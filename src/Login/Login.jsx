@@ -39,7 +39,7 @@ const Login = () => {
       setIdMessage("");
     }
 
-    if (validator.isEmail(e.target.value)) {
+    if (validator.isEmail(userId)) {
       setIdMessage("");
       //console.log(userId + ", " + userPassword);
     } else {
