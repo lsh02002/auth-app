@@ -66,6 +66,12 @@ const Signup = () => {
       setEmailMessage("");
     }
 
+    if (validator.isEmail(userEmail)) {
+      setEmailMessage("");
+    } else {
+      setEmailMessage("이메일 형식이 올바르지 않습니다!");
+    }
+
     if (userPassword === "") {
       setPassMessage("비밀번호란이 공백입니다!");
     } else {
