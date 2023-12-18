@@ -61,3 +61,8 @@ input:hover {
   font-size: 12px;
   text-align: left;
 }
+
+.link-login {
+  width: 270px;
+  text-align: right;
+}

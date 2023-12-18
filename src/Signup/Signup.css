@@ -58,7 +58,13 @@ input:hover {
 }
 
 .id-message-signup {
+  width: 260px;
   font-size: 12px;
   text-align: left;
   color: red;
+}
+
+.link-signup {
+  width: 270px;
+  text-align: right;
 }

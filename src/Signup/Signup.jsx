@@ -21,7 +21,7 @@ const Signup = () => {
     setNameMessage("");
   };
 
-  const onUserIdChange = (e) => {
+  const onUserEmailChange = (e) => {
     setUserEmail(e.target.value);
 
     if (validator.isEmail(e.target.value)) {
@@ -34,6 +34,22 @@ const Signup = () => {
   const onUserPasswordChange = (e) => {
     setUserPassword(e.target.value);
     setPassMessage("");
+
+    if (
+      validator.isStrongPassword(e.target.value, {
+        minLength: 8,
+        minLowercase: 1,
+        minUppercase: 1,
+        minNumbers: 1,
+        minSymbols: 1,
+      })
+    ) {
+      setPassMessage("");
+    } else {
+      setPassMessage(
+        "비밀번호가 강력하지 않습니다. (최소길이: 8, 최소 소문자: 1, 최소 대문자: 1, 최소 숫자: 1,최소 특수문자: 1)"
+      );
+    }
 
     if (e.target.value === userPassword2) {
       setPassMatchMessage("");
@@ -72,16 +88,34 @@ const Signup = () => {
       setEmailMessage("이메일 형식이 올바르지 않습니다!");
     }
 
+    /*
     if (userPassword === "") {
       setPassMessage("비밀번호란이 공백입니다!");
     } else {
       setPassMessage("");
     }
+    */
 
     if (userPassword2 === "") {
       setPass2Message("비밀번호 확인란이 공백입니다!");
     } else {
       setPass2Message("");
+    }
+
+    if (
+      validator.isStrongPassword(userPassword, {
+        minLength: 8,
+        minLowercase: 1,
+        minUppercase: 1,
+        minNumbers: 1,
+        minSymbols: 1,
+      })
+    ) {
+      setPassMessage("");
+    } else {
+      setPassMessage(
+        "비밀번호가 강력하지 않습니다.\n (최소길이: 8, 최소 소문자: 1, 최소 대문자: 1, 최소 숫자: 1,최소 특수문자: 1"
+      );
     }
 
     /*
@@ -97,7 +131,14 @@ const Signup = () => {
       validator.isEmail(userEmail) &&
       userPassword !== "" &&
       userPassword2 !== "" &&
-      userPassword === userPassword2
+      userPassword === userPassword2 &&
+      validator.isStrongPassword(userPassword, {
+        minLength: 8,
+        minLowercase: 1,
+        minUppercase: 1,
+        minNumbers: 1,
+        minSymbols: 1,
+      })
     ) {
       alert(
         userName +
@@ -133,7 +174,7 @@ const Signup = () => {
           type="email"
           name="user_id"
           value={userEmail}
-          onChange={onUserIdChange}
+          onChange={onUserEmailChange}
           placeholder="이메일"
         />
         <div className="id-message-signup">{emailMessage}</div>
@@ -166,7 +207,9 @@ const Signup = () => {
       >
         회원 가입
       </button>
-      <Link to="/">로그인 하기</Link>
+      <Link className="link-signup" to="/">
+        로그인 하기
+      </Link>
     </div>
   );
 };

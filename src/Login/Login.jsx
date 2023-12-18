@@ -89,7 +89,9 @@ const Login = () => {
         >
           로그인
         </button>
-        <Link to="/signup">회원가입 하기</Link>
+        <Link className="link-login" to="/signup">
+          회원가입 하기
+        </Link>
       </div>
     </>
   );
