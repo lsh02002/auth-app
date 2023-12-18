@@ -165,7 +165,7 @@ const Signup = () => {
           name="user_name"
           value={userName}
           onChange={onUserNameChange}
-          placeholder="이름"
+          placeholder=" 이름"
         />
         <div className="id-message-signup">{nameMessage}</div>
       </div>
@@ -175,7 +175,7 @@ const Signup = () => {
           name="user_id"
           value={userEmail}
           onChange={onUserEmailChange}
-          placeholder="이메일"
+          placeholder=" 이메일"
         />
         <div className="id-message-signup">{emailMessage}</div>
       </div>
@@ -185,7 +185,7 @@ const Signup = () => {
           name="user_pwd"
           value={userPassword}
           onChange={onUserPasswordChange}
-          placeholder="비밀번호"
+          placeholder=" 비밀번호"
         />
         <div className="id-message-signup">{passMessage}</div>
       </div>
@@ -195,7 +195,7 @@ const Signup = () => {
           name="user_pwd2"
           value={userPassword2}
           onChange={onUserPassword2Change}
-          placeholder="비밀번호 확인"
+          placeholder=" 비밀번호 확인"
         />
         <div className="id-message-signup">{pass2Message}</div>
         <br />

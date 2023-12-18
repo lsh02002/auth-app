@@ -68,7 +68,7 @@ const Login = () => {
             name="user_id"
             value={userId}
             onChange={onUserIdChange}
-            placeholder="이메일"
+            placeholder=" 이메일"
           />
           <div className="id-message-login">{idMessage}</div>
         </div>
@@ -78,7 +78,7 @@ const Login = () => {
             name="user_pwd"
             value={userPassword}
             onChange={onUserPasswordChange}
-            placeholder="비밀번호"
+            placeholder=" 비밀번호"
           />
           <div className="id-message-login">{passMessage}</div>
         </div>
