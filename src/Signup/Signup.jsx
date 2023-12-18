@@ -16,6 +16,12 @@ const Signup = () => {
   const [pass2Message, setPass2Message] = useState("");
   const [passMatchMessage, setPassMatchMessage] = useState("");
 
+  const [allCheck, setAllCheck] = useState(false);
+  const [ageCheck, setAgeCheck] = useState(false);
+  const [userCheck, setUserCheck] = useState(false);
+  const [marketingCheck, setMarketingCheck] = useState(false);
+  const [allCheckMessage, setAllCheckMessage] = useState("");
+
   const onUserNameChange = (e) => {
     setUserName(e.target.value);
     setNameMessage("");
@@ -69,6 +75,48 @@ const Signup = () => {
     }
   };
 
+  const allBtnEvent = () => {
+    if (allCheck === false) {
+      setAllCheck(true);
+      setAgeCheck(true);
+      setUserCheck(true);
+      setMarketingCheck(true);
+
+      setAllCheckMessage("");
+    } else {
+      setAllCheck(false);
+      setAgeCheck(false);
+      setUserCheck(false);
+      setMarketingCheck(false);
+
+      setAllCheckMessage("모든 내용에 동의 해주시기 바랍니다!");
+    }
+  };
+
+  const ageBtnEvent = () => {
+    if (ageCheck === false) {
+      setAgeCheck(true);
+    } else {
+      setAgeCheck(false);
+    }
+  };
+
+  const userBtnEvent = () => {
+    if (userCheck === false) {
+      setUserCheck(true);
+    } else {
+      setUserCheck(false);
+    }
+  };
+
+  const marketingBtnEvent = () => {
+    if (marketingCheck === false) {
+      setMarketingCheck(true);
+    } else {
+      setMarketingCheck(false);
+    }
+  };
+
   const onSignupButtonClickHandler = () => {
     if (userName === "") {
       setNameMessage("이름란이 공백입니다!");
@@ -118,6 +166,16 @@ const Signup = () => {
       );
     }
 
+    if (allCheck !== true || ageCheck !== true || userCheck !== true) {
+      setAllCheck(false);
+    }
+
+    if (allCheck === true) {
+      setAllCheckMessage("");
+    } else {
+      setAllCheckMessage("모든 내용에 동의 해주시기 바랍니다!");
+    }
+
     /*
     if (userPassword !== userPassword2) {
       setPassMatchMessage("비밀번호와 비밀번호 확인란이 일치하지 않습니다!");
@@ -138,7 +196,8 @@ const Signup = () => {
         minUppercase: 1,
         minNumbers: 1,
         minSymbols: 1,
-      })
+      }) &&
+      allCheck === true
     ) {
       alert(
         userName +
@@ -201,6 +260,56 @@ const Signup = () => {
         <br />
         <div className="id-message-signup">{passMatchMessage}</div>
       </div>
+
+      {/* 동의 사항 체크 */}
+      <div className="checkbox-box-signup">
+        <div className="checkbox-signup">
+          <input
+            type="checkbox"
+            id="all-check"
+            checked={allCheck}
+            onChange={allBtnEvent}
+          />
+          <label htmlFor="all-check">
+            <b>전체동의</b>
+          </label>
+        </div>
+        <div className="checkbox-signup">
+          <input
+            type="checkbox"
+            id="check1"
+            checked={ageCheck}
+            onChange={ageBtnEvent}
+          />
+          <label htmlFor="check1">
+            만 14세 이상입니다 <span>(필수)</span>
+          </label>
+        </div>
+        <div className="checkbox-signup">
+          <input
+            type="checkbox"
+            id="check2"
+            checked={userCheck}
+            onChange={userBtnEvent}
+          />
+          <label htmlFor="check2">
+            이용약관 <span>(필수)</span>
+          </label>
+        </div>
+        <div className="checkbox-signup">
+          <input
+            type="checkbox"
+            id="check3"
+            checked={marketingCheck}
+            onChange={marketingBtnEvent}
+          />
+          <label htmlFor="check3">
+            마케팅 동의 <span>(선택)</span>
+          </label>
+        </div>
+        <div className="id-message-signup">{allCheckMessage}</div>
+      </div>
+
       <button
         className="user-signup-button"
         onClick={onSignupButtonClickHandler}
