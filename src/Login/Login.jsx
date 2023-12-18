@@ -30,8 +30,7 @@ const Login = () => {
     setPassMessage("");
   };
 
-  const onLoginButtonClickHandler = (e) => {
-    e.preventDefault();
+  const onLoginButtonClickHandler = () => {
     //입력된 이메일 유효성 검사 모듈
     if (userId === "") {
       setIdMessage("이메일란이 공백입니다!");
@@ -52,7 +51,7 @@ const Login = () => {
       setPassMessage("");
     }
 
-    if (idMessage === "" && userPassword !== "") {
+    if (idMessage === "" && userId !== "" && userPassword !== "") {
       alert(userId + ", " + userPassword + " 로그인 요청합니다!");
     }
   };
