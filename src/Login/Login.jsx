@@ -60,7 +60,9 @@ const Login = () => {
     <>
       <div className="user-login">
         <div className="user-title-image-login">
-          <img src={titlepic} alt="" />
+          <Link to="/">
+            <img src={titlepic} alt="" />
+          </Link>
         </div>
         <div className="user-id-login">
           <input

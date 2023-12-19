@@ -213,7 +213,9 @@ const Signup = () => {
   return (
     <div className="user-signup">
       <div className="user-title-image-signup">
-        <img src={titlepic} alt="" />
+        <Link to="/">
+          <img src={titlepic} alt="" />
+        </Link>
         <div className="user-title-text-signup">
           <h1>회원가입</h1>
         </div>
