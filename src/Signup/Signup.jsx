@@ -6,12 +6,14 @@ import { Link } from "react-router-dom";
 
 const UserSignup = styled.div`
   .user-signup-main {
+    margin-top: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-bottom: 50px;
   }
+
   .user-signup {
-    margin-top: 50px;
     padding: 15px;
     width: 280px;
     display: flex;
@@ -123,7 +125,7 @@ const Signup = () => {
   const [allCheckMessage, setAllCheckMessage] = useState("");
 
   const onUserNameChange = (e) => {
-    setUserName(e.target.value);
+    setUserName(e.target.value.trim());
     setNameMessage("");
   };
 
