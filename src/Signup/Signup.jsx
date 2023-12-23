@@ -126,7 +126,12 @@ const Signup = () => {
 
   const onUserNameChange = (e) => {
     setUserName(e.target.value.trim());
-    setNameMessage("");
+
+    if (e.target.value.trim() === "") {
+      setNameMessage("이름란이 공백입니다!");
+    } else {
+      setNameMessage("");
+    }
   };
 
   const onUserEmailChange = (e) => {
