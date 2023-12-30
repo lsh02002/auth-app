@@ -171,9 +171,9 @@ const Signup = () => {
   };
 
   const onUserAddressChange = (e) => {
-    setUserAddress(e.target.value.trim());
+    setUserAddress(e.target.value);
 
-    if (e.target.value.trim() === "") {
+    if (e.target.value === "") {
       setAddressMessage("주소란이 공백입니다!");
     } else {
       setAddressMessage("");
