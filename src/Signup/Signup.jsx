@@ -108,12 +108,18 @@ const UserSignup = styled.div`
 
 const Signup = () => {
   const [userName, setUserName] = useState("");
+  const [userNickName, setUserNickName] = useState("");
   const [userEmail, setUserEmail] = useState("");
+  const [userPhone, setUserPhone] = useState("");
+  const [userAddress, setUserAddress] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [userPassword2, setUserPassword2] = useState("");
 
   const [nameMessage, setNameMessage] = useState("");
+  const [nickNameMessage, setNickNameMessage] = useState("");
   const [emailMessage, setEmailMessage] = useState("");
+  const [phoneMessage, setPhoneMessage] = useState("");
+  const [addressMessage, setAddressMessage] = useState("");
   const [passMessage, setPassMessage] = useState("");
   const [pass2Message, setPass2Message] = useState("");
   const [passMatchMessage, setPassMatchMessage] = useState("");
@@ -134,6 +140,16 @@ const Signup = () => {
     }
   };
 
+  const onUserNickNameChange = (e) => {
+    setUserNickName(e.target.value.trim());
+
+    if (e.target.value.trim() === "") {
+      setNickNameMessage("닉네임란이 공백입니다!");
+    } else {
+      setNickNameMessage("");
+    }
+  };
+
   const onUserEmailChange = (e) => {
     setUserEmail(e.target.value);
 
@@ -141,6 +157,26 @@ const Signup = () => {
       setEmailMessage("");
     } else {
       setEmailMessage("이메일 형식이 올바르지 않습니다!");
+    }
+  };
+
+  const onUserPhoneChange = (e) => {
+    setUserPhone(e.target.value);
+
+    if (validator.isMobilePhone(e.target.value)) {
+      setPhoneMessage("");
+    } else {
+      setPhoneMessage("핸드폰 번호 형식이 올바르지 않습니다!");
+    }
+  };
+
+  const onUserAddressChange = (e) => {
+    setUserAddress(e.target.value.trim());
+
+    if (e.target.value.trim() === "") {
+      setAddressMessage("주소란이 공백입니다!");
+    } else {
+      setAddressMessage("");
     }
   };
 
@@ -231,6 +267,12 @@ const Signup = () => {
       setNameMessage("");
     }
 
+    if (userNickName === "") {
+      setNickNameMessage("닉네임란이 공백입니다!");
+    } else {
+      setNickNameMessage("");
+    }
+
     if (userEmail === "") {
       setEmailMessage("이메일란이 공백입니다!");
     } else {
@@ -241,6 +283,18 @@ const Signup = () => {
       setEmailMessage("");
     } else {
       setEmailMessage("이메일 형식이 올바르지 않습니다!");
+    }
+
+    if (validator.isMobilePhone(userPhone)) {
+      setPhoneMessage("");
+    } else {
+      setPhoneMessage("핸드폰 번호 형식이 올바르지 않습니다!");
+    }
+
+    if (userAddress === "") {
+      setAddressMessage("주소란이 공백입니다!");
+    } else {
+      setAddressMessage("");
     }
 
     /*
@@ -293,7 +347,10 @@ const Signup = () => {
 
     if (
       userName !== "" &&
+      userNickName !== "" &&
       validator.isEmail(userEmail) &&
+      validator.isMobilePhone(userPhone) &&
+      userAddress !== "" &&
       userPassword !== "" &&
       userPassword2 !== "" &&
       userPassword === userPassword2 &&
@@ -309,7 +366,11 @@ const Signup = () => {
       alert(
         userName +
           ", " +
+          userNickName +
+          ", " +
           userEmail +
+          ", " +
+          userPhone +
           ", " +
           userPassword +
           " 회원가입 요청합니다!"
@@ -339,6 +400,16 @@ const Signup = () => {
             />
             <div className="id-message-signup">{nameMessage}</div>
           </div>
+          <div className="user-nickname-signup">
+            <input
+              type="text"
+              name="user_nickname"
+              value={userNickName}
+              onChange={onUserNickNameChange}
+              placeholder=" 닉네임"
+            />
+            <div className="id-message-signup">{nickNameMessage}</div>
+          </div>
           <div className="user-id-signup">
             <input
               type="email"
@@ -348,6 +419,26 @@ const Signup = () => {
               placeholder=" 이메일"
             />
             <div className="id-message-signup">{emailMessage}</div>
+          </div>
+          <div className="user-phone-signup">
+            <input
+              type="text"
+              name="user_phone"
+              value={userPhone}
+              onChange={onUserPhoneChange}
+              placeholder=" 핸드폰 번호"
+            />
+            <div className="id-message-signup">{phoneMessage}</div>
+          </div>
+          <div className="user-address-signup">
+            <input
+              type="text"
+              name="user_address"
+              value={userAddress}
+              onChange={onUserAddressChange}
+              placeholder=" 주소"
+            />
+            <div className="id-message-signup">{addressMessage}</div>
           </div>
           <div className="user-pwd-signup">
             <input
