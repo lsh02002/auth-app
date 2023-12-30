@@ -372,6 +372,8 @@ const Signup = () => {
           ", " +
           userPhone +
           ", " +
+          userAddress +
+          ", " +
           userPassword +
           " 회원가입 요청합니다!"
       );
