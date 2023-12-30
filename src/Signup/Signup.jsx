@@ -3,6 +3,7 @@ import validator from "validator";
 import styled from "styled-components";
 import titlepic from "./assets/titlepic.png";
 import { Link } from "react-router-dom";
+import { Tooltip } from "react-tooltip";
 
 const UserSignup = styled.div`
   .user-signup-main {
@@ -382,6 +383,7 @@ const Signup = () => {
 
   return (
     <UserSignup>
+      <Tooltip id="my-tooltip" />
       <div className="user-signup-main">
         <div className="user-signup">
           <div className="user-title-image-signup">
@@ -399,6 +401,9 @@ const Signup = () => {
               value={userName}
               onChange={onUserNameChange}
               placeholder=" 이름"
+              data-tooltip-id="my-tooltip"
+              data-tooltip-content="이름"
+              data-tooltip-place="left-start"
             />
             {nameMessage && (
               <div className="id-message-signup">{nameMessage}</div>
@@ -411,6 +416,9 @@ const Signup = () => {
               value={userNickName}
               onChange={onUserNickNameChange}
               placeholder=" 닉네임"
+              data-tooltip-id="my-tooltip"
+              data-tooltip-content="닉네임"
+              data-tooltip-place="left-start"
             />
             {nickNameMessage && (
               <div className="id-message-signup">{nickNameMessage}</div>
@@ -423,6 +431,9 @@ const Signup = () => {
               value={userEmail}
               onChange={onUserEmailChange}
               placeholder=" 이메일"
+              data-tooltip-id="my-tooltip"
+              data-tooltip-content="이메일"
+              data-tooltip-place="left-start"
             />
             {emailMessage && (
               <div className="id-message-signup">{emailMessage}</div>
@@ -435,6 +446,9 @@ const Signup = () => {
               value={userPhone}
               onChange={onUserPhoneChange}
               placeholder=" 핸드폰 번호"
+              data-tooltip-id="my-tooltip"
+              data-tooltip-content="핸드폰 번호"
+              data-tooltip-place="left-start"
             />
             {phoneMessage && (
               <div className="id-message-signup">{phoneMessage}</div>
@@ -447,6 +461,9 @@ const Signup = () => {
               value={userAddress}
               onChange={onUserAddressChange}
               placeholder=" 주소"
+              data-tooltip-id="my-tooltip"
+              data-tooltip-content="주소"
+              data-tooltip-place="left-start"
             />
             {addressMessage && (
               <div className="id-message-signup">{addressMessage}</div>
@@ -459,6 +476,9 @@ const Signup = () => {
               value={userPassword}
               onChange={onUserPasswordChange}
               placeholder=" 비밀번호"
+              data-tooltip-id="my-tooltip"
+              data-tooltip-content="비밀번호"
+              data-tooltip-place="left-start"
             />
             {passMessage && (
               <div className="id-message-signup">{passMessage}</div>
@@ -471,6 +491,9 @@ const Signup = () => {
               value={userPassword2}
               onChange={onUserPassword2Change}
               placeholder=" 비밀번호 확인"
+              data-tooltip-id="my-tooltip"
+              data-tooltip-content="비밀번호 확인"
+              data-tooltip-place="left-start"
             />
             {pass2Message && (
               <div className="id-message-signup">{pass2Message}</div>
