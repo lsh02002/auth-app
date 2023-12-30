@@ -403,6 +403,7 @@ const Signup = () => {
               placeholder=" 이름"
               data-tooltip-id="my-tooltip"
               data-tooltip-content="이름"
+              data-tooltip-variant="info"
               data-tooltip-place="left-start"
             />
             {nameMessage && (
@@ -418,6 +419,7 @@ const Signup = () => {
               placeholder=" 닉네임"
               data-tooltip-id="my-tooltip"
               data-tooltip-content="닉네임"
+              data-tooltip-variant="info"
               data-tooltip-place="left-start"
             />
             {nickNameMessage && (
@@ -433,6 +435,7 @@ const Signup = () => {
               placeholder=" 이메일"
               data-tooltip-id="my-tooltip"
               data-tooltip-content="이메일"
+              data-tooltip-variant="info"
               data-tooltip-place="left-start"
             />
             {emailMessage && (
@@ -448,6 +451,7 @@ const Signup = () => {
               placeholder=" 핸드폰 번호"
               data-tooltip-id="my-tooltip"
               data-tooltip-content="핸드폰 번호"
+              data-tooltip-variant="info"
               data-tooltip-place="left-start"
             />
             {phoneMessage && (
@@ -463,6 +467,7 @@ const Signup = () => {
               placeholder=" 주소"
               data-tooltip-id="my-tooltip"
               data-tooltip-content="주소"
+              data-tooltip-variant="info"
               data-tooltip-place="left-start"
             />
             {addressMessage && (
@@ -478,6 +483,7 @@ const Signup = () => {
               placeholder=" 비밀번호"
               data-tooltip-id="my-tooltip"
               data-tooltip-content="비밀번호"
+              data-tooltip-variant="info"
               data-tooltip-place="left-start"
             />
             {passMessage && (
@@ -493,6 +499,7 @@ const Signup = () => {
               placeholder=" 비밀번호 확인"
               data-tooltip-id="my-tooltip"
               data-tooltip-content="비밀번호 확인"
+              data-tooltip-variant="info"
               data-tooltip-place="left-start"
             />
             {pass2Message && (
