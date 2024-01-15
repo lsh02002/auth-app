@@ -5,108 +5,6 @@ import titlepic from "./assets/titlepic.png";
 import { Link } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
 
-const UserSignup = styled.div`
-  .user-signup-main {
-    margin-top: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 50px;
-  }
-
-  .user-signup {
-    padding: 15px;
-    width: 280px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    border: 1px solid rgb(240, 200, 200);
-  }
-
-  .user-title-image-signup {
-    text-align: left;
-    width: 260px;
-    margin: 30px 10px 30px 10px;
-  }
-
-  .user-title-image-signup img {
-    width: 50%;
-  }
-
-  input {
-    font-weight: bold;
-    height: 40px;
-    color: rgb(200, 200, 200);
-    font-size: 15px;
-    width: 260px;
-
-    border-width: 1px;
-    border-color: rgb(250, 250, 250);
-  }
-
-  input::placeholder {
-    color: rgb(200, 200, 200);
-  }
-
-  input:hover {
-    background-color: rgb(250, 250, 250);
-  }
-
-  .checkbox-box-signup {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .checkbox-signup {
-    width: 260px;
-    font-size: 15px;
-
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-  }
-
-  input[type="checkbox"] {
-    width: 50px;
-    padding: 0px;
-    zoom: 0.5;
-  }
-
-  .user-signup-button {
-    margin: 30px 0px 30px 0px;
-    color: white;
-    font-weight: bold;
-    font-size: 15px;
-    width: 270px;
-    height: 50px;
-
-    border: none;
-    border-radius: 5px;
-    background-color: rgb(48, 192, 224);
-  }
-
-  .user-signup-button:hover {
-    background-color: rgb(40, 182, 214);
-    cursor: pointer;
-  }
-
-  .id-message-signup {
-    width: 260px;
-    font-size: 12px;
-    text-align: left;
-    color: red;
-  }
-
-  .link-signup {
-    width: 270px;
-    text-align: right;
-  }
-`;
-
 const Signup = () => {
   const [userName, setUserName] = useState("");
   const [userNickName, setUserNickName] = useState("");
@@ -338,14 +236,6 @@ const Signup = () => {
       setAllCheckMessage("모든 내용에 동의 해주시기 바랍니다!");
     }
 
-    /*
-    if (userPassword !== userPassword2) {
-      setPassMatchMessage("비밀번호와 비밀번호 확인란이 일치하지 않습니다!");
-    } else {
-      setPassMatchMessage("");
-    }
-    */
-
     if (
       userName !== "" &&
       userNickName !== "" &&
@@ -382,199 +272,265 @@ const Signup = () => {
   };
 
   return (
-    <UserSignup>
+    <UserSignupMain>
       <Tooltip id="my-tooltip" />
-      <div className="user-signup-main">
-        <div className="user-signup">
-          <div className="user-title-image-signup">
-            <Link to="/">
-              <img src={titlepic} alt="" />
-            </Link>
-            <div className="user-title-text-signup">
-              <h1>회원가입</h1>
-            </div>
-          </div>
-          <div className="user-name-signup">
-            <input
-              type="text"
-              name="user_name"
-              value={userName}
-              onChange={onUserNameChange}
-              placeholder=" 이름"
-              data-tooltip-id="my-tooltip"
-              data-tooltip-content="이름"
-              data-tooltip-variant="info"
-              data-tooltip-place="left-start"
-            />
-            {nameMessage && (
-              <div className="id-message-signup">{nameMessage}</div>
-            )}
-          </div>
-          <div className="user-nickname-signup">
-            <input
-              type="text"
-              name="user_nickname"
-              value={userNickName}
-              onChange={onUserNickNameChange}
-              placeholder=" 닉네임"
-              data-tooltip-id="my-tooltip"
-              data-tooltip-content="닉네임"
-              data-tooltip-variant="info"
-              data-tooltip-place="left-start"
-            />
-            {nickNameMessage && (
-              <div className="id-message-signup">{nickNameMessage}</div>
-            )}
-          </div>
-          <div className="user-id-signup">
-            <input
-              type="email"
-              name="user_id"
-              value={userEmail}
-              onChange={onUserEmailChange}
-              placeholder=" 이메일"
-              data-tooltip-id="my-tooltip"
-              data-tooltip-content="이메일"
-              data-tooltip-variant="info"
-              data-tooltip-place="left-start"
-            />
-            {emailMessage && (
-              <div className="id-message-signup">{emailMessage}</div>
-            )}
-          </div>
-          <div className="user-phone-signup">
-            <input
-              type="text"
-              name="user_phone"
-              value={userPhone}
-              onChange={onUserPhoneChange}
-              placeholder=" 핸드폰 번호"
-              data-tooltip-id="my-tooltip"
-              data-tooltip-content="핸드폰 번호"
-              data-tooltip-variant="info"
-              data-tooltip-place="left-start"
-            />
-            {phoneMessage && (
-              <div className="id-message-signup">{phoneMessage}</div>
-            )}
-          </div>
-          <div className="user-address-signup">
-            <input
-              type="text"
-              name="user_address"
-              value={userAddress}
-              onChange={onUserAddressChange}
-              placeholder=" 주소"
-              data-tooltip-id="my-tooltip"
-              data-tooltip-content="주소"
-              data-tooltip-variant="info"
-              data-tooltip-place="left-start"
-            />
-            {addressMessage && (
-              <div className="id-message-signup">{addressMessage}</div>
-            )}
-          </div>
-          <div className="user-pwd-signup">
-            <input
-              type="password"
-              name="user_pwd"
-              value={userPassword}
-              onChange={onUserPasswordChange}
-              placeholder=" 비밀번호"
-              data-tooltip-id="my-tooltip"
-              data-tooltip-content="비밀번호"
-              data-tooltip-variant="info"
-              data-tooltip-place="left-start"
-            />
-            {passMessage && (
-              <div className="id-message-signup">{passMessage}</div>
-            )}
-          </div>
-          <div className="user-pwd2-signup">
-            <input
-              type="password"
-              name="user_pwd2"
-              value={userPassword2}
-              onChange={onUserPassword2Change}
-              placeholder=" 비밀번호 확인"
-              data-tooltip-id="my-tooltip"
-              data-tooltip-content="비밀번호 확인"
-              data-tooltip-variant="info"
-              data-tooltip-place="left-start"
-            />
-            {pass2Message && (
-              <div className="id-message-signup">{pass2Message}</div>
-            )}
-            <br />
-            {passMatchMessage && (
-              <div className="id-message-signup">{passMatchMessage}</div>
-            )}
-          </div>
-
-          {/* 동의 사항 체크 */}
-          <div className="checkbox-box-signup">
-            <div className="checkbox-signup">
-              <input
-                type="checkbox"
-                id="all-check"
-                checked={allCheck}
-                onChange={allBtnEvent}
-              />
-              <label htmlFor="all-check">
-                <b>전체동의</b>
-              </label>
-            </div>
-            <div className="checkbox-signup">
-              <input
-                type="checkbox"
-                id="check1"
-                checked={ageCheck}
-                onChange={ageBtnEvent}
-              />
-              <label htmlFor="check1">
-                만 14세 이상입니다 <span>(필수)</span>
-              </label>
-            </div>
-            <div className="checkbox-signup">
-              <input
-                type="checkbox"
-                id="check2"
-                checked={userCheck}
-                onChange={userBtnEvent}
-              />
-              <label htmlFor="check2">
-                이용약관 <span>(필수)</span>
-              </label>
-            </div>
-            <div className="checkbox-signup">
-              <input
-                type="checkbox"
-                id="check3"
-                checked={marketingCheck}
-                onChange={marketingBtnEvent}
-              />
-              <label htmlFor="check3">
-                마케팅 동의 <span>(선택)</span>
-              </label>
-            </div>
-            {allCheckMessage && (
-              <div className="id-message-signup">{allCheckMessage}</div>
-            )}
-          </div>
-
-          <button
-            className="user-signup-button"
-            onClick={onSignupButtonClickHandler}
-          >
-            회원 가입
-          </button>
-          <Link className="link-signup" to="/">
-            로그인 하기
+      <UserSignup>
+        <UserTitleImageSignup>
+          <Link to="/">
+            <ImgSignup src={titlepic} alt="" />
           </Link>
-        </div>
-      </div>
-    </UserSignup>
+          <h1>회원가입</h1>
+        </UserTitleImageSignup>
+        <InputSingup
+          type="text"
+          name="user_name"
+          value={userName}
+          onChange={onUserNameChange}
+          placeholder="이름"
+          data-tooltip-id="my-tooltip"
+          data-tooltip-content="이름"
+          data-tooltip-variant="info"
+          data-tooltip-place="left-start"
+        />
+        {nameMessage && <IdMessageSignup>{nameMessage}</IdMessageSignup>}
+        <InputSingup
+          type="text"
+          name="user_nickname"
+          value={userNickName}
+          onChange={onUserNickNameChange}
+          placeholder="닉네임"
+          data-tooltip-id="my-tooltip"
+          data-tooltip-content="닉네임"
+          data-tooltip-variant="info"
+          data-tooltip-place="left-start"
+        />
+        {nickNameMessage && (
+          <IdMessageSignup>{nickNameMessage}</IdMessageSignup>
+        )}
+        <InputSingup
+          type="email"
+          name="user_id"
+          value={userEmail}
+          onChange={onUserEmailChange}
+          placeholder="이메일"
+          data-tooltip-id="my-tooltip"
+          data-tooltip-content="이메일"
+          data-tooltip-variant="info"
+          data-tooltip-place="left-start"
+        />
+        {emailMessage && <IdMessageSignup>{emailMessage}</IdMessageSignup>}
+        <InputSingup
+          type="text"
+          name="user_phone"
+          value={userPhone}
+          onChange={onUserPhoneChange}
+          placeholder="핸드폰 번호"
+          data-tooltip-id="my-tooltip"
+          data-tooltip-content="핸드폰 번호"
+          data-tooltip-variant="info"
+          data-tooltip-place="left-start"
+        />
+        {phoneMessage && <IdMessageSignup>{phoneMessage}</IdMessageSignup>}
+        <InputSingup
+          type="text"
+          name="user_address"
+          value={userAddress}
+          onChange={onUserAddressChange}
+          placeholder="주소"
+          data-tooltip-id="my-tooltip"
+          data-tooltip-content="주소"
+          data-tooltip-variant="info"
+          data-tooltip-place="left-start"
+        />
+        {addressMessage && <IdMessageSignup>{addressMessage}</IdMessageSignup>}
+        <InputSingup
+          type="password"
+          name="user_pwd"
+          value={userPassword}
+          onChange={onUserPasswordChange}
+          placeholder="비밀번호"
+          data-tooltip-id="my-tooltip"
+          data-tooltip-content="비밀번호"
+          data-tooltip-variant="info"
+          data-tooltip-place="left-start"
+        />
+        {passMessage && <IdMessageSignup>{passMessage}</IdMessageSignup>}
+        <InputSingup
+          type="password"
+          name="user_pwd2"
+          value={userPassword2}
+          onChange={onUserPassword2Change}
+          placeholder="비밀번호 확인"
+          data-tooltip-id="my-tooltip"
+          data-tooltip-content="비밀번호 확인"
+          data-tooltip-variant="info"
+          data-tooltip-place="left-start"
+        />
+        {pass2Message && <IdMessageSignup>{pass2Message}</IdMessageSignup>}
+        <br />
+        {passMatchMessage && (
+          <IdMessageSignup>{passMatchMessage}</IdMessageSignup>
+        )}
+
+        {/* 동의 사항 체크 */}
+        <CheckboxBoxSignup>
+          <CheckboxSignup>
+            <InputCheckBoxSignup
+              type="checkbox"
+              id="all-check"
+              checked={allCheck}
+              onChange={allBtnEvent}
+            />
+            <label htmlFor="all-check">
+              <b>전체동의</b>
+            </label>
+          </CheckboxSignup>
+          <CheckboxSignup>
+            <InputCheckBoxSignup
+              type="checkbox"
+              id="check1"
+              checked={ageCheck}
+              onChange={ageBtnEvent}
+            />
+            <label htmlFor="check1">
+              만 14세 이상입니다 <span>(필수)</span>
+            </label>
+          </CheckboxSignup>
+          <CheckboxSignup>
+            <InputCheckBoxSignup
+              type="checkbox"
+              id="check2"
+              checked={userCheck}
+              onChange={userBtnEvent}
+            />
+            <label htmlFor="check2">
+              이용약관 <span>(필수)</span>
+            </label>
+          </CheckboxSignup>
+          <CheckboxSignup>
+            <InputCheckBoxSignup
+              type="checkbox"
+              id="check3"
+              checked={marketingCheck}
+              onChange={marketingBtnEvent}
+            />
+            <label htmlFor="check3">
+              마케팅 동의 <span>(선택)</span>
+            </label>
+          </CheckboxSignup>
+          {allCheckMessage && (
+            <IdMessageSignup>{allCheckMessage}</IdMessageSignup>
+          )}
+        </CheckboxBoxSignup>
+
+        <UserSignupButton onClick={onSignupButtonClickHandler}>
+          회원 가입
+        </UserSignupButton>
+        <LinkSignup to="/">로그인 하기</LinkSignup>
+      </UserSignup>
+    </UserSignupMain>
   );
 };
+
+const UserSignupMain = styled.div`
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 50px;
+`;
+
+const UserSignup = styled.div`
+  padding: 15px;
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  border: 1px solid rgb(240, 200, 200);
+`;
+
+const UserTitleImageSignup = styled.div`
+  text-align: left;
+  width: 260px;
+  margin: 30px 10px 30px 10px;
+`;
+
+const ImgSignup = styled.img`
+  width: 50%;
+`;
+
+const InputSingup = styled.input`
+  font-weight: bold;
+  height: 40px;
+  color: rgb(200, 200, 200);
+  font-size: 15px;
+  width: 260px;
+
+  border-width: 1px;
+  border-color: rgb(250, 250, 250);
+
+  &::placeholder {
+    padding-left: 15px;
+    color: rgb(200, 200, 200);
+  }
+
+  &:hover {
+    background-color: rgb(250, 250, 250);
+  }
+`;
+
+const CheckboxBoxSignup = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const CheckboxSignup = styled.div`
+  width: 260px;
+  font-size: 15px;
+
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+`;
+
+const InputCheckBoxSignup = styled.input`
+  width: 50px;
+  padding: 0px;
+  zoom: 1.2;
+`;
+
+const UserSignupButton = styled.button`
+  margin: 30px 0px 30px 0px;
+  color: white;
+  font-weight: bold;
+  font-size: 15px;
+  width: 270px;
+  height: 50px;
+
+  border: none;
+  border-radius: 5px;
+  background-color: rgb(48, 192, 224);
+
+  &:hover {
+    background-color: rgb(40, 182, 214);
+    cursor: pointer;
+  }
+`;
+
+const IdMessageSignup = styled.div`
+  width: 260px;
+  font-size: 12px;
+  text-align: left;
+  color: red;
+`;
+
+const LinkSignup = styled(Link)`
+  width: 270px;
+  text-align: right;
+`;
 
 export default Signup;

@@ -1,88 +1,9 @@
 import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-
 import validator from "validator";
 import styled from "styled-components";
-
 import titlepic from "./assets/titlepic.png";
-
-const UserLogin = styled.div`
-  .user-login-main {
-    margin-top: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 50px;
-  }
-  .user-login {
-    padding: 15px;
-    width: 280px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    border: 1px solid rgb(240, 200, 200);
-  }
-
-  .user-title-image-login {
-    width: 260px;
-    margin: 30px 10px 30px 10px;
-  }
-
-  .user-title-image-login img {
-    width: 50%;
-  }
-
-  input {
-    font-weight: bold;
-    height: 40px;
-    color: rgb(200, 200, 200);
-    font-size: 15px;
-    width: 260px;
-
-    border-width: 1px;
-    border-color: rgb(250, 250, 250);
-  }
-
-  input::placeholder {
-    color: rgb(200, 200, 200);
-  }
-
-  input:hover {
-    background-color: rgb(250, 250, 250);
-  }
-
-  .user-login-button {
-    margin: 30px 0px 30px 0px;
-    color: white;
-    font-weight: bold;
-    font-size: 15px;
-    width: 270px;
-    height: 50px;
-
-    border: none;
-    border-radius: 5px;
-    background-color: rgb(48, 192, 224);
-  }
-
-  .user-login-button:hover {
-    background-color: rgb(40, 182, 214);
-    cursor: pointer;
-  }
-
-  .id-message-login {
-    color: red;
-    font-size: 12px;
-    text-align: left;
-  }
-
-  .link-login {
-    width: 270px;
-    text-align: right;
-  }
-`;
 
 const Login = () => {
   const [userId, setUserId] = useState("");
@@ -135,48 +56,117 @@ const Login = () => {
 
   return (
     <>
-      <UserLogin>
-        <div className="user-login-main">
-          <div className="user-login">
-            <div className="user-title-image-login">
-              <Link to="/">
-                <img src={titlepic} alt="" />
-              </Link>
-            </div>
-            <div className="user-id-login">
-              <input
-                type="email"
-                name="user_id"
-                value={userId}
-                onChange={onUserIdChange}
-                placeholder=" 이메일"
-              />
-              <div className="id-message-login">{idMessage}</div>
-            </div>
-            <div className="user-pwd-login">
-              <input
-                type="password"
-                name="user_pwd"
-                value={userPassword}
-                onChange={onUserPasswordChange}
-                placeholder=" 비밀번호"
-              />
-              <div className="id-message-login">{passMessage}</div>
-            </div>
-            <button
-              onClick={onLoginButtonClickHandler}
-              className="user-login-button"
-            >
-              로그인
-            </button>
-            <Link className="link-login" to="/signup">
-              회원가입 하기
+      <UserLoginMain>
+        <UserLogin>
+          <UserTitleImageLogin>
+            <Link to="/">
+              <ImgLogin src={titlepic} alt="" />
             </Link>
-          </div>
-        </div>
-      </UserLogin>
+          </UserTitleImageLogin>
+          <InputLogin
+            type="email"
+            name="user_id"
+            value={userId}
+            onChange={onUserIdChange}
+            placeholder="이메일"
+          />
+          <IdMessageLogin>{idMessage}</IdMessageLogin>
+          <InputLogin
+            type="password"
+            name="user_pwd"
+            value={userPassword}
+            onChange={onUserPasswordChange}
+            placeholder="비밀번호"
+          />
+          <IdMessageLogin>{passMessage}</IdMessageLogin>
+          <UserLoginButton
+            onClick={onLoginButtonClickHandler}
+            className="user-login-button"
+          >
+            로그인
+          </UserLoginButton>
+          <LinkLogin to="/signup">회원가입 하기</LinkLogin>
+        </UserLogin>
+      </UserLoginMain>
     </>
   );
 };
+
+const UserLoginMain = styled.div`
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 50px;
+`;
+
+const UserLogin = styled.div`
+  padding: 15px;
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  border: 1px solid rgb(240, 200, 200);
+`;
+
+const UserTitleImageLogin = styled.div`
+  width: 260px;
+  margin: 30px 10px 30px 10px;
+`;
+
+const ImgLogin = styled.img`
+  width: 50%;
+`;
+
+const InputLogin = styled.input`
+  font-weight: bold;
+  height: 40px;
+  color: rgb(200, 200, 200);
+  font-size: 15px;
+  width: 260px;
+
+  border-width: 1px;
+  border-color: rgb(250, 250, 250);
+
+  &::placeholder {
+    padding-left: 15px;
+    color: rgb(200, 200, 200);
+  }
+
+  &:hover {
+    background-color: rgb(250, 250, 250);
+  }
+`;
+
+const UserLoginButton = styled.button`
+  margin: 30px 0px 30px 0px;
+  color: white;
+  font-weight: bold;
+  font-size: 15px;
+  width: 270px;
+  height: 50px;
+
+  border: none;
+  border-radius: 5px;
+  background-color: rgb(48, 192, 224);
+
+  &:hover {
+    background-color: rgb(40, 182, 214);
+    cursor: pointer;
+  }
+`;
+
+const IdMessageLogin = styled.div`
+  color: red;
+  font-size: 12px;
+  text-align: left;
+`;
+
+const LinkLogin = styled(Link)`
+  width: 270px;
+  text-align: right;
+`;
 
 export default Login;
