@@ -16,7 +16,6 @@ const Login = () => {
 
     if (validator.isEmail(e.target.value)) {
       setIdMessage("");
-      //console.log(userId + ", " + userPassword);
     } else {
       setIdMessage("이메일 형식이 올바르지 않습니다!");
     }
@@ -37,7 +36,6 @@ const Login = () => {
 
     if (validator.isEmail(userId)) {
       setIdMessage("");
-      //console.log(userId + ", " + userPassword);
     } else {
       setIdMessage("이메일 형식이 올바르지 않습니다!");
     }

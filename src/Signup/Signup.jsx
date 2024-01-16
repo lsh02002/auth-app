@@ -361,9 +361,9 @@ const Signup = () => {
               checked={allCheck}
               onChange={allBtnEvent}
             />
-            <label htmlFor="all-check">
+            <LableCheckBoxSignup>
               <b>전체동의</b>
-            </label>
+            </LableCheckBoxSignup>
           </CheckboxSignup>
           <CheckboxSignup>
             <InputCheckBoxSignup
@@ -372,9 +372,9 @@ const Signup = () => {
               checked={ageCheck}
               onChange={ageBtnEvent}
             />
-            <label htmlFor="check1">
+            <LableCheckBoxSignup>
               만 14세 이상입니다 <span>(필수)</span>
-            </label>
+            </LableCheckBoxSignup>
           </CheckboxSignup>
           <CheckboxSignup>
             <InputCheckBoxSignup
@@ -383,9 +383,9 @@ const Signup = () => {
               checked={userCheck}
               onChange={userBtnEvent}
             />
-            <label htmlFor="check2">
+            <LableCheckBoxSignup>
               이용약관 <span>(필수)</span>
-            </label>
+            </LableCheckBoxSignup>
           </CheckboxSignup>
           <CheckboxSignup>
             <InputCheckBoxSignup
@@ -394,9 +394,9 @@ const Signup = () => {
               checked={marketingCheck}
               onChange={marketingBtnEvent}
             />
-            <label htmlFor="check3">
+            <LableCheckBoxSignup>
               마케팅 동의 <span>(선택)</span>
-            </label>
+            </LableCheckBoxSignup>
           </CheckboxSignup>
           {allCheckMessage && (
             <IdMessageSignup>{allCheckMessage}</IdMessageSignup>
@@ -462,6 +462,10 @@ const InputSignup = styled.input`
   &:hover {
     background-color: rgb(250, 250, 250);
   }
+`;
+
+const LableCheckBoxSignup = styled.label`
+  width: 200px;
 `;
 
 const CheckboxBoxSignup = styled.div`
