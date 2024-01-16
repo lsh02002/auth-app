@@ -3,7 +3,6 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import validator from "validator";
 import styled from "styled-components";
-import titlepic from "./assets/titlepic.png";
 
 const Login = () => {
   const [userId, setUserId] = useState("");
@@ -28,7 +27,7 @@ const Login = () => {
     setPassMessage("");
   };
 
-  const onLoginButtonClickHandler = () => {
+  const onLoginClickHandler = () => {
     //입력된 이메일 유효성 검사 모듈
     if (userId === "") {
       setIdMessage("이메일란이 공백입니다!");
@@ -58,31 +57,30 @@ const Login = () => {
     <>
       <UserLoginMain>
         <UserLogin>
-          <UserTitleImageLogin>
-            <Link to="/">
-              <ImgLogin src={titlepic} alt="" />
-            </Link>
-          </UserTitleImageLogin>
+          <UserTitleLogin>
+            <h1>로그인</h1>
+          </UserTitleLogin>
+          <LabelLogin htmlFor="user_id">이메일</LabelLogin>
           <InputLogin
             type="email"
+            id="user_id"
             name="user_id"
+            placeholder="이메일 입력하세요."
             value={userId}
             onChange={onUserIdChange}
-            placeholder="이메일"
           />
           <IdMessageLogin>{idMessage}</IdMessageLogin>
+          <LabelLogin htmlFor="user_pwd">비밀번호</LabelLogin>
           <InputLogin
             type="password"
+            id="user_pwd"
             name="user_pwd"
+            placeholder="비밀번호를 입력하세요."
             value={userPassword}
             onChange={onUserPasswordChange}
-            placeholder="비밀번호"
           />
           <IdMessageLogin>{passMessage}</IdMessageLogin>
-          <UserLoginButton
-            onClick={onLoginButtonClickHandler}
-            className="user-login-button"
-          >
+          <UserLoginButton onClick={onLoginClickHandler}>
             로그인
           </UserLoginButton>
           <LinkLogin to="/signup">회원가입 하기</LinkLogin>
@@ -108,30 +106,33 @@ const UserLogin = styled.div`
   justify-content: center;
   align-items: center;
 
-  border: 1px solid rgb(240, 200, 200);
+  border: 1px solid pink;
 `;
 
-const UserTitleImageLogin = styled.div`
+const UserTitleLogin = styled.div`
   width: 260px;
-  margin: 30px 10px 30px 10px;
+  margin: 10px 10px 10px 10px;
 `;
 
-const ImgLogin = styled.img`
-  width: 50%;
+const LabelLogin = styled.label`
+  padding-top: 10px;
+  color: rgb(100, 100, 100);
+  width: 260px;
+  padding-bottom: 5px;
 `;
 
 const InputLogin = styled.input`
-  font-weight: bold;
-  height: 40px;
+  height: 30px;
   color: rgb(200, 200, 200);
-  font-size: 15px;
+  font-size: 13px;
   width: 260px;
+  border-radius: 10px;
 
   border-width: 1px;
-  border-color: rgb(250, 250, 250);
+  border-color: rgb(253, 253, 253);
 
   &::placeholder {
-    padding-left: 15px;
+    padding-left: 5px;
     color: rgb(200, 200, 200);
   }
 
@@ -159,6 +160,8 @@ const UserLoginButton = styled.button`
 `;
 
 const IdMessageLogin = styled.div`
+  width: 260px;
+  padding-top: 5px;
   color: red;
   font-size: 12px;
   text-align: left;

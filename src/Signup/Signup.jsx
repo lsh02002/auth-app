@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import validator from "validator";
 import styled from "styled-components";
-import titlepic from "./assets/titlepic.png";
 import { Link } from "react-router-dom";
-import { Tooltip } from "react-tooltip";
 
 const Signup = () => {
   const [userName, setUserName] = useState("");
@@ -159,7 +157,7 @@ const Signup = () => {
     }
   };
 
-  const onSignupButtonClickHandler = () => {
+  const onSignupClickHandler = () => {
     if (userName === "") {
       setNameMessage("이름란이 공백입니다!");
     } else {
@@ -273,98 +271,80 @@ const Signup = () => {
 
   return (
     <UserSignupMain>
-      <Tooltip id="my-tooltip" />
       <UserSignup>
-        <UserTitleImageSignup>
-          <Link to="/">
-            <ImgSignup src={titlepic} alt="" />
-          </Link>
+        <UserTitleSignup>
           <h1>회원가입</h1>
-        </UserTitleImageSignup>
-        <InputSingup
+        </UserTitleSignup>
+        <LabelSignup htmlFor="user_name">이름</LabelSignup>
+        <InputSignup
           type="text"
           name="user_name"
+          id="user_name"
+          placeholder="이름을 입력하세요."
           value={userName}
           onChange={onUserNameChange}
-          placeholder="이름"
-          data-tooltip-id="my-tooltip"
-          data-tooltip-content="이름"
-          data-tooltip-variant="info"
-          data-tooltip-place="left-start"
         />
         {nameMessage && <IdMessageSignup>{nameMessage}</IdMessageSignup>}
-        <InputSingup
+        <LabelSignup htmlFor="user_nickname">닉네임</LabelSignup>
+        <InputSignup
           type="text"
           name="user_nickname"
+          id="user_nickname"
+          placeholder="닉네임을 입력하세요."
           value={userNickName}
           onChange={onUserNickNameChange}
-          placeholder="닉네임"
-          data-tooltip-id="my-tooltip"
-          data-tooltip-content="닉네임"
-          data-tooltip-variant="info"
-          data-tooltip-place="left-start"
         />
         {nickNameMessage && (
           <IdMessageSignup>{nickNameMessage}</IdMessageSignup>
         )}
-        <InputSingup
+        <LabelSignup htmlFor="user_id">이메일</LabelSignup>
+        <InputSignup
           type="email"
           name="user_id"
+          id="user_id"
+          placeholder="이메일을 입력하세요."
           value={userEmail}
           onChange={onUserEmailChange}
-          placeholder="이메일"
-          data-tooltip-id="my-tooltip"
-          data-tooltip-content="이메일"
-          data-tooltip-variant="info"
-          data-tooltip-place="left-start"
         />
         {emailMessage && <IdMessageSignup>{emailMessage}</IdMessageSignup>}
-        <InputSingup
+        <LabelSignup htmlFor="user_phone">핸드폰 번호</LabelSignup>
+        <InputSignup
           type="text"
           name="user_phone"
+          id="user_phone"
+          placeholder="핸드폰 번호를 입력하세요."
           value={userPhone}
           onChange={onUserPhoneChange}
-          placeholder="핸드폰 번호"
-          data-tooltip-id="my-tooltip"
-          data-tooltip-content="핸드폰 번호"
-          data-tooltip-variant="info"
-          data-tooltip-place="left-start"
         />
         {phoneMessage && <IdMessageSignup>{phoneMessage}</IdMessageSignup>}
-        <InputSingup
+        <LabelSignup htmlFor="user_address">주소</LabelSignup>
+        <InputSignup
           type="text"
           name="user_address"
+          id="user_address"
+          placeholder="주소를 입력하세요."
           value={userAddress}
           onChange={onUserAddressChange}
-          placeholder="주소"
-          data-tooltip-id="my-tooltip"
-          data-tooltip-content="주소"
-          data-tooltip-variant="info"
-          data-tooltip-place="left-start"
         />
         {addressMessage && <IdMessageSignup>{addressMessage}</IdMessageSignup>}
-        <InputSingup
+        <LabelSignup htmlFor="user_pwd">비밀번호</LabelSignup>
+        <InputSignup
           type="password"
           name="user_pwd"
+          id="user_pwd"
+          placeholder="비밀번호를 입력하세요."
           value={userPassword}
           onChange={onUserPasswordChange}
-          placeholder="비밀번호"
-          data-tooltip-id="my-tooltip"
-          data-tooltip-content="비밀번호"
-          data-tooltip-variant="info"
-          data-tooltip-place="left-start"
         />
         {passMessage && <IdMessageSignup>{passMessage}</IdMessageSignup>}
-        <InputSingup
+        <LabelSignup htmlFor="user_pwd2">비밀번호 확인</LabelSignup>
+        <InputSignup
           type="password"
           name="user_pwd2"
+          id="user_pwd2"
+          placeholder="비밀번호를 한번더 입력하세요."
           value={userPassword2}
           onChange={onUserPassword2Change}
-          placeholder="비밀번호 확인"
-          data-tooltip-id="my-tooltip"
-          data-tooltip-content="비밀번호 확인"
-          data-tooltip-variant="info"
-          data-tooltip-place="left-start"
         />
         {pass2Message && <IdMessageSignup>{pass2Message}</IdMessageSignup>}
         <br />
@@ -423,7 +403,7 @@ const Signup = () => {
           )}
         </CheckboxBoxSignup>
 
-        <UserSignupButton onClick={onSignupButtonClickHandler}>
+        <UserSignupButton onClick={onSignupClickHandler}>
           회원 가입
         </UserSignupButton>
         <LinkSignup to="/">로그인 하기</LinkSignup>
@@ -448,31 +428,34 @@ const UserSignup = styled.div`
   justify-content: center;
   align-items: center;
 
-  border: 1px solid rgb(240, 200, 200);
+  border: 1px solid pink;
 `;
 
-const UserTitleImageSignup = styled.div`
+const UserTitleSignup = styled.div`
   text-align: left;
   width: 260px;
-  margin: 30px 10px 30px 10px;
+  margin: 10px 10px 10px 10px;
 `;
 
-const ImgSignup = styled.img`
-  width: 50%;
-`;
-
-const InputSingup = styled.input`
-  font-weight: bold;
-  height: 40px;
-  color: rgb(200, 200, 200);
-  font-size: 15px;
+const LabelSignup = styled.label`
+  padding-top: 10px;
+  color: rgb(100, 100, 100);
   width: 260px;
+  padding-bottom: 5px;
+`;
+
+const InputSignup = styled.input`
+  height: 30px;
+  color: rgb(200, 200, 200);
+  font-size: 13px;
+  width: 260px;
+  border-radius: 10px;
 
   border-width: 1px;
   border-color: rgb(250, 250, 250);
 
   &::placeholder {
-    padding-left: 15px;
+    padding-left: 5px;
     color: rgb(200, 200, 200);
   }
 
@@ -523,9 +506,10 @@ const UserSignupButton = styled.button`
 
 const IdMessageSignup = styled.div`
   width: 260px;
+  padding-top: 5px;
+  color: red;
   font-size: 12px;
   text-align: left;
-  color: red;
 `;
 
 const LinkSignup = styled(Link)`
