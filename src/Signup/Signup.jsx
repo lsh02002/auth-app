@@ -4,19 +4,19 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 const Signup = () => {
-  const [userName, setUserName] = useState("");
+  //const [userName, setUserName] = useState("");
   const [userNickName, setUserNickName] = useState("");
   const [userEmail, setUserEmail] = useState("");
-  const [userPhone, setUserPhone] = useState("");
-  const [userAddress, setUserAddress] = useState("");
+  //const [userPhone, setUserPhone] = useState("");
+  const [userId, setUserId] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [userPassword2, setUserPassword2] = useState("");
 
-  const [nameMessage, setNameMessage] = useState("");
+  //const [nameMessage, setNameMessage] = useState("");
+  const [idMessage, setIdMessage] = useState("");
   const [nickNameMessage, setNickNameMessage] = useState("");
   const [emailMessage, setEmailMessage] = useState("");
-  const [phoneMessage, setPhoneMessage] = useState("");
-  const [addressMessage, setAddressMessage] = useState("");
+  //const [phoneMessage, setPhoneMessage] = useState("");
   const [passMessage, setPassMessage] = useState("");
   const [pass2Message, setPass2Message] = useState("");
   const [passMatchMessage, setPassMatchMessage] = useState("");
@@ -27,6 +27,7 @@ const Signup = () => {
   const [marketingCheck, setMarketingCheck] = useState(false);
   const [allCheckMessage, setAllCheckMessage] = useState("");
 
+  /*
   const onUserNameChange = (e) => {
     setUserName(e.target.value.trim());
 
@@ -34,6 +35,17 @@ const Signup = () => {
       setNameMessage("이름란이 공백입니다!");
     } else {
       setNameMessage("");
+    }
+  };
+  */
+
+  const onUserIdChange = (e) => {
+    setUserId(e.target.value);
+
+    if (e.target.value === "") {
+      setIdMessage("아이디란이 공백입니다!");
+    } else {
+      setIdMessage("");
     }
   };
 
@@ -57,6 +69,7 @@ const Signup = () => {
     }
   };
 
+  /*
   const onUserPhoneChange = (e) => {
     setUserPhone(e.target.value);
 
@@ -66,16 +79,7 @@ const Signup = () => {
       setPhoneMessage("핸드폰 번호 형식이 올바르지 않습니다!");
     }
   };
-
-  const onUserAddressChange = (e) => {
-    setUserAddress(e.target.value);
-
-    if (e.target.value === "") {
-      setAddressMessage("주소란이 공백입니다!");
-    } else {
-      setAddressMessage("");
-    }
-  };
+  */
 
   const onUserPasswordChange = (e) => {
     setUserPassword(e.target.value);
@@ -158,11 +162,13 @@ const Signup = () => {
   };
 
   const onSignupClickHandler = () => {
+    /*
     if (userName === "") {
       setNameMessage("이름란이 공백입니다!");
     } else {
       setNameMessage("");
     }
+    */
 
     if (userNickName === "") {
       setNickNameMessage("닉네임란이 공백입니다!");
@@ -182,16 +188,18 @@ const Signup = () => {
       setEmailMessage("이메일 형식이 올바르지 않습니다!");
     }
 
+    /*
     if (validator.isMobilePhone(userPhone)) {
       setPhoneMessage("");
     } else {
       setPhoneMessage("핸드폰 번호 형식이 올바르지 않습니다!");
     }
+    */
 
-    if (userAddress === "") {
-      setAddressMessage("주소란이 공백입니다!");
+    if (userId === "") {
+      setIdMessage("아이디란이 공백입니다!");
     } else {
-      setAddressMessage("");
+      setIdMessage("");
     }
 
     /*
@@ -235,11 +243,11 @@ const Signup = () => {
     }
 
     if (
-      userName !== "" &&
+      //userName !== "" &&
       userNickName !== "" &&
       validator.isEmail(userEmail) &&
-      validator.isMobilePhone(userPhone) &&
-      userAddress !== "" &&
+      //validator.isMobilePhone(userPhone) &&
+      userId !== "" &&
       userPassword !== "" &&
       userPassword2 !== "" &&
       userPassword === userPassword2 &&
@@ -253,15 +261,15 @@ const Signup = () => {
       allCheck === true
     ) {
       alert(
-        userName +
-          ", " +
-          userNickName +
+        //userName +
+        //", " +
+        userNickName +
           ", " +
           userEmail +
           ", " +
-          userPhone +
-          ", " +
-          userAddress +
+          //userPhone +
+          //", " +
+          userId +
           ", " +
           userPassword +
           " 회원가입 요청합니다!"
@@ -275,7 +283,7 @@ const Signup = () => {
         <UserTitleSignup>
           <h1>회원가입</h1>
         </UserTitleSignup>
-        <LabelSignup htmlFor="user_name">이름</LabelSignup>
+        {/*<LabelSignup htmlFor="user_name">이름</LabelSignup>
         <InputSignup
           type="text"
           name="user_name"
@@ -285,6 +293,17 @@ const Signup = () => {
           onChange={onUserNameChange}
         />
         {nameMessage && <IdMessageSignup>{nameMessage}</IdMessageSignup>}
+        */}
+        <LabelSignup htmlFor="user_id">아이디</LabelSignup>
+        <InputSignup
+          type="text"
+          name="user_id"
+          id="user_id"
+          placeholder="아이디를 입력하세요."
+          value={userId}
+          onChange={onUserIdChange}
+        />
+        {idMessage && <IdMessageSignup>{idMessage}</IdMessageSignup>}
         <LabelSignup htmlFor="user_nickname">닉네임</LabelSignup>
         <InputSignup
           type="text"
@@ -307,7 +326,7 @@ const Signup = () => {
           onChange={onUserEmailChange}
         />
         {emailMessage && <IdMessageSignup>{emailMessage}</IdMessageSignup>}
-        <LabelSignup htmlFor="user_phone">핸드폰 번호</LabelSignup>
+        {/*<LabelSignup htmlFor="user_phone">핸드폰 번호</LabelSignup>
         <InputSignup
           type="text"
           name="user_phone"
@@ -317,16 +336,7 @@ const Signup = () => {
           onChange={onUserPhoneChange}
         />
         {phoneMessage && <IdMessageSignup>{phoneMessage}</IdMessageSignup>}
-        <LabelSignup htmlFor="user_address">주소</LabelSignup>
-        <InputSignup
-          type="text"
-          name="user_address"
-          id="user_address"
-          placeholder="주소를 입력하세요."
-          value={userAddress}
-          onChange={onUserAddressChange}
-        />
-        {addressMessage && <IdMessageSignup>{addressMessage}</IdMessageSignup>}
+        */}
         <LabelSignup htmlFor="user_pwd">비밀번호</LabelSignup>
         <InputSignup
           type="password"
