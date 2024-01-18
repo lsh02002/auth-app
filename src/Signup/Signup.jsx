@@ -531,7 +531,7 @@ const InputSignup = styled.input`
     background-color: rgb(250, 250, 250);
   }
 `;
-
+/*
 const LableCheckBoxSignup = styled.label`
   width: 200px;
 `;
@@ -557,7 +557,7 @@ const InputCheckBoxSignup = styled.input`
   padding: 0px;
   zoom: 1.2;
 `;
-
+*/
 const RadioSignup = styled.div`
   display: flex;
   justify-content: space-evenly;
