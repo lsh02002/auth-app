@@ -2,20 +2,25 @@ import React, { useState } from "react";
 import validator from "validator";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import ReactDatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.module.css";
 
 const Signup = () => {
   //const [userName, setUserName] = useState("");
   const [userNickName, setUserNickName] = useState("");
   const [userEmail, setUserEmail] = useState("");
+  const [userGender, setUserGender] = useState(0);
+  const [userBirthDate, setUserBirthDate] = useState(null);
   //const [userPhone, setUserPhone] = useState("");
-  const [userId, setUserId] = useState("");
+  //const [userId, setUserId] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [userPassword2, setUserPassword2] = useState("");
 
   //const [nameMessage, setNameMessage] = useState("");
-  const [idMessage, setIdMessage] = useState("");
+  //const [idMessage, setIdMessage] = useState("");
   const [nickNameMessage, setNickNameMessage] = useState("");
   const [emailMessage, setEmailMessage] = useState("");
+  const [birthDateMessage, setBirthDateMessage] = useState("");
   //const [phoneMessage, setPhoneMessage] = useState("");
   const [passMessage, setPassMessage] = useState("");
   const [pass2Message, setPass2Message] = useState("");
@@ -37,17 +42,17 @@ const Signup = () => {
       setNameMessage("");
     }
   };
-  */
-
+  
   const onUserIdChange = (e) => {
-    setUserId(e.target.value);
+    setUserId(e.target.value.trim());
 
-    if (e.target.value === "") {
+    if (e.target.value.trim() === "") {
       setIdMessage("아이디란이 공백입니다!");
     } else {
       setIdMessage("");
     }
   };
+  */
 
   const onUserNickNameChange = (e) => {
     setUserNickName(e.target.value.trim());
@@ -66,6 +71,16 @@ const Signup = () => {
       setEmailMessage("");
     } else {
       setEmailMessage("이메일 형식이 올바르지 않습니다!");
+    }
+  };
+
+  const onBirthDateChange = (date) => {
+    setUserBirthDate(date);
+
+    if (date === null) {
+      setBirthDateMessage("생년월일을 확인해 주세요!");
+    } else {
+      setBirthDateMessage("");
     }
   };
 
@@ -188,21 +203,24 @@ const Signup = () => {
       setEmailMessage("이메일 형식이 올바르지 않습니다!");
     }
 
+    if (userBirthDate === null) {
+      setBirthDateMessage("생년월일을 선택해 주세요!");
+    } else {
+      setBirthDateMessage("");
+    }
     /*
     if (validator.isMobilePhone(userPhone)) {
       setPhoneMessage("");
     } else {
       setPhoneMessage("핸드폰 번호 형식이 올바르지 않습니다!");
     }
-    */
-
+   
     if (userId === "") {
       setIdMessage("아이디란이 공백입니다!");
     } else {
       setIdMessage("");
     }
-
-    /*
+   
     if (userPassword === "") {
       setPassMessage("비밀번호란이 공백입니다!");
     } else {
@@ -228,7 +246,7 @@ const Signup = () => {
       setPassMessage("");
     } else {
       setPassMessage(
-        "비밀번호가 강력하지 않습니다.\n (최소길이: 8, 최소 소문자: 1, 최소 대문자: 1, 최소 숫자: 1,최소 특수문자: 1"
+        "비밀번호가 강력하지 않습니다. (최소길이: 8, 최소 소문자: 1, 최소 대문자: 1, 최소 숫자: 1,최소 특수문자: 1)"
       );
     }
 
@@ -246,8 +264,9 @@ const Signup = () => {
       //userName !== "" &&
       userNickName !== "" &&
       validator.isEmail(userEmail) &&
+      userBirthDate !== null &&
       //validator.isMobilePhone(userPhone) &&
-      userId !== "" &&
+      //userId !== "" &&
       userPassword !== "" &&
       userPassword2 !== "" &&
       userPassword === userPassword2 &&
@@ -267,10 +286,12 @@ const Signup = () => {
           ", " +
           userEmail +
           ", " +
-          //userPhone +
-          //", " +
-          userId +
+          userGender +
           ", " +
+          userBirthDate +
+          ", " +
+          //userId +
+          //", " +
           userPassword +
           " 회원가입 요청합니다!"
       );
@@ -292,8 +313,7 @@ const Signup = () => {
           value={userName}
           onChange={onUserNameChange}
         />
-        {nameMessage && <IdMessageSignup>{nameMessage}</IdMessageSignup>}
-        */}
+        {nameMessage && <IdMessageSignup>{nameMessage}</IdMessageSignup>}        
         <LabelSignup htmlFor="user_id">아이디</LabelSignup>
         <InputSignup
           type="text"
@@ -304,6 +324,7 @@ const Signup = () => {
           onChange={onUserIdChange}
         />
         {idMessage && <IdMessageSignup>{idMessage}</IdMessageSignup>}
+        */}
         <LabelSignup htmlFor="user_nickname">닉네임</LabelSignup>
         <InputSignup
           type="text"
@@ -337,6 +358,38 @@ const Signup = () => {
         />
         {phoneMessage && <IdMessageSignup>{phoneMessage}</IdMessageSignup>}
         */}
+        <RadioSignup>
+          <RadioInputSignup
+            type="radio"
+            name="man"
+            id="user_gender1"
+            value={userGender}
+            checked={userGender === 0}
+            onChange={() => setUserGender(0)}
+          />
+          <RadioLabelSignup htmlFor="user_gender1">남성</RadioLabelSignup>
+          <RadioInputSignup
+            type="radio"
+            name="women"
+            id="user_gender2"
+            value={userGender}
+            checked={userGender === 1}
+            onChange={() => setUserGender(1)}
+          />
+          <RadioLabelSignup htmlFor="user_gender2">여성</RadioLabelSignup>
+        </RadioSignup>
+        <LabelSignup htmlFor="user_birth">생년월일</LabelSignup>
+        <ReactDatePicker
+          id="user_birth"
+          startDate={() => new Date()}
+          showYearDropdown
+          selected={userBirthDate}
+          calendar="hijri"
+          onChange={(date) => onBirthDateChange(date)}
+        />
+        {birthDateMessage && (
+          <IdMessageSignup>{birthDateMessage}</IdMessageSignup>
+        )}
         <LabelSignup htmlFor="user_pwd">비밀번호</LabelSignup>
         <InputSignup
           type="password"
@@ -498,6 +551,20 @@ const InputCheckBoxSignup = styled.input`
   width: 50px;
   padding: 0px;
   zoom: 1.2;
+`;
+
+const RadioSignup = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  padding: 15px;
+`;
+
+const RadioInputSignup = styled.input`
+  align: left;
+`;
+
+const RadioLabelSignup = styled.label`
+  width: 100px;
 `;
 
 const UserSignupButton = styled.button`
