@@ -6,7 +6,7 @@ import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.module.css";
 
 const Signup = () => {
-  //const [userName, setUserName] = useState("");
+  const [userName, setUserName] = useState("");
   const [userNickName, setUserNickName] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [userGender, setUserGender] = useState(0);
@@ -16,7 +16,7 @@ const Signup = () => {
   const [userPassword, setUserPassword] = useState("");
   const [userPassword2, setUserPassword2] = useState("");
 
-  //const [nameMessage, setNameMessage] = useState("");
+  const [nameMessage, setNameMessage] = useState("");
   //const [idMessage, setIdMessage] = useState("");
   const [nickNameMessage, setNickNameMessage] = useState("");
   const [emailMessage, setEmailMessage] = useState("");
@@ -32,7 +32,6 @@ const Signup = () => {
   const [marketingCheck, setMarketingCheck] = useState(false);
   const [allCheckMessage, setAllCheckMessage] = useState("");
 
-  /*
   const onUserNameChange = (e) => {
     setUserName(e.target.value.trim());
 
@@ -42,7 +41,8 @@ const Signup = () => {
       setNameMessage("");
     }
   };
-  
+
+  /*
   const onUserIdChange = (e) => {
     setUserId(e.target.value.trim());
 
@@ -177,13 +177,11 @@ const Signup = () => {
   };
 
   const onSignupClickHandler = () => {
-    /*
     if (userName === "") {
       setNameMessage("이름란이 공백입니다!");
     } else {
       setNameMessage("");
     }
-    */
 
     if (userNickName === "") {
       setNickNameMessage("닉네임란이 공백입니다!");
@@ -261,7 +259,7 @@ const Signup = () => {
     }
 
     if (
-      //userName !== "" &&
+      userName !== "" &&
       userNickName !== "" &&
       validator.isEmail(userEmail) &&
       userBirthDate !== null &&
@@ -280,9 +278,9 @@ const Signup = () => {
       allCheck === true
     ) {
       alert(
-        //userName +
-        //", " +
-        userNickName +
+        userName +
+          ", " +
+          userNickName +
           ", " +
           userEmail +
           ", " +
@@ -304,7 +302,7 @@ const Signup = () => {
         <UserTitleSignup>
           <h1>회원가입</h1>
         </UserTitleSignup>
-        {/*<LabelSignup htmlFor="user_name">이름</LabelSignup>
+        <LabelSignup htmlFor="user_name">이름</LabelSignup>
         <InputSignup
           type="text"
           name="user_name"
@@ -313,7 +311,8 @@ const Signup = () => {
           value={userName}
           onChange={onUserNameChange}
         />
-        {nameMessage && <IdMessageSignup>{nameMessage}</IdMessageSignup>}        
+        {nameMessage && <IdMessageSignup>{nameMessage}</IdMessageSignup>}
+        {/*
         <LabelSignup htmlFor="user_id">아이디</LabelSignup>
         <InputSignup
           type="text"
