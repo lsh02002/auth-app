@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.module.css";
 import validator from "validator";
-import axios from "axios";
+//import axios from "axios";
 
 const Signup = () => {
   //const [userName, setUserName] = useState("");
@@ -264,7 +264,7 @@ const Signup = () => {
       //allCheck === true
     ) {
       //const gender2 = userGender === 0 ? "남성" : "여성";
-
+      /*
       axios
         .post("https://hansol.lhenry0.com/auth/sign-up", {
           email: userEmail,
@@ -280,6 +280,7 @@ const Signup = () => {
         .catch(function (err) {
           console.log(err);
         });
+*/
     }
   };
 
