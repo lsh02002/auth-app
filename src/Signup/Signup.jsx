@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.module.css";
 import validator from "validator";
-//import axios from "axios";
+import axios from "axios";
 
 const Signup = () => {
   //const [userName, setUserName] = useState("");
@@ -103,7 +103,11 @@ const Signup = () => {
     setUserPassword(e.target.value);
     setPassMessage("");
 
-    if (validator.isAlphanumeric(e.target.value) && e.target.value.length > 7) {
+    if (
+      validator.isAlphanumeric(e.target.value) &&
+      e.target.value.length > 7 &&
+      e.target.value.length <= 20
+    ) {
       setPassMessage("");
     } else {
       setPassMessage(
@@ -229,7 +233,11 @@ const Signup = () => {
       setPass2Message("");
     }
 
-    if (validator.isAlphanumeric(userPassword) && userPassword.length > 7) {
+    if (
+      validator.isAlphanumeric(userPassword) &&
+      userPassword.length > 7 &&
+      userPassword.length <= 20
+    ) {
       setPassMessage("");
     } else {
       setPassMessage(
@@ -259,12 +267,13 @@ const Signup = () => {
       userPassword2 !== "" &&
       userPassword === userPassword2 &&
       validator.isAlphanumeric(userPassword) &&
-      userPassword.length > 7
+      userPassword.length > 7 &&
+      userPassword.length <= 20
       // &&
       //allCheck === true
     ) {
-      //const gender2 = userGender === 0 ? "남성" : "여성";
-      /*
+      const gender2 = userGender === 0 ? "남성" : "여성";
+
       axios
         .post("https://hansol.lhenry0.com/auth/sign-up", {
           email: userEmail,
@@ -272,7 +281,7 @@ const Signup = () => {
           password: userPassword,
           password_confirm: userPassword2,
           date_of_birth: "2023-12-05",
-          gender: "남성",
+          gender: gender2,
         })
         .then(function (res) {
           console.log(res);
@@ -280,7 +289,6 @@ const Signup = () => {
         .catch(function (err) {
           console.log(err);
         });
-*/
     }
   };
 

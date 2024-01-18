@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import validator from "validator";
 import styled from "styled-components";
+import axios from "axios";
 
 const Login = () => {
   const [userId, setUserId] = useState("");
@@ -47,7 +48,17 @@ const Login = () => {
     }
 
     if (idMessage === "" && userId !== "" && userPassword !== "") {
-      alert(userId + ", " + userPassword + " 로그인 요청합니다!");
+      axios
+        .post("https://hansol.lhenry0.com/auth/login", {
+          email: userId,
+          password: userPassword,
+        })
+        .then(function (res) {
+          console.log(res);
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
     }
   };
 
