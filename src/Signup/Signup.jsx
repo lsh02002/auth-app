@@ -26,11 +26,13 @@ const Signup = () => {
   const [pass2Message, setPass2Message] = useState("");
   const [passMatchMessage, setPassMatchMessage] = useState("");
 
+  /*
   const [allCheck, setAllCheck] = useState(false);
   const [ageCheck, setAgeCheck] = useState(false);
   const [userCheck, setUserCheck] = useState(false);
   const [marketingCheck, setMarketingCheck] = useState(false);
   const [allCheckMessage, setAllCheckMessage] = useState("");
+  */
 
   const onUserNameChange = (e) => {
     setUserName(e.target.value.trim());
@@ -134,6 +136,7 @@ const Signup = () => {
     }
   };
 
+  /*
   const allBtnEvent = () => {
     if (allCheck === false) {
       setAllCheck(true);
@@ -175,6 +178,7 @@ const Signup = () => {
       setMarketingCheck(false);
     }
   };
+  */
 
   const onSignupClickHandler = () => {
     if (userName === "") {
@@ -248,6 +252,7 @@ const Signup = () => {
       );
     }
 
+    /*
     if (allCheck !== true || ageCheck !== true || userCheck !== true) {
       setAllCheck(false);
     }
@@ -257,7 +262,7 @@ const Signup = () => {
     } else {
       setAllCheckMessage("모든 내용에 동의 해주시기 바랍니다!");
     }
-
+    */
     if (
       userName !== "" &&
       userNickName !== "" &&
@@ -274,8 +279,9 @@ const Signup = () => {
         minUppercase: 1,
         minNumbers: 1,
         minSymbols: 1,
-      }) &&
-      allCheck === true
+      })
+      // &&
+      //allCheck === true
     ) {
       alert(
         userName +
@@ -414,7 +420,7 @@ const Signup = () => {
           <IdMessageSignup>{passMatchMessage}</IdMessageSignup>
         )}
 
-        {/* 동의 사항 체크 */}
+        {/* 동의 사항 체크 
         <CheckboxBoxSignup>
           <CheckboxSignup>
             <InputCheckBoxSignup
@@ -464,7 +470,7 @@ const Signup = () => {
             <IdMessageSignup>{allCheckMessage}</IdMessageSignup>
           )}
         </CheckboxBoxSignup>
-
+           */}
         <UserSignupButton onClick={onSignupClickHandler}>
           회원 가입
         </UserSignupButton>
