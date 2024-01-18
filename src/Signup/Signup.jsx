@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import validator from "validator";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.module.css";
+import validator from "validator";
+import axios from "axios";
 
 const Signup = () => {
-  const [userName, setUserName] = useState("");
+  //const [userName, setUserName] = useState("");
   const [userNickName, setUserNickName] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [userGender, setUserGender] = useState(0);
@@ -16,7 +17,7 @@ const Signup = () => {
   const [userPassword, setUserPassword] = useState("");
   const [userPassword2, setUserPassword2] = useState("");
 
-  const [nameMessage, setNameMessage] = useState("");
+  //const [nameMessage, setNameMessage] = useState("");
   //const [idMessage, setIdMessage] = useState("");
   const [nickNameMessage, setNickNameMessage] = useState("");
   const [emailMessage, setEmailMessage] = useState("");
@@ -34,6 +35,7 @@ const Signup = () => {
   const [allCheckMessage, setAllCheckMessage] = useState("");
   */
 
+  /*
   const onUserNameChange = (e) => {
     setUserName(e.target.value.trim());
 
@@ -43,8 +45,7 @@ const Signup = () => {
       setNameMessage("");
     }
   };
-
-  /*
+  
   const onUserIdChange = (e) => {
     setUserId(e.target.value.trim());
 
@@ -102,19 +103,11 @@ const Signup = () => {
     setUserPassword(e.target.value);
     setPassMessage("");
 
-    if (
-      validator.isStrongPassword(e.target.value, {
-        minLength: 8,
-        minLowercase: 1,
-        minUppercase: 1,
-        minNumbers: 1,
-        minSymbols: 1,
-      })
-    ) {
+    if (validator.isAlphanumeric(e.target.value) && e.target.value.length > 7) {
       setPassMessage("");
     } else {
       setPassMessage(
-        "비밀번호가 강력하지 않습니다. (최소길이: 8, 최소 소문자: 1, 최소 대문자: 1, 최소 숫자: 1,최소 특수문자: 1)"
+        "비밀번호가 강력하지 않습니다. (최소길이: 8, 최대길이: 20, 최소 소문자: 1, 최소 숫자: 1)"
       );
     }
 
@@ -181,12 +174,12 @@ const Signup = () => {
   */
 
   const onSignupClickHandler = () => {
-    if (userName === "") {
+    /*  if (userName === "") {
       setNameMessage("이름란이 공백입니다!");
     } else {
       setNameMessage("");
     }
-
+*/
     if (userNickName === "") {
       setNickNameMessage("닉네임란이 공백입니다!");
     } else {
@@ -236,19 +229,11 @@ const Signup = () => {
       setPass2Message("");
     }
 
-    if (
-      validator.isStrongPassword(userPassword, {
-        minLength: 8,
-        minLowercase: 1,
-        minUppercase: 1,
-        minNumbers: 1,
-        minSymbols: 1,
-      })
-    ) {
+    if (validator.isAlphanumeric(userPassword) && userPassword.length > 7) {
       setPassMessage("");
     } else {
       setPassMessage(
-        "비밀번호가 강력하지 않습니다. (최소길이: 8, 최소 소문자: 1, 최소 대문자: 1, 최소 숫자: 1,최소 특수문자: 1)"
+        "비밀번호가 강력하지 않습니다. (최소길이: 8, 최대길이: 20, 최소 소문자: 1, 최소 숫자: 1)"
       );
     }
 
@@ -264,7 +249,7 @@ const Signup = () => {
     }
     */
     if (
-      userName !== "" &&
+      //userName !== "" &&
       userNickName !== "" &&
       validator.isEmail(userEmail) &&
       userBirthDate !== null &&
@@ -273,32 +258,28 @@ const Signup = () => {
       userPassword !== "" &&
       userPassword2 !== "" &&
       userPassword === userPassword2 &&
-      validator.isStrongPassword(userPassword, {
-        minLength: 8,
-        minLowercase: 1,
-        minUppercase: 1,
-        minNumbers: 1,
-        minSymbols: 1,
-      })
+      validator.isAlphanumeric(userPassword) &&
+      userPassword.length > 7
       // &&
       //allCheck === true
     ) {
-      alert(
-        userName +
-          ", " +
-          userNickName +
-          ", " +
-          userEmail +
-          ", " +
-          userGender +
-          ", " +
-          userBirthDate +
-          ", " +
-          //userId +
-          //", " +
-          userPassword +
-          " 회원가입 요청합니다!"
-      );
+      //const gender2 = userGender === 0 ? "남성" : "여성";
+
+      axios
+        .post("https://hansol.lhenry0.com/auth/sign-up", {
+          email: userEmail,
+          nick_name: userNickName,
+          password: userPassword,
+          password_confirm: userPassword2,
+          date_of_birth: "2023-12-05",
+          gender: "남성",
+        })
+        .then(function (res) {
+          console.log(res);
+        })
+        .catch(function (err) {
+          console.log(err);
+        });
     }
   };
 
@@ -308,6 +289,7 @@ const Signup = () => {
         <UserTitleSignup>
           <h1>회원가입</h1>
         </UserTitleSignup>
+        {/*
         <LabelSignup htmlFor="user_name">이름</LabelSignup>
         <InputSignup
           type="text"
@@ -317,8 +299,7 @@ const Signup = () => {
           value={userName}
           onChange={onUserNameChange}
         />
-        {nameMessage && <IdMessageSignup>{nameMessage}</IdMessageSignup>}
-        {/*
+        {nameMessage && <IdMessageSignup>{nameMessage}</IdMessageSignup>}        
         <LabelSignup htmlFor="user_id">아이디</LabelSignup>
         <InputSignup
           type="text"
