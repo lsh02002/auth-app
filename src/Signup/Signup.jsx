@@ -5,65 +5,43 @@ import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.module.css";
 import validator from "validator";
 import axios from "axios";
+import moment from "moment";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
-  //const [userName, setUserName] = useState("");
   const [userNickName, setUserNickName] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [userGender, setUserGender] = useState(0);
-  const [userBirthDate, setUserBirthDate] = useState(null);
-  //const [userPhone, setUserPhone] = useState("");
-  //const [userId, setUserId] = useState("");
+  const [userBirthDate, setUserBirthDate] = useState("");
+  //스트링 겂이 아닌 생년월일 오브젝트 상태변수
+  const [userBirthDateObj, setUserBirthDateObj] = useState(new Date());
+
+  //비밀번호 보이기/ 숨기기 상태변수
+  const [isShowPwd, setIsShowPwd] = useState(false);
+
   const [userPassword, setUserPassword] = useState("");
   const [userPassword2, setUserPassword2] = useState("");
 
-  //const [nameMessage, setNameMessage] = useState("");
-  //const [idMessage, setIdMessage] = useState("");
   const [nickNameMessage, setNickNameMessage] = useState("");
   const [emailMessage, setEmailMessage] = useState("");
   const [birthDateMessage, setBirthDateMessage] = useState("");
-  //const [phoneMessage, setPhoneMessage] = useState("");
   const [passMessage, setPassMessage] = useState("");
   const [pass2Message, setPass2Message] = useState("");
   const [passMatchMessage, setPassMatchMessage] = useState("");
 
-  /*
-  const [allCheck, setAllCheck] = useState(false);
-  const [ageCheck, setAgeCheck] = useState(false);
-  const [userCheck, setUserCheck] = useState(false);
-  const [marketingCheck, setMarketingCheck] = useState(false);
-  const [allCheckMessage, setAllCheckMessage] = useState("");
-  */
-
-  /*
-  const onUserNameChange = (e) => {
-    setUserName(e.target.value.trim());
-
-    if (e.target.value.trim() === "") {
-      setNameMessage("이름란이 공백입니다!");
-    } else {
-      setNameMessage("");
-    }
-  };
-  
-  const onUserIdChange = (e) => {
-    setUserId(e.target.value.trim());
-
-    if (e.target.value.trim() === "") {
-      setIdMessage("아이디란이 공백입니다!");
-    } else {
-      setIdMessage("");
-    }
-  };
-  */
+  const navigator = useNavigate();
 
   const onUserNickNameChange = (e) => {
     setUserNickName(e.target.value.trim());
 
-    if (e.target.value.trim() === "") {
-      setNickNameMessage("닉네임란이 공백입니다!");
-    } else {
+    if (
+      e.target.value.trim() !== "" &&
+      e.target.value.length >= 2 &&
+      e.target.value.length <= 8
+    ) {
       setNickNameMessage("");
+    } else {
+      setNickNameMessage("올바른 닉네임이 아닙니다.(최소길이: 2, 최대길이: 8)");
     }
   };
 
@@ -78,26 +56,17 @@ const Signup = () => {
   };
 
   const onBirthDateChange = (date) => {
-    setUserBirthDate(date);
+    const changedDate = moment(date).format("YYYY-MM-DD");
 
-    if (date === null) {
+    if (date === null || date === undefined) {
+      setUserBirthDate("");
       setBirthDateMessage("생년월일을 확인해 주세요!");
     } else {
+      setUserBirthDateObj(date);
       setBirthDateMessage("");
+      setUserBirthDate(changedDate);
     }
   };
-
-  /*
-  const onUserPhoneChange = (e) => {
-    setUserPhone(e.target.value);
-
-    if (validator.isMobilePhone(e.target.value)) {
-      setPhoneMessage("");
-    } else {
-      setPhoneMessage("핸드폰 번호 형식이 올바르지 않습니다!");
-    }
-  };
-  */
 
   const onUserPasswordChange = (e) => {
     setUserPassword(e.target.value);
@@ -106,12 +75,14 @@ const Signup = () => {
     if (
       validator.isAlphanumeric(e.target.value) &&
       e.target.value.length > 7 &&
-      e.target.value.length <= 20
+      e.target.value.length <= 20 &&
+      e.target.value.match(/\d+/) &&
+      e.target.value.match(/[a-zA-Z]/)
     ) {
       setPassMessage("");
     } else {
       setPassMessage(
-        "비밀번호가 강력하지 않습니다. (최소길이: 8, 최대길이: 20, 영문자 숫자 조합)"
+        "비밀번호가 강력하지 않습니다. (최소길이: 8, 최대길이: 20, 영문자 숫자 조합, 최소한 영문자 1개 숫자 1개씩 포함되어야 함)"
       );
     }
 
@@ -133,65 +104,27 @@ const Signup = () => {
     }
   };
 
-  /*
-  const allBtnEvent = () => {
-    if (allCheck === false) {
-      setAllCheck(true);
-      setAgeCheck(true);
-      setUserCheck(true);
-      setMarketingCheck(true);
-
-      setAllCheckMessage("");
+  const onTogglePwdShowHandler = () => {
+    if (!isShowPwd) {
+      setIsShowPwd(true);
     } else {
-      setAllCheck(false);
-      setAgeCheck(false);
-      setUserCheck(false);
-      setMarketingCheck(false);
-
-      setAllCheckMessage("모든 내용에 동의 해주시기 바랍니다!");
+      setIsShowPwd(false);
     }
   };
 
-  const ageBtnEvent = () => {
-    if (ageCheck === false) {
-      setAgeCheck(true);
-    } else {
-      setAgeCheck(false);
-    }
-  };
-
-  const userBtnEvent = () => {
-    if (userCheck === false) {
-      setUserCheck(true);
-    } else {
-      setUserCheck(false);
-    }
-  };
-
-  const marketingBtnEvent = () => {
-    if (marketingCheck === false) {
-      setMarketingCheck(true);
-    } else {
-      setMarketingCheck(false);
-    }
-  };
-  */
-
-  const onSignupClickHandler = () => {
-    /*  if (userName === "") {
-      setNameMessage("이름란이 공백입니다!");
-    } else {
-      setNameMessage("");
-    }
-*/
-    if (userNickName === "") {
-      setNickNameMessage("닉네임란이 공백입니다!");
-    } else {
+  const onSignupClickHandler = async () => {
+    if (
+      userNickName !== "" &&
+      userNickName.length >= 2 &&
+      userNickName.length <= 8
+    ) {
       setNickNameMessage("");
+    } else {
+      setNickNameMessage("올바른 닉네임이 아닙니다.(최소길이: 2, 최대길이: 8)");
     }
 
     if (userEmail === "") {
-      setEmailMessage("이메일란이 공백입니다!");
+      setEmailMessage("이메일란이 비어있습니다!");
     } else {
       setEmailMessage("");
     }
@@ -207,28 +140,9 @@ const Signup = () => {
     } else {
       setBirthDateMessage("");
     }
-    /*
-    if (validator.isMobilePhone(userPhone)) {
-      setPhoneMessage("");
-    } else {
-      setPhoneMessage("핸드폰 번호 형식이 올바르지 않습니다!");
-    }
-   
-    if (userId === "") {
-      setIdMessage("아이디란이 공백입니다!");
-    } else {
-      setIdMessage("");
-    }
-   
-    if (userPassword === "") {
-      setPassMessage("비밀번호란이 공백입니다!");
-    } else {
-      setPassMessage("");
-    }
-    */
 
     if (userPassword2 === "") {
-      setPass2Message("비밀번호 확인란이 공백입니다!");
+      setPass2Message("비밀번호 확인란이 비어있습니다!");
     } else {
       setPass2Message("");
     }
@@ -236,55 +150,49 @@ const Signup = () => {
     if (
       validator.isAlphanumeric(userPassword) &&
       userPassword.length > 7 &&
-      userPassword.length <= 20
+      userPassword.length <= 20 &&
+      userPassword.match(/\d+/) &&
+      userPassword.match(/[a-zA-Z]/)
     ) {
       setPassMessage("");
     } else {
       setPassMessage(
-        "비밀번호가 강력하지 않습니다. (최소길이: 8, 최대길이: 20, 영문자 숫자 조합)"
+        "비밀번호가 강력하지 않습니다. (최소길이: 8, 최대길이: 20, 영문자 숫자 조합, 최소한 영문자 1개 숫자 1개씩 포함되어야 함)"
       );
     }
 
-    /*
-    if (allCheck !== true || ageCheck !== true || userCheck !== true) {
-      setAllCheck(false);
-    }
-
-    if (allCheck === true) {
-      setAllCheckMessage("");
-    } else {
-      setAllCheckMessage("모든 내용에 동의 해주시기 바랍니다!");
-    }
-    */
     if (
-      //userName !== "" &&
       userNickName !== "" &&
+      userNickName.length >= 2 &&
+      userNickName.length <= 8 &&
       validator.isEmail(userEmail) &&
       userBirthDate !== null &&
-      //validator.isMobilePhone(userPhone) &&
-      //userId !== "" &&
       userPassword !== "" &&
       userPassword2 !== "" &&
       userPassword === userPassword2 &&
       validator.isAlphanumeric(userPassword) &&
       userPassword.length > 7 &&
-      userPassword.length <= 20
-      // &&
-      //allCheck === true
+      userPassword.length <= 20 &&
+      userPassword.match(/\d+/) &&
+      userPassword.match(/[a-zA-Z]/)
     ) {
       const gender2 = userGender === 0 ? "남성" : "여성";
 
-      axios
+      await axios
         .post("https://hansol.lhenry0.com/auth/sign-up", {
           email: userEmail,
           nick_name: userNickName,
           password: userPassword,
           password_confirm: userPassword2,
-          date_of_birth: "2023-12-05",
+          date_of_birth: userBirthDate,
           gender: gender2,
         })
         .then(function (res) {
           console.log(res);
+          alert(
+            userEmail + " 님 가입을 축하드립니다! 로그인 페이지로 이동합니다."
+          );
+          navigator("/login");
         })
         .catch(function (err) {
           console.log(err);
@@ -298,28 +206,6 @@ const Signup = () => {
         <UserTitleSignup>
           <h1>회원가입</h1>
         </UserTitleSignup>
-        {/*
-        <LabelSignup htmlFor="user_name">이름</LabelSignup>
-        <InputSignup
-          type="text"
-          name="user_name"
-          id="user_name"
-          placeholder="이름을 입력하세요."
-          value={userName}
-          onChange={onUserNameChange}
-        />
-        {nameMessage && <IdMessageSignup>{nameMessage}</IdMessageSignup>}        
-        <LabelSignup htmlFor="user_id">아이디</LabelSignup>
-        <InputSignup
-          type="text"
-          name="user_id"
-          id="user_id"
-          placeholder="아이디를 입력하세요."
-          value={userId}
-          onChange={onUserIdChange}
-        />
-        {idMessage && <IdMessageSignup>{idMessage}</IdMessageSignup>}
-        */}
         <LabelSignup htmlFor="user_nickname">닉네임</LabelSignup>
         <InputSignup
           type="text"
@@ -342,17 +228,6 @@ const Signup = () => {
           onChange={onUserEmailChange}
         />
         {emailMessage && <IdMessageSignup>{emailMessage}</IdMessageSignup>}
-        {/*<LabelSignup htmlFor="user_phone">핸드폰 번호</LabelSignup>
-        <InputSignup
-          type="text"
-          name="user_phone"
-          id="user_phone"
-          placeholder="핸드폰 번호를 입력하세요."
-          value={userPhone}
-          onChange={onUserPhoneChange}
-        />
-        {phoneMessage && <IdMessageSignup>{phoneMessage}</IdMessageSignup>}
-        */}
         <RadioSignup>
           <RadioInputSignup
             type="radio"
@@ -376,10 +251,10 @@ const Signup = () => {
         <LabelSignup htmlFor="user_birth">생년월일</LabelSignup>
         <ReactDatePicker
           id="user_birth"
+          dateFormat="yyyy-MM-dd"
           startDate={() => new Date()}
           showYearDropdown
-          selected={userBirthDate}
-          calendar="hijri"
+          selected={userBirthDateObj}
           onChange={(date) => onBirthDateChange(date)}
         />
         {birthDateMessage && (
@@ -387,7 +262,7 @@ const Signup = () => {
         )}
         <LabelSignup htmlFor="user_pwd">비밀번호</LabelSignup>
         <InputSignup
-          type="password"
+          type={isShowPwd ? "text" : "password"}
           name="user_pwd"
           id="user_pwd"
           placeholder="비밀번호를 입력하세요."
@@ -397,70 +272,28 @@ const Signup = () => {
         {passMessage && <IdMessageSignup>{passMessage}</IdMessageSignup>}
         <LabelSignup htmlFor="user_pwd2">비밀번호 확인</LabelSignup>
         <InputSignup
-          type="password"
+          type={isShowPwd ? "text" : "password"}
           name="user_pwd2"
           id="user_pwd2"
           placeholder="비밀번호를 한번더 입력하세요."
           value={userPassword2}
           onChange={onUserPassword2Change}
         />
+        <PwdCheckDivSignup>
+          <PwdCheckBoxSignup
+            type="checkbox"
+            id="user_check_show_pwd"
+            onClick={onTogglePwdShowHandler}
+          />
+          <PwdCheckLabelSignup htmlFor="user_check_show_pwd">
+            비밀번호 보이기
+          </PwdCheckLabelSignup>
+        </PwdCheckDivSignup>
         {pass2Message && <IdMessageSignup>{pass2Message}</IdMessageSignup>}
         <br />
         {passMatchMessage && (
           <IdMessageSignup>{passMatchMessage}</IdMessageSignup>
         )}
-
-        {/* 동의 사항 체크 
-        <CheckboxBoxSignup>
-          <CheckboxSignup>
-            <InputCheckBoxSignup
-              type="checkbox"
-              id="all-check"
-              checked={allCheck}
-              onChange={allBtnEvent}
-            />
-            <LableCheckBoxSignup>
-              <b>전체동의</b>
-            </LableCheckBoxSignup>
-          </CheckboxSignup>
-          <CheckboxSignup>
-            <InputCheckBoxSignup
-              type="checkbox"
-              id="check1"
-              checked={ageCheck}
-              onChange={ageBtnEvent}
-            />
-            <LableCheckBoxSignup>
-              만 14세 이상입니다 <span>(필수)</span>
-            </LableCheckBoxSignup>
-          </CheckboxSignup>
-          <CheckboxSignup>
-            <InputCheckBoxSignup
-              type="checkbox"
-              id="check2"
-              checked={userCheck}
-              onChange={userBtnEvent}
-            />
-            <LableCheckBoxSignup>
-              이용약관 <span>(필수)</span>
-            </LableCheckBoxSignup>
-          </CheckboxSignup>
-          <CheckboxSignup>
-            <InputCheckBoxSignup
-              type="checkbox"
-              id="check3"
-              checked={marketingCheck}
-              onChange={marketingBtnEvent}
-            />
-            <LableCheckBoxSignup>
-              마케팅 동의 <span>(선택)</span>
-            </LableCheckBoxSignup>
-          </CheckboxSignup>
-          {allCheckMessage && (
-            <IdMessageSignup>{allCheckMessage}</IdMessageSignup>
-          )}
-        </CheckboxBoxSignup>
-           */}
         <UserSignupButton onClick={onSignupClickHandler}>
           회원 가입
         </UserSignupButton>
@@ -521,33 +354,7 @@ const InputSignup = styled.input`
     background-color: rgb(250, 250, 250);
   }
 `;
-/*
-const LableCheckBoxSignup = styled.label`
-  width: 200px;
-`;
 
-const CheckboxBoxSignup = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
-const CheckboxSignup = styled.div`
-  width: 260px;
-  font-size: 15px;
-
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-`;
-
-const InputCheckBoxSignup = styled.input`
-  width: 50px;
-  padding: 0px;
-  zoom: 1.2;
-`;
-*/
 const RadioSignup = styled.div`
   display: flex;
   justify-content: space-evenly;
@@ -560,6 +367,20 @@ const RadioInputSignup = styled.input`
 
 const RadioLabelSignup = styled.label`
   width: 100px;
+`;
+
+const PwdCheckDivSignup = styled.div`
+  display: flex;
+  justify-content: end;
+  width: 260px;
+`;
+const PwdCheckBoxSignup = styled.input`
+  align: left;
+`;
+
+const PwdCheckLabelSignup = styled.label`
+  width: 80px;
+  font-size: 11px;
 `;
 
 const UserSignupButton = styled.button`

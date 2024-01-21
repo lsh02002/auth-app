@@ -1,63 +1,77 @@
 import React from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import validator from "validator";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 
-const Login = () => {
+const Login = ({ updateIsToken }) => {
   const [userId, setUserId] = useState("");
   const [userPassword, setUserPassword] = useState("");
 
   const [idMessage, setIdMessage] = useState("");
   const [passMessage, setPassMessage] = useState("");
+  const [failMessage, setFailMessage] = useState("");
+
+  const navigator = useNavigate();
 
   const onUserIdChange = (e) => {
     setUserId(e.target.value);
+    setFailMessage("");
 
-    if (validator.isEmail(e.target.value)) {
-      setIdMessage("");
+    if (e.target.value === "") {
+      setIdMessage("이메일 또는 닉네임란이 비어있습니다!");
     } else {
-      setIdMessage("이메일 형식이 올바르지 않습니다!");
+      setIdMessage("");
     }
   };
 
   const onUserPasswordChange = (e) => {
     setUserPassword(e.target.value);
-    setPassMessage("");
+    setFailMessage("");
+
+    if (e.target.value === "") {
+      setPassMessage("비밀번호란이 비어있습니다!");
+    } else {
+      setPassMessage("");
+    }
   };
 
-  const onLoginClickHandler = () => {
+  const onLoginClickHandler = async () => {
     //입력된 이메일 유효성 검사 모듈
     if (userId === "") {
-      setIdMessage("이메일란이 공백입니다!");
+      setIdMessage("이메일 또는 닉네임란이 비어있습니다!");
     } else {
       setIdMessage("");
     }
-
+    /*
     if (validator.isEmail(userId)) {
       setIdMessage("");
     } else {
-      setIdMessage("이메일 형식이 올바르지 않습니다!");
+      setIdMessage("이메일 또는 닉네임 형식이 올바르지 않습니다!");
     }
-
+*/
     if (userPassword === "") {
-      setPassMessage("비밀번호란이 공백입니다!");
+      setPassMessage("비밀번호란이 비어있습니다!");
     } else {
       setPassMessage("");
     }
 
     if (idMessage === "" && userId !== "" && userPassword !== "") {
-      axios
+      await axios
         .post("https://hansol.lhenry0.com/auth/login", {
           email: userId,
           password: userPassword,
         })
         .then(function (res) {
           console.log(res);
+          localStorage.setItem("token", res.headers.token);
+
+          updateIsToken(true);
+          navigator("/");
         })
         .catch(function (err) {
           console.log(err);
+          setFailMessage(err.message);
         });
     }
   };
@@ -69,16 +83,16 @@ const Login = () => {
           <UserTitleLogin>
             <h1>로그인</h1>
           </UserTitleLogin>
-          <LabelLogin htmlFor="user_id">이메일</LabelLogin>
+          <LabelLogin htmlFor="user_id">이메일 또는 닉네임</LabelLogin>
           <InputLogin
             type="email"
             id="user_id"
             name="user_id"
-            placeholder="이메일 입력하세요."
+            placeholder="이메일 또는 닉네임을 입력하세요."
             value={userId}
             onChange={onUserIdChange}
           />
-          <IdMessageLogin>{idMessage}</IdMessageLogin>
+          {idMessage && <MessageLogin>{idMessage}</MessageLogin>}
           <LabelLogin htmlFor="user_pwd">비밀번호</LabelLogin>
           <InputLogin
             type="password"
@@ -88,11 +102,12 @@ const Login = () => {
             value={userPassword}
             onChange={onUserPasswordChange}
           />
-          <IdMessageLogin>{passMessage}</IdMessageLogin>
+          {passMessage && <MessageLogin>{passMessage}</MessageLogin>}
           <UserLoginButton onClick={onLoginClickHandler}>
             로그인
           </UserLoginButton>
           <LinkLogin to="/signup">회원가입 하기</LinkLogin>
+          {failMessage && <MessageLogin>{failMessage}</MessageLogin>}
         </UserLogin>
       </UserLoginMain>
     </>
@@ -168,7 +183,7 @@ const UserLoginButton = styled.button`
   }
 `;
 
-const IdMessageLogin = styled.div`
+const MessageLogin = styled.div`
   width: 260px;
   padding-top: 5px;
   color: red;
