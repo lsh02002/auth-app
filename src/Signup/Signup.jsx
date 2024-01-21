@@ -61,15 +61,15 @@ const Signup = () => {
 
   const onBirthDateChange = (date) => {
     const changedDate = moment(date).format("YYYY-MM-DD");
+    setUserBirthDate(changedDate);
+    setUserBirthDateObj(date);
     setAxiosErrorMessage("");
 
     if (date === null || date === undefined || changedDate === "") {
-      setUserBirthDate("");
+      //setUserBirthDate("");
       setBirthDateMessage("생년월일을 확인해 주세요!");
     } else {
-      setUserBirthDateObj(date);
       setBirthDateMessage("");
-      setUserBirthDate(changedDate);
     }
   };
 
