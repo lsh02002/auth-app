@@ -29,10 +29,13 @@ const Signup = () => {
   const [pass2Message, setPass2Message] = useState("");
   const [passMatchMessage, setPassMatchMessage] = useState("");
 
+  const [axiosErrorMessage, setAxiosErrorMessage] = useState("");
+
   const navigator = useNavigate();
 
   const onUserNickNameChange = (e) => {
     setUserNickName(e.target.value.trim());
+    setAxiosErrorMessage("");
 
     if (
       e.target.value.trim() !== "" &&
@@ -47,6 +50,7 @@ const Signup = () => {
 
   const onUserEmailChange = (e) => {
     setUserEmail(e.target.value);
+    setAxiosErrorMessage("");
 
     if (validator.isEmail(e.target.value)) {
       setEmailMessage("");
@@ -57,8 +61,9 @@ const Signup = () => {
 
   const onBirthDateChange = (date) => {
     const changedDate = moment(date).format("YYYY-MM-DD");
+    setAxiosErrorMessage("");
 
-    if (date === null || date === undefined) {
+    if (date === null || date === undefined || changedDate === "") {
       setUserBirthDate("");
       setBirthDateMessage("생년월일을 확인해 주세요!");
     } else {
@@ -70,6 +75,7 @@ const Signup = () => {
 
   const onUserPasswordChange = (e) => {
     setUserPassword(e.target.value);
+    setAxiosErrorMessage("");
     setPassMessage("");
 
     if (
@@ -95,6 +101,7 @@ const Signup = () => {
 
   const onUserPassword2Change = (e) => {
     setUserPassword2(e.target.value);
+    setAxiosErrorMessage("");
     setPass2Message("");
 
     if (userPassword === e.target.value) {
@@ -196,6 +203,7 @@ const Signup = () => {
         })
         .catch(function (err) {
           console.log(err);
+          setAxiosErrorMessage(err.message);
         });
     }
   };
@@ -215,9 +223,7 @@ const Signup = () => {
           value={userNickName}
           onChange={onUserNickNameChange}
         />
-        {nickNameMessage && (
-          <IdMessageSignup>{nickNameMessage}</IdMessageSignup>
-        )}
+        {nickNameMessage && <MessageSignup>{nickNameMessage}</MessageSignup>}
         <LabelSignup htmlFor="user_id">이메일</LabelSignup>
         <InputSignup
           type="email"
@@ -227,7 +233,7 @@ const Signup = () => {
           value={userEmail}
           onChange={onUserEmailChange}
         />
-        {emailMessage && <IdMessageSignup>{emailMessage}</IdMessageSignup>}
+        {emailMessage && <MessageSignup>{emailMessage}</MessageSignup>}
         <RadioSignup>
           <RadioInputSignup
             type="radio"
@@ -257,9 +263,7 @@ const Signup = () => {
           selected={userBirthDateObj}
           onChange={(date) => onBirthDateChange(date)}
         />
-        {birthDateMessage && (
-          <IdMessageSignup>{birthDateMessage}</IdMessageSignup>
-        )}
+        {birthDateMessage && <MessageSignup>{birthDateMessage}</MessageSignup>}
         <LabelSignup htmlFor="user_pwd">비밀번호</LabelSignup>
         <InputSignup
           type={isShowPwd ? "text" : "password"}
@@ -269,7 +273,7 @@ const Signup = () => {
           value={userPassword}
           onChange={onUserPasswordChange}
         />
-        {passMessage && <IdMessageSignup>{passMessage}</IdMessageSignup>}
+        {passMessage && <MessageSignup>{passMessage}</MessageSignup>}
         <LabelSignup htmlFor="user_pwd2">비밀번호 확인</LabelSignup>
         <InputSignup
           type={isShowPwd ? "text" : "password"}
@@ -289,15 +293,16 @@ const Signup = () => {
             비밀번호 보이기
           </PwdCheckLabelSignup>
         </PwdCheckDivSignup>
-        {pass2Message && <IdMessageSignup>{pass2Message}</IdMessageSignup>}
+        {pass2Message && <MessageSignup>{pass2Message}</MessageSignup>}
         <br />
-        {passMatchMessage && (
-          <IdMessageSignup>{passMatchMessage}</IdMessageSignup>
-        )}
+        {passMatchMessage && <MessageSignup>{passMatchMessage}</MessageSignup>}
         <UserSignupButton onClick={onSignupClickHandler}>
           회원 가입
         </UserSignupButton>
         <LinkSignup to="/">로그인 하기</LinkSignup>
+        {axiosErrorMessage && (
+          <MessageSignup>{axiosErrorMessage}</MessageSignup>
+        )}
       </UserSignup>
     </UserSignupMain>
   );
@@ -401,7 +406,7 @@ const UserSignupButton = styled.button`
   }
 `;
 
-const IdMessageSignup = styled.div`
+const MessageSignup = styled.div`
   width: 260px;
   padding-top: 5px;
   color: red;
