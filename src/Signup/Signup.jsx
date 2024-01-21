@@ -14,7 +14,7 @@ const Signup = () => {
   const [userGender, setUserGender] = useState(0);
   const [userBirthDate, setUserBirthDate] = useState("");
   //스트링 겂이 아닌 생년월일 오브젝트 상태변수
-  const [userBirthDateObj, setUserBirthDateObj] = useState(new Date());
+  const [userBirthDateObj, setUserBirthDateObj] = useState(null);
 
   //비밀번호 보이기/ 숨기기 상태변수
   const [isShowPwd, setIsShowPwd] = useState(false);
@@ -135,7 +135,7 @@ const Signup = () => {
       setEmailMessage("이메일 형식이 올바르지 않습니다!");
     }
 
-    if (userBirthDate === null) {
+    if (userBirthDate === "") {
       setBirthDateMessage("생년월일을 선택해 주세요!");
     } else {
       setBirthDateMessage("");
@@ -166,7 +166,7 @@ const Signup = () => {
       userNickName.length >= 2 &&
       userNickName.length <= 8 &&
       validator.isEmail(userEmail) &&
-      userBirthDate !== null &&
+      userBirthDate !== "" &&
       userPassword !== "" &&
       userPassword2 !== "" &&
       userPassword === userPassword2 &&
