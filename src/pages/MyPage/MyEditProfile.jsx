@@ -48,14 +48,6 @@ const MyEditProfile = () => {
             <LabelProfile htmlFor="user_image">프로필 사진:</LabelProfile>
             <InputProfile type="file" id="user_image" />
           </InputContainerProfile>
-          {/*<InputContainerProfile>
-            <LabelProfile htmlFor="user_pwd">비밀번호: </LabelProfile>
-            <InputProfile
-              type="password"
-              id="user_pwd"
-              placeholder="비밀번호를 입력하세요."
-            />
-          </InputContainerProfile>*/}
           <br />
           <br />
           <br />

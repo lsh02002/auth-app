@@ -6,6 +6,7 @@ import Logout from "./pages/Login/Logout";
 import MyPage from "./pages/MyPage/MyPage";
 import Signup from "./pages/Signup/Signup";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import MyPageButton from "./pages/MyPage/MyPageButton";
 
 function App() {
   const [isToken, setIsToken] = useState(false);
@@ -22,7 +23,10 @@ function App() {
     <div className="App">
       {isToken ? (
         <Router>
+          {/* 임시로 설정 : MyPageButton*/}
+          <MyPageButton isToken={isToken} />
           <Routes>
+            {/* 물론 메인페이지는 담당자 분이 바꾸셔도 됩니다 */}
             <Route
               exact
               path="/"
@@ -59,6 +63,7 @@ function App() {
       ) : (
         // 로그인 안되었을때 페이지
         <Router>
+          <MyPageButton isToken={isToken} />
           <Routes>
             <Route
               exact
