@@ -9,7 +9,7 @@ const MyPageMenu = ({ updatePageNumber }) => {
 
   return (
     <>
-      <MyMainPage>
+      <MyMenuMainPage>
         <MenuMyPage>
           <MyRestaurantMypage>
             <ButtonMypage onClick={() => onUpdatePageNumberHandler(0)}>
@@ -27,12 +27,12 @@ const MyPageMenu = ({ updatePageNumber }) => {
             </ButtonMypage>
           </EditProfileMypage>
         </MenuMyPage>
-      </MyMainPage>
+      </MyMenuMainPage>
     </>
   );
 };
 
-const MyMainPage = styled.div`
+const MyMenuMainPage = styled.div`
   display: flex;
   justify-content: end;
   align-items: center;

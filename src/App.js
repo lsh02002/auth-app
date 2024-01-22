@@ -1,10 +1,10 @@
 import { useLayoutEffect, useState } from "react";
 import "./App.css";
-import Login from "./Login/Login";
-import LoginError from "./Login/LoginError";
-import Logout from "./Login/Logout";
-import MyPage from "./MyPage/MyPage";
-import Signup from "./Signup/Signup";
+import Login from "./pages/Login/Login";
+import LoginError from "./pages/Login/LoginError";
+import Logout from "./pages/Login/Logout";
+import MyPage from "./pages/MyPage/MyPage";
+import Signup from "./pages/Signup/Signup";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {

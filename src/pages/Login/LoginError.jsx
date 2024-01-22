@@ -12,7 +12,9 @@ const LoginError = ({ pageName, error }) => {
     <>
       <MessageLoginError>
         <h1>
-          {pageName} 페이지 : {error}
+          {pageName} 페이지 :
+          <br />
+          {error}
         </h1>
         <ButtonLoginError onClick={onClickHander}>
           이전 페이지로 이동

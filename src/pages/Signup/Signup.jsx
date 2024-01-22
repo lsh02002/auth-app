@@ -142,7 +142,7 @@ const Signup = () => {
       setEmailMessage("이메일 형식이 올바르지 않습니다!");
     }
 
-    if (userBirthDate === "") {
+    if (userBirthDate === "" || userBirthDateObj === null) {
       setBirthDateMessage("생년월일을 선택해 주세요!");
     } else {
       setBirthDateMessage("");
@@ -174,6 +174,7 @@ const Signup = () => {
       userNickName.length <= 8 &&
       validator.isEmail(userEmail) &&
       userBirthDate !== "" &&
+      userBirthDateObj !== null &&
       userPassword !== "" &&
       userPassword2 !== "" &&
       userPassword === userPassword2 &&
@@ -224,11 +225,11 @@ const Signup = () => {
           onChange={onUserNickNameChange}
         />
         {nickNameMessage && <MessageSignup>{nickNameMessage}</MessageSignup>}
-        <LabelSignup htmlFor="user_id">이메일</LabelSignup>
+        <LabelSignup htmlFor="user_email">이메일</LabelSignup>
         <InputSignup
           type="email"
-          name="user_id"
-          id="user_id"
+          name="user_email"
+          id="user_email"
           placeholder="이메일을 입력하세요."
           value={userEmail}
           onChange={onUserEmailChange}
@@ -299,10 +300,10 @@ const Signup = () => {
         <UserSignupButton onClick={onSignupClickHandler}>
           회원 가입
         </UserSignupButton>
-        <LinkSignup to="/">로그인 하기</LinkSignup>
         {axiosErrorMessage && (
           <MessageSignup>{axiosErrorMessage}</MessageSignup>
         )}
+        <LinkSignup to="/">로그인 하기</LinkSignup>
       </UserSignup>
     </UserSignupMain>
   );
@@ -389,7 +390,7 @@ const PwdCheckLabelSignup = styled.label`
 `;
 
 const UserSignupButton = styled.button`
-  margin: 30px 0px 30px 0px;
+  margin: 10px 0px 10px 0px;
   color: white;
   font-weight: bold;
   font-size: 15px;
@@ -415,6 +416,7 @@ const MessageSignup = styled.div`
 `;
 
 const LinkSignup = styled(Link)`
+  margin-top: 20px;
   width: 270px;
   text-align: right;
 `;
