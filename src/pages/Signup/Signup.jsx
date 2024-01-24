@@ -22,6 +22,10 @@ const Signup = () => {
   const [userPassword, setUserPassword] = useState("");
   const [userPassword2, setUserPassword2] = useState("");
 
+  //닉네임과 이메일 중복 체크 상태변수
+  //const [alreadyNickName, setAlreadyNickName] = useState(false);
+  //const [alreadyEmail, setAlreadyEmail] = useState(false);
+
   const [nickNameMessage, setNickNameMessage] = useState("");
   const [emailMessage, setEmailMessage] = useState("");
   const [birthDateMessage, setBirthDateMessage] = useState("");
@@ -29,12 +33,18 @@ const Signup = () => {
   const [pass2Message, setPass2Message] = useState("");
   const [passMatchMessage, setPassMatchMessage] = useState("");
 
+  //닉네임과 이메일 중복 체크 상태 메세지 변수
+  const [alreadyEmailMessage, setAlreadyEmailMessage] = useState("");
+  const [alreadyNickNameMessage, setAlreadyNickNameMessage] = useState("");
+
   const [axiosErrorMessage, setAxiosErrorMessage] = useState("");
 
   const navigator = useNavigate();
 
   const onUserNickNameChange = (e) => {
     setUserNickName(e.target.value.trim());
+
+    setAlreadyNickNameMessage("");
     setAxiosErrorMessage("");
 
     if (
@@ -48,8 +58,10 @@ const Signup = () => {
     }
   };
 
-  const onUserEmailChange = (e) => {
+  const onUserEmailChange = async (e) => {
     setUserEmail(e.target.value);
+
+    setAlreadyEmailMessage("");
     setAxiosErrorMessage("");
 
     if (validator.isEmail(e.target.value)) {
@@ -63,6 +75,8 @@ const Signup = () => {
     const changedDate = moment(date).format("YYYY-MM-DD");
     setUserBirthDate(changedDate);
     setUserBirthDateObj(date);
+
+    //setAlreadyEmailMessage("");
     setAxiosErrorMessage("");
 
     if (date === null || date === undefined || changedDate === "") {
@@ -75,6 +89,8 @@ const Signup = () => {
 
   const onUserPasswordChange = (e) => {
     setUserPassword(e.target.value);
+
+    //setAlreadyEmailMessage("");
     setAxiosErrorMessage("");
     setPassMessage("");
 
@@ -101,6 +117,8 @@ const Signup = () => {
 
   const onUserPassword2Change = (e) => {
     setUserPassword2(e.target.value);
+
+    //setAlreadyEmailMessage("");
     setAxiosErrorMessage("");
     setPass2Message("");
 
@@ -126,6 +144,24 @@ const Signup = () => {
       userNickName.length <= 8
     ) {
       setNickNameMessage("");
+
+      await axios
+        .get(
+          `https://hansol.lhenry0.com/auth/sign-up/check-nickname?nickname=${userNickName}`
+        )
+        .then(function (res) {
+          console.log(res.data);
+
+          if (res.data) {
+            setAlreadyNickNameMessage("");
+          } else {
+            setAlreadyNickNameMessage("등록된 닉네임이 이미 있습니다!");
+          }
+        })
+        .catch(function (err) {
+          console.log(err.message);
+          setAlreadyNickNameMessage(err.message);
+        });
     } else {
       setNickNameMessage("올바른 닉네임이 아닙니다.(최소길이: 2, 최대길이: 8)");
     }
@@ -137,7 +173,26 @@ const Signup = () => {
     }
 
     if (validator.isEmail(userEmail)) {
-      setEmailMessage("");
+      //setEmailMessage("");
+      setAlreadyEmailMessage("");
+
+      await axios
+        .get(
+          `https://hansol.lhenry0.com/auth/sign-up/check-email?email=${userEmail}`
+        )
+        .then(function (res) {
+          console.log(res.data);
+
+          if (res.data) {
+            setAlreadyEmailMessage("");
+          } else {
+            setAlreadyEmailMessage("등록된 이메일이 이미 있습니다!");
+          }
+        })
+        .catch(function (err) {
+          setAlreadyEmailMessage(err.message);
+          console.log(err.message);
+        });
     } else {
       setEmailMessage("이메일 형식이 올바르지 않습니다!");
     }
@@ -172,7 +227,9 @@ const Signup = () => {
       userNickName !== "" &&
       userNickName.length >= 2 &&
       userNickName.length <= 8 &&
+      alreadyNickNameMessage === "" &&
       validator.isEmail(userEmail) &&
+      alreadyEmailMessage === "" &&
       userBirthDate !== "" &&
       userBirthDateObj !== null &&
       userPassword !== "" &&
@@ -185,14 +242,13 @@ const Signup = () => {
       userPassword.match(/[a-zA-Z]/)
     ) {
       const gender2 = userGender === 0 ? "남성" : "여성";
-
       await axios
         .post("https://hansol.lhenry0.com/auth/sign-up", {
           email: userEmail,
-          nick_name: userNickName,
+          nickName: userNickName,
           password: userPassword,
-          password_confirm: userPassword2,
-          date_of_birth: userBirthDate,
+          passwordConfirm: userPassword2,
+          dateOfBirth: userBirthDate,
           gender: gender2,
         })
         .then(function (res) {
@@ -225,6 +281,9 @@ const Signup = () => {
           onChange={onUserNickNameChange}
         />
         {nickNameMessage && <MessageSignup>{nickNameMessage}</MessageSignup>}
+        {alreadyNickNameMessage && (
+          <MessageSignup>{alreadyNickNameMessage}</MessageSignup>
+        )}
         <LabelSignup htmlFor="user_email">이메일</LabelSignup>
         <InputSignup
           type="email"
@@ -235,6 +294,9 @@ const Signup = () => {
           onChange={onUserEmailChange}
         />
         {emailMessage && <MessageSignup>{emailMessage}</MessageSignup>}
+        {alreadyEmailMessage && (
+          <MessageSignup>{alreadyEmailMessage}</MessageSignup>
+        )}
         <RadioSignup>
           <RadioInputSignup
             type="radio"

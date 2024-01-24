@@ -7,6 +7,8 @@ import MyPage from "./pages/MyPage/MyPage";
 import Signup from "./pages/Signup/Signup";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MyPageButton from "./pages/MyPage/MyPageButton";
+import ChangePassword from "./pages/Login/ChangePassword";
+import FindEmail from "./pages/Login/FindEmail";
 
 function App() {
   const [isToken, setIsToken] = useState(false);
@@ -36,6 +38,16 @@ function App() {
             />
             <Route
               exact
+              path="/find-email"
+              element={
+                <LoginError
+                  pageName={"FindEmail"}
+                  error={"로그인 상태입니다!"}
+                />
+              }
+            />
+            <Route
+              exact
               path="/login"
               element={
                 <LoginError pageName={"Login"} error={"로그인 상태입니다!"} />
@@ -51,6 +63,8 @@ function App() {
                 />
               }
             />
+
+            <Route exact path="/changepassword" element={<ChangePassword />} />
 
             <Route
               exact
@@ -90,6 +104,17 @@ function App() {
                 />
               }
             />
+            <Route
+              exact
+              path="/changepassword"
+              element={
+                <LoginError
+                  pageName={"ChangePassword"}
+                  error={"먼저 로그인하십시오!"}
+                />
+              }
+            />
+            <Route exact path="/find-email" element={<FindEmail />} />
             <Route
               exact
               path="/login"

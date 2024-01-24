@@ -107,6 +107,7 @@ const Login = ({ updateIsToken }) => {
             로그인
           </UserLoginButton>
           <LinkLogin to="/signup">회원가입 하기</LinkLogin>
+          <LinkLogin to="/find-email">이메일 찾기</LinkLogin>
           {failMessage && <MessageLogin>{failMessage}</MessageLogin>}
         </UserLogin>
       </UserLoginMain>
@@ -193,6 +194,7 @@ const MessageLogin = styled.div`
 
 const LinkLogin = styled(Link)`
   width: 270px;
+  padding-bottom: 5px;
   text-align: right;
 `;
 
