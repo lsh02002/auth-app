@@ -54,6 +54,40 @@ const Signup = () => {
     }
   };
 
+  const onUserNickNameBlur = async (e) => {
+    if (
+      !(
+        e.target.value.trim() !== "" &&
+        e.target.value.length >= 2 &&
+        e.target.value.length <= 8
+      )
+    ) {
+      setNickNameMessage("올바른 닉네임이 아닙니다.(최소길이: 2, 최대길이: 8)");
+      return;
+    }
+
+    await axios
+      .get(
+        `https://hansol.lhenry0.com/auth/sign-up/check-nickname?nickname=${e.target.value}`
+      )
+      .then(function (res) {
+        console.log(res.data);
+
+        if (res.data) {
+          setAlreadyNickNameMessage("");
+        } else {
+          setAlreadyNickNameMessage("등록된 닉네임이 이미 있습니다!");
+        }
+      })
+      .catch(function (err) {
+        if (err.response.status === 409) {
+          setAlreadyNickNameMessage("등록된 닉네임이 이미 있습니다!");
+        } else {
+          setAlreadyNickNameMessage(err.message);
+        }
+      });
+  };
+
   const onUserEmailChange = async (e) => {
     setUserEmail(e.target.value);
 
@@ -67,16 +101,42 @@ const Signup = () => {
     }
   };
 
+  const onUserEmailBlur = async (e) => {
+    if (!validator.isEmail(e.target.value)) {
+      setEmailMessage("이메일 형식이 올바르지 않습니다!");
+      return;
+    }
+
+    await axios
+      .get(
+        `https://hansol.lhenry0.com/auth/sign-up/check-email?email=${e.target.value}`
+      )
+      .then(function (res) {
+        console.log(res.data);
+
+        if (res.data) {
+          setAlreadyEmailMessage("");
+        } else {
+          setAlreadyEmailMessage("등록된 이메일이 이미 있습니다!");
+        }
+      })
+      .catch(function (err) {
+        if (err.response.status === 409) {
+          setAlreadyEmailMessage("등록된 이메일이 이미 있습니다!");
+        } else {
+          setAlreadyEmailMessage(err.message);
+        }
+      });
+  };
+
   const onBirthDateChange = (date) => {
     const changedDate = moment(date).format("YYYY-MM-DD");
     setUserBirthDate(changedDate);
     setUserBirthDateObj(date);
 
-    setAlreadyEmailMessage("");
     setAxiosErrorMessage("");
 
     if (date === null || date === undefined || changedDate === "") {
-      //setUserBirthDate("");
       setBirthDateMessage("생년월일을 확인해 주세요!");
     } else {
       setBirthDateMessage("");
@@ -86,7 +146,6 @@ const Signup = () => {
   const onUserPasswordChange = (e) => {
     setUserPassword(e.target.value);
 
-    setAlreadyEmailMessage("");
     setAxiosErrorMessage("");
     setPassMessage("");
 
@@ -114,7 +173,7 @@ const Signup = () => {
   const onUserPassword2Change = (e) => {
     setUserPassword2(e.target.value);
 
-    setAlreadyEmailMessage("");
+    //setAlreadyEmailMessage("");
     setAxiosErrorMessage("");
     setPass2Message("");
 
@@ -142,54 +201,12 @@ const Signup = () => {
       userNickName.length <= 8
     ) {
       setNickNameMessage("");
-
-      await axios
-        .get(
-          `https://hansol.lhenry0.com/auth/sign-up/check-nickname?nickname=${userNickName}`
-        )
-        .then(function (res) {
-          console.log(res.data);
-
-          if (res.data) {
-            setAlreadyNickNameMessage("");
-          } else {
-            setAlreadyNickNameMessage("등록된 닉네임이 이미 있습니다!");
-          }
-        })
-        .catch(function (err) {
-          if (err.response.status === 409) {
-            setAlreadyNickNameMessage("등록된 닉네임이 이미 있습니다!");
-          } else {
-            setAlreadyNickNameMessage(err.message);
-          }
-        });
     } else {
       setNickNameMessage("올바른 닉네임이 아닙니다.(최소길이: 2, 최대길이: 8)");
     }
 
     if (validator.isEmail(userEmail)) {
       setEmailMessage("");
-
-      await axios
-        .get(
-          `https://hansol.lhenry0.com/auth/sign-up/check-email?email=${userEmail}`
-        )
-        .then(function (res) {
-          console.log(res.data);
-
-          if (res.data) {
-            setAlreadyEmailMessage("");
-          } else {
-            setAlreadyEmailMessage("등록된 이메일이 이미 있습니다!");
-          }
-        })
-        .catch(function (err) {
-          if (err.response.status === 409) {
-            setAlreadyEmailMessage("등록된 이메일이 이미 있습니다!");
-          } else {
-            setAlreadyEmailMessage(err.message);
-          }
-        });
     } else {
       setEmailMessage("이메일 형식이 올바르지 않습니다!");
     }
@@ -221,6 +238,8 @@ const Signup = () => {
     }
 
     if (
+      alreadyNickNameMessage === "" &&
+      alreadyEmailMessage === "" &&
       userNickName !== "" &&
       userNickName.length >= 2 &&
       userNickName.length <= 8 &&
@@ -254,12 +273,8 @@ const Signup = () => {
           navigator("/login");
         })
         .catch(function (err) {
-          if (err.response.status === 409) {
-            setAxiosErrorMessage("");
-          } else {
-            console.log(err);
-            setAxiosErrorMessage(err.message);
-          }
+          console.log(err);
+          setAxiosErrorMessage(err.message);
         });
     }
   };
@@ -278,6 +293,7 @@ const Signup = () => {
           placeholder="닉네임을 입력하세요."
           value={userNickName}
           onChange={onUserNickNameChange}
+          onBlur={onUserNickNameBlur}
         />
         {nickNameMessage && <MessageSignup>{nickNameMessage}</MessageSignup>}
         {alreadyNickNameMessage && (
@@ -291,6 +307,7 @@ const Signup = () => {
           placeholder="이메일을 입력하세요."
           value={userEmail}
           onChange={onUserEmailChange}
+          onBlur={onUserEmailBlur}
         />
         {emailMessage && <MessageSignup>{emailMessage}</MessageSignup>}
         {alreadyEmailMessage && (
