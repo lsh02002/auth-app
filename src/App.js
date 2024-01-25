@@ -71,7 +71,7 @@ function App() {
               path="/logout"
               element={<Logout updateIsToken={setIsToken} />}
             />
-            <Route exact path="/mypage" element={<MyPage />} />
+            <Route exact path="/mypage/:pagenumber" element={<MyPage />} />
           </Routes>
         </Router>
       ) : (

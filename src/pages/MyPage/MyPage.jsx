@@ -1,40 +1,30 @@
-import React, { useEffect, useState } from "react";
 import MyPageMenu from "./MyPageMenu";
 import MyRestaurant from "./MyRestaurant";
 import MyFavoriteRestaurant from "./MyFavoriteRestaurant";
 import MyEditProfile from "./MyEditProfile";
+import { useParams } from "react-router-dom";
 
 const MyPage = () => {
-  const [pageNumber, setPageNumber] = useState(0);
+  const { pagenumber } = useParams();
 
-  useEffect(() => {
-    const page = localStorage.getItem("mypagenumber");
-
-    if (page === null || page === undefined) {
-      setPageNumber(0);
-    } else {
-      setPageNumber(Number(page));
-    }
-  }, []);
-
-  if (pageNumber === 0) {
+  if (pagenumber === "0") {
     return (
       <>
-        <MyPageMenu updatePageNumber={setPageNumber} />
+        <MyPageMenu />
         <MyRestaurant />
       </>
     );
-  } else if (pageNumber === 1) {
+  } else if (pagenumber === "1") {
     return (
       <>
-        <MyPageMenu updatePageNumber={setPageNumber} />
+        <MyPageMenu />
         <MyFavoriteRestaurant />
       </>
     );
-  } else if (pageNumber === 2) {
+  } else if (pagenumber === "2") {
     return (
       <>
-        <MyPageMenu updatePageNumber={setPageNumber} />
+        <MyPageMenu />
         <MyEditProfile />
       </>
     );

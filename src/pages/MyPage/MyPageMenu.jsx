@@ -1,30 +1,20 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-const MyPageMenu = ({ updatePageNumber }) => {
-  function onUpdatePageNumberHandler(pageNumber) {
-    updatePageNumber(pageNumber);
-    localStorage.setItem("mypagenumber", pageNumber);
-  }
-
+const MyPageMenu = () => {
   return (
     <>
       <MyMenuMainPage>
         <MenuMyPage>
           <MyRestaurantMypage>
-            <ButtonMypage onClick={() => onUpdatePageNumberHandler(0)}>
-              나의 맛집
-            </ButtonMypage>
+            <LinkMypage to={"/mypage/0"}>나의 맛집</LinkMypage>
           </MyRestaurantMypage>
           <FavoriteRestaurantsMypage>
-            <ButtonMypage onClick={() => onUpdatePageNumberHandler(1)}>
-              찜한 맛집
-            </ButtonMypage>
+            <LinkMypage to={"/mypage/1"}>찜한 맛집</LinkMypage>
           </FavoriteRestaurantsMypage>
           <EditProfileMypage>
-            <ButtonMypage onClick={() => onUpdatePageNumberHandler(2)}>
-              회원 정보 수정
-            </ButtonMypage>
+            <LinkMypage to={"/mypage/2"}>회원 정보 수정</LinkMypage>
           </EditProfileMypage>
         </MenuMyPage>
       </MyMenuMainPage>
@@ -64,7 +54,7 @@ const EditProfileMypage = styled.div`
     cursor: pointer;
 `;
 
-const ButtonMypage = styled.button`
+const LinkMypage = styled(Link)`
   margin: 5px;
   width: 150px;
   color: white;
