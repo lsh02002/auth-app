@@ -9,11 +9,13 @@ const FindEmail = () => {
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [dateofBirthObj, setDateOfBirthObj] = useState(null);
 
-  const [findMessage, setFindMessage] = useState("");
+  const [findSuccessMessage, setFindSuccessMessage] = useState("");
+  const [findFailMessage, setFindFailMessage] = useState("");
 
   const OnNickNameChange = (e) => {
     setNickName(e.target.value);
-    setFindMessage("");
+    setFindSuccessMessage("");
+    setFindFailMessage("");
   };
 
   const OnBirthDateChange = (date) => {
@@ -21,7 +23,8 @@ const FindEmail = () => {
     setDateOfBirth(changedDate);
     setDateOfBirthObj(date);
 
-    setFindMessage("");
+    setFindSuccessMessage("");
+    setFindFailMessage("");
   };
 
   const OnLoginClickHandler = async () => {
@@ -32,10 +35,11 @@ const FindEmail = () => {
       })
       .then(function (res) {
         console.log(res);
+        setFindSuccessMessage(res.data.data);
       })
       .catch(function (err) {
         console.log(err);
-        setFindMessage(err.message);
+        setFindFailMessage(err.message);
       });
   };
 
@@ -60,7 +64,16 @@ const FindEmail = () => {
           onChange={(date) => OnBirthDateChange(date)}
         />
         <ButtonFind onClick={OnLoginClickHandler}>찾기</ButtonFind>
-        {findMessage && <MessageFailFind>{findMessage}</MessageFailFind>}
+        {findSuccessMessage && (
+          <MessageSuccessFind>
+            {nickName}님 이메일은 <br />
+            <b>{findSuccessMessage}</b>
+            <br /> 입니다.
+          </MessageSuccessFind>
+        )}
+        {findFailMessage && (
+          <MessageFailFind>{findFailMessage}</MessageFailFind>
+        )}
       </UserFind>
     </MainFind>
   );
@@ -96,6 +109,7 @@ const InputFind = styled.input`
 `;
 
 const ButtonFind = styled.button`
+  marign: 20px;
   width: 100px;
   height: 30px;
 
@@ -103,12 +117,20 @@ const ButtonFind = styled.button`
   cursor: pointer;
 `;
 
+const MessageSuccessFind = styled.div`
+  width: 250px;
+  padding-top: 5px;
+  color: green;
+  font-size: 17px;
+  text-align: center;
+`;
+
 const MessageFailFind = styled.div`
-  width: 200px;
+  width: 250px;
   padding-top: 5px;
   color: red;
   font-size: 12px;
-  text-align: left;
+  text-align: center;
 `;
 
 export default FindEmail;
