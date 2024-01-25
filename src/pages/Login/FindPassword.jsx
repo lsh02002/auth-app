@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 //import axios from "axios";
 
-const ChangePassword = () => {
+const FindPassword = () => {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -105,4 +105,4 @@ const ButtonPass = styled.button`
   cursor: pointer;
 `;
 
-export default ChangePassword;
+export default FindPassword;

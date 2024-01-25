@@ -7,7 +7,7 @@ import MyPage from "./pages/MyPage/MyPage";
 import Signup from "./pages/Signup/Signup";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MyPageButton from "./pages/MyPage/MyPageButton";
-import ChangePassword from "./pages/Login/ChangePassword";
+import FindPassword from "./pages/Login/FindPassword";
 import FindEmail from "./pages/Login/FindEmail";
 
 function App() {
@@ -64,7 +64,7 @@ function App() {
               }
             />
 
-            <Route exact path="/changepassword" element={<ChangePassword />} />
+            <Route exact path="/findpassword" element={<FindPassword />} />
 
             <Route
               exact

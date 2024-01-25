@@ -22,10 +22,6 @@ const Signup = () => {
   const [userPassword, setUserPassword] = useState("");
   const [userPassword2, setUserPassword2] = useState("");
 
-  //닉네임과 이메일 중복 체크 상태변수
-  //const [alreadyNickName, setAlreadyNickName] = useState(false);
-  //const [alreadyEmail, setAlreadyEmail] = useState(false);
-
   const [nickNameMessage, setNickNameMessage] = useState("");
   const [emailMessage, setEmailMessage] = useState("");
   const [birthDateMessage, setBirthDateMessage] = useState("");
@@ -76,7 +72,7 @@ const Signup = () => {
     setUserBirthDate(changedDate);
     setUserBirthDateObj(date);
 
-    //setAlreadyEmailMessage("");
+    setAlreadyEmailMessage("");
     setAxiosErrorMessage("");
 
     if (date === null || date === undefined || changedDate === "") {
@@ -90,7 +86,7 @@ const Signup = () => {
   const onUserPasswordChange = (e) => {
     setUserPassword(e.target.value);
 
-    //setAlreadyEmailMessage("");
+    setAlreadyEmailMessage("");
     setAxiosErrorMessage("");
     setPassMessage("");
 
@@ -118,7 +114,7 @@ const Signup = () => {
   const onUserPassword2Change = (e) => {
     setUserPassword2(e.target.value);
 
-    //setAlreadyEmailMessage("");
+    setAlreadyEmailMessage("");
     setAxiosErrorMessage("");
     setPass2Message("");
 
@@ -138,6 +134,8 @@ const Signup = () => {
   };
 
   const onSignupClickHandler = async () => {
+    //같은 함수 안에서는 상태변수가 바뀌지 않음 ????
+    //대안으로 일반 변수를 사용함
     if (
       userNickName !== "" &&
       userNickName.length >= 2 &&
@@ -159,22 +157,18 @@ const Signup = () => {
           }
         })
         .catch(function (err) {
-          console.log(err.message);
-          setAlreadyNickNameMessage(err.message);
+          if (err.response.status === 409) {
+            setAlreadyNickNameMessage("등록된 닉네임이 이미 있습니다!");
+          } else {
+            setAlreadyNickNameMessage(err.message);
+          }
         });
     } else {
       setNickNameMessage("올바른 닉네임이 아닙니다.(최소길이: 2, 최대길이: 8)");
     }
 
-    if (userEmail === "") {
-      setEmailMessage("이메일란이 비어있습니다!");
-    } else {
-      setEmailMessage("");
-    }
-
     if (validator.isEmail(userEmail)) {
-      //setEmailMessage("");
-      setAlreadyEmailMessage("");
+      setEmailMessage("");
 
       await axios
         .get(
@@ -190,8 +184,11 @@ const Signup = () => {
           }
         })
         .catch(function (err) {
-          setAlreadyEmailMessage(err.message);
-          console.log(err.message);
+          if (err.response.status === 409) {
+            setAlreadyEmailMessage("등록된 이메일이 이미 있습니다!");
+          } else {
+            setAlreadyEmailMessage(err.message);
+          }
         });
     } else {
       setEmailMessage("이메일 형식이 올바르지 않습니다!");
@@ -227,9 +224,7 @@ const Signup = () => {
       userNickName !== "" &&
       userNickName.length >= 2 &&
       userNickName.length <= 8 &&
-      alreadyNickNameMessage === "" &&
       validator.isEmail(userEmail) &&
-      alreadyEmailMessage === "" &&
       userBirthDate !== "" &&
       userBirthDateObj !== null &&
       userPassword !== "" &&
@@ -259,8 +254,12 @@ const Signup = () => {
           navigator("/login");
         })
         .catch(function (err) {
-          console.log(err);
-          setAxiosErrorMessage(err.message);
+          if (err.response.status === 409) {
+            setAxiosErrorMessage("");
+          } else {
+            console.log(err);
+            setAxiosErrorMessage(err.message);
+          }
         });
     }
   };
