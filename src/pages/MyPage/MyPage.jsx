@@ -3,6 +3,8 @@ import MyRestaurant from "./MyRestaurant";
 import MyFavoriteRestaurant from "./MyFavoriteRestaurant";
 import MyEditProfile from "./MyEditProfile";
 import { useParams } from "react-router-dom";
+import styled from "styled-components";
+import MyInfo from "./MyInfo";
 
 const MyPage = () => {
   const { pagenumber } = useParams();
@@ -11,24 +13,53 @@ const MyPage = () => {
     return (
       <>
         <MyPageMenu />
-        <MyRestaurant />
+        <MyMain>
+          <MyPageContainer>
+            <MyInfo />
+            <MyRestaurant />
+          </MyPageContainer>
+        </MyMain>
       </>
     );
   } else if (pagenumber === "1") {
     return (
       <>
         <MyPageMenu />
-        <MyFavoriteRestaurant />
+        <MyMain>
+          <MyPageContainer>
+            <MyInfo />
+            <MyFavoriteRestaurant />
+          </MyPageContainer>
+        </MyMain>
       </>
     );
   } else if (pagenumber === "2") {
     return (
       <>
         <MyPageMenu />
-        <MyEditProfile />
+        <MyMain>
+          <MyPageContainer>
+            <MyInfo />
+            <MyEditProfile />
+          </MyPageContainer>
+        </MyMain>
       </>
     );
   }
 };
+
+const MyMain = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const MyPageContainer = styled.div`
+  width: 1000px;
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+`;
 
 export default MyPage;

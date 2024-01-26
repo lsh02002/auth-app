@@ -81,6 +81,7 @@ const UserInfoProfile = styled.div`
 
 const UserInfoContainerProfile = styled.div`
   width: 500px;
+  height: 700px;
   padding: 30px;
   display: flex;
   flex-direction: column;

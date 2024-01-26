@@ -8,9 +8,11 @@ const ChangePassword = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  //비밀번호 보이기/ 숨기기 상태변수
+  const [isShowPwd, setIsShowPwd] = useState(false);
+
   const [newPasswordMessage, setNewPasswordMessage] = useState("");
   const [passMatchMessage, setPassMatchMessage] = useState("");
-
   const [axiosErrorMessage, setAxiosErrorMessage] = useState("");
 
   const OnOldPasswordChange = (e) => {
@@ -57,8 +59,23 @@ const ChangePassword = () => {
     }
   };
 
+  const onTogglePwdShowHandler = () => {
+    if (!isShowPwd) {
+      setIsShowPwd(true);
+    } else {
+      setIsShowPwd(false);
+    }
+  };
+
   const OnChangeClickHandler = async () => {
+    if (oldPassword === "" || newPassword === "" || confirmPassword === "") {
+      setAxiosErrorMessage("비어있는 칸이 있습니다!");
+    }
+
     if (
+      oldPassword !== "" &&
+      newPassword !== "" &&
+      confirmPassword !== "" &&
       newPassword === confirmPassword &&
       validator.isAlphanumeric(newPassword) &&
       newPassword.length > 7 &&
@@ -96,9 +113,10 @@ const ChangePassword = () => {
           value={oldPassword}
           onChange={OnOldPasswordChange}
         />
+        <br />
         <LabelChange htmlFor="newpass">새로운 비밀번호</LabelChange>
         <InputChange
-          type="password"
+          type={isShowPwd ? "text" : "password"}
           id="newpass"
           name="newpass"
           value={newPassword}
@@ -109,13 +127,23 @@ const ChangePassword = () => {
         )}
         <LabelChange htmlFor="confirmpass">새로운 비밀번호 확인</LabelChange>
         <InputChange
-          type="password"
+          type={isShowPwd ? "text" : "password"}
           id="confirmpass"
           name="confirmpass"
           value={confirmPassword}
           onChange={OnConfirmPasswordChange}
         />
         {passMatchMessage && <MessageChange>{passMatchMessage}</MessageChange>}
+        <PwdCheckDivChange>
+          <PwdCheckBoxChange
+            type="checkbox"
+            id="user_check_show_pwd"
+            onClick={onTogglePwdShowHandler}
+          />
+          <PwdCheckLabelChange htmlFor="user_check_show_pwd">
+            비밀번호 보이기
+          </PwdCheckLabelChange>
+        </PwdCheckDivChange>
         <ButtonChange onClick={OnChangeClickHandler}>
           비밀번호 변경
         </ButtonChange>
@@ -156,9 +184,24 @@ const InputChange = styled.input`
   width: 170px;
 `;
 
+const PwdCheckDivChange = styled.div`
+  display: flex;
+  justify-content: end;
+  width: 180px;
+`;
+const PwdCheckBoxChange = styled.input`
+  align: left;
+`;
+
+const PwdCheckLabelChange = styled.label`
+  width: 80px;
+  font-size: 11px;
+`;
+
 const ButtonChange = styled.button`
-  width: 100px;
-  height: 30px;
+  margin: 20px;
+  width: 120px;
+  height: 40px;
 
   border: none;
   cursor: pointer;
