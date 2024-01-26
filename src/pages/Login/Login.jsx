@@ -64,7 +64,12 @@ const Login = ({ updateIsToken }) => {
         })
         .then(function (res) {
           console.log(res);
-          localStorage.setItem("token", res.headers.token);
+
+          const item = {
+            token: res.headers.token,
+            email: userId,
+          };
+          localStorage.setItem("token", JSON.stringify(item));
 
           updateIsToken(true);
           navigator("/");

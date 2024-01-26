@@ -2,25 +2,41 @@ import React, { useState, useLayoutEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import backgroundImage from "./logout-background.jpg";
+//import axios from "axios";
 
 const Logout = ({ updateIsToken }) => {
   const navigator = useNavigate();
   const [userToken, setUserToken] = useState("");
 
   useLayoutEffect(() => {
-    let pass = localStorage.getItem("token");
+    const itemStr = localStorage.getItem("token");
+    const item = JSON.parse(itemStr);
 
-    if (pass === undefined || pass === null) {
+    if (item === undefined || item === null) {
       setUserToken("");
     } else {
-      setUserToken(pass);
+      setUserToken(item);
     }
   }, []);
 
   const logoutHandler = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("mypagenumber");
+    /*await axios
+      .post("https://hansol.lhenry0.com/auth/logout")
+      .then((res) => {
+        //로그아웃 성공
+        localStorage.removeItem("token");
+        updateIsToken(false);
+        console.log(res);
 
+        alert("로그아웃 되셨습니다!");
+        navigator("/");
+      })
+      .catch((err) => {
+        //로그아웃에 실패하면 err 출력
+        console.log(err.response.data);
+      });
+*/
+    localStorage.removeItem("token");
     updateIsToken(false);
 
     alert("로그아웃 되셨습니다!");
@@ -38,8 +54,11 @@ const Logout = ({ updateIsToken }) => {
           <BackgroundImgLogout>
             <ImgLogout src={backgroundImage} alt="" />
             <MessageLogout>
-              <b>{userToken && userToken.substring(0, 30)}... 님</b> 로그아웃
-              하시겠습니까?
+              {userToken && (
+                <>
+                  <b>{userToken.email} 님</b> 로그아웃 하시겠습니까?
+                </>
+              )}
               <ButtonLogout onClick={logoutHandler}>로그 아웃</ButtonLogout>
             </MessageLogout>
           </BackgroundImgLogout>

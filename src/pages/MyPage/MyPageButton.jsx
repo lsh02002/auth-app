@@ -9,6 +9,7 @@ const MyPageButton = ({ isToken }) => {
         <>
           <LinkPage to="/logout">로그아웃 페이지로 이동</LinkPage>
           <LinkPage to="/mypage/0">마이 페이지로 이동</LinkPage>
+          <LinkPage to="change-password">비밀번호 바꾸기</LinkPage>
         </>
       ) : (
         <>

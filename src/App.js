@@ -9,9 +9,11 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MyPageButton from "./pages/MyPage/MyPageButton";
 import FindPassword from "./pages/Login/FindPassword";
 import FindEmail from "./pages/Login/FindEmail";
+import ChangePassword from "./pages/Login/ChangePassword";
 
 function App() {
   const [isToken, setIsToken] = useState(false);
+
   useLayoutEffect(() => {
     if (localStorage.getItem("token")) {
       setIsToken(true);
@@ -63,7 +65,7 @@ function App() {
                 />
               }
             />
-
+            <Route exact path="/change-password" element={<ChangePassword />} />
             <Route exact path="/findpassword" element={<FindPassword />} />
 
             <Route
@@ -96,7 +98,7 @@ function App() {
             />
             <Route
               exact
-              path="/mypage"
+              path={"/mypage/*"}
               element={
                 <LoginError
                   pageName={"MyPage"}
@@ -106,7 +108,7 @@ function App() {
             />
             <Route
               exact
-              path="/changepassword"
+              path="/change-password"
               element={
                 <LoginError
                   pageName={"ChangePassword"}
