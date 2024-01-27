@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 
-const MyFavoriteRestaurant = () => {
+const MyRestaurant = () => {
   return (
     <>
       <hr />
       <MyMain>
-        <MyFavoriteContainer></MyFavoriteContainer>
+        <MyRestaurantContainer>나의 맛집</MyRestaurantContainer>
       </MyMain>
     </>
   );
@@ -19,16 +19,15 @@ const MyMain = styled.div`
   align-items: center;
 `;
 
-const MyFavoriteContainer = styled.div`
+const MyRestaurantContainer = styled.div`
   width: 500px;
   height: 700px;
   padding: 30px;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
 
   border: 1px solid gray;
 `;
 
-export default MyFavoriteRestaurant;
+export default MyRestaurant;

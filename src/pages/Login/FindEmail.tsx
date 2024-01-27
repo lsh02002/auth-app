@@ -58,7 +58,7 @@ const FindEmail = () => {
         <ReactDatePicker
           id="user_birth"
           dateFormat="yyyy-MM-dd"
-          startDate={() => new Date()}
+          startDate={null}
           showYearDropdown
           selected={dateofBirthObj}
           onChange={(date) => OnBirthDateChange(date)}

@@ -1,7 +1,11 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const MyInfo = () => {
+  const navigator = useNavigate();
+
   return (
     <MainInfo>
       <ContainerInfo>
@@ -12,22 +16,28 @@ const MyInfo = () => {
           <h3>Seho</h3>
         </CenterInfo>
         <CenterInfo>
-          <ButtonInfo>회원정보수정</ButtonInfo>
+          <ButtonInfo onClick={() => navigator("/mypage/2")}>
+            회원정보수정
+          </ButtonInfo>
         </CenterInfo>
         <CenterInfo>
           <RestrauntInfo>
-            <FavoriteInfo>
-              <CountInfo>
-                <b>나의 맛집</b>
-              </CountInfo>
-              <CountInfo>15</CountInfo>
-            </FavoriteInfo>
-            <FavoriteInfo>
-              <CountInfo>
-                <b>찜한 맛집</b>
-              </CountInfo>
-              <CountInfo>7</CountInfo>
-            </FavoriteInfo>
+            <LinkInfo to="/mypage/0">
+              <FavoriteInfo>
+                <CounterInfo>
+                  <b>나의 맛집</b>
+                </CounterInfo>
+                <CounterInfo>15</CounterInfo>
+              </FavoriteInfo>
+            </LinkInfo>
+            <LinkInfo to="/mypage/1">
+              <FavoriteInfo>
+                <CounterInfo>
+                  <b>찜한 맛집</b>
+                </CounterInfo>
+                <CounterInfo>7</CounterInfo>
+              </FavoriteInfo>
+            </LinkInfo>
           </RestrauntInfo>
         </CenterInfo>
         <CenterInfo>
@@ -84,6 +94,7 @@ const ButtonInfo = styled.button`
   height: 40px;
   border-radius: 7px;
   margin: 20px;
+  cursor: pointer;
 `;
 
 const RestrauntInfo = styled.div`
@@ -102,8 +113,12 @@ const FavoriteInfo = styled.div`
   align-items: center;
 `;
 
-const CountInfo = styled.div`
+const CounterInfo = styled.div`
   padding-bottom: 15px;
+`;
+
+const LinkInfo = styled(Link)`
+  cursor: pointer;
 `;
 
 export default MyInfo;

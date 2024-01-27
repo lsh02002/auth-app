@@ -337,7 +337,7 @@ const Signup = () => {
         <ReactDatePicker
           id="user_birth"
           dateFormat="yyyy-MM-dd"
-          startDate={() => new Date()}
+          startDate={null}
           showYearDropdown
           selected={userBirthDateObj}
           onChange={(date) => onBirthDateChange(date)}

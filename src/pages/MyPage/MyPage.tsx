@@ -1,10 +1,11 @@
-import MyPageMenu from "./MyPageMenu";
-import MyRestaurant from "./MyRestaurant";
-import MyFavoriteRestaurant from "./MyFavoriteRestaurant";
-import MyEditProfile from "./MyEditProfile";
+import React from "react";
+import MyPageMenu from "./MyPageMenu.tsx";
+import MyRestaurant from "./MyRestaurant.tsx";
+import MyFavoriteRestaurant from "./MyFavoriteRestaurant.tsx";
+import MyEditProfile from "./MyEditProfile.tsx";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import MyInfo from "./MyInfo";
+import MyInfo from "./MyInfo.tsx";
 
 const MyPage = () => {
   const { pagenumber } = useParams();
@@ -58,7 +59,7 @@ const MyMain = styled.div`
 const MyPageContainer = styled.div`
   width: 1000px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: start;
 `;
 

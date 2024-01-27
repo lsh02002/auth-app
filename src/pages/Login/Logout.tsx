@@ -10,12 +10,15 @@ const Logout = ({ updateIsToken }) => {
 
   useLayoutEffect(() => {
     const itemStr = localStorage.getItem("token");
-    const item = JSON.parse(itemStr);
 
-    if (item === undefined || item === null) {
-      setUserToken("");
-    } else {
-      setUserToken(item);
+    if (itemStr !== null) {
+      const item = JSON.parse(itemStr);
+
+      if (itemStr === undefined || itemStr === null) {
+        setUserToken("");
+      } else {
+        setUserToken(item.email);
+      }
     }
   }, []);
 
@@ -56,7 +59,7 @@ const Logout = ({ updateIsToken }) => {
             <MessageLogout>
               {userToken && (
                 <>
-                  <b>{userToken.email} 님</b> 로그아웃 하시겠습니까?
+                  <b>{userToken} 님</b> 로그아웃 하시겠습니까?
                 </>
               )}
               <ButtonLogout onClick={logoutHandler}>로그 아웃</ButtonLogout>
@@ -112,7 +115,7 @@ const MessageLogout = styled.div`
 const ButtonLogout = styled.button`
   margin: 20px;
   color: white;
-  font-weight: 600px;
+  font-weight: 600;
   width: 200px;
   height: 80px;
   background-color: black;

@@ -1,15 +1,16 @@
 import { useLayoutEffect, useState } from "react";
 import "./App.css";
-import Login from "./pages/Login/Login";
-import LoginError from "./pages/Login/LoginError";
-import Logout from "./pages/Login/Logout";
-import MyPage from "./pages/MyPage/MyPage";
-import Signup from "./pages/Signup/Signup";
+import Login from "./pages/Login/Login.tsx";
+import LoginError from "./pages/Login/LoginError.tsx";
+import Logout from "./pages/Login/Logout.tsx";
+import MyPage from "./pages/MyPage/MyPage.tsx";
+import Signup from "./pages/Signup/Signup.tsx";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import MyPageButton from "./pages/MyPage/MyPageButton";
-import FindPassword from "./pages/Login/FindPassword";
-import FindEmail from "./pages/Login/FindEmail";
-import ChangePassword from "./pages/Login/ChangePassword";
+import MyPageButton from "./pages/MyPage/MyPageButton.tsx";
+import FindPassword from "./pages/Login/FindPassword.tsx";
+import FindEmail from "./pages/Login/FindEmail.tsx";
+import ChangePassword from "./pages/Login/ChangePassword.tsx";
+import React from "react";
 
 function App() {
   const [isToken, setIsToken] = useState(false);
@@ -32,14 +33,12 @@ function App() {
           <Routes>
             {/* 물론 메인페이지는 담당자 분이 바꾸셔도 됩니다 */}
             <Route
-              exact
               path="/"
               element={
                 <LoginError pageName={"Main"} error={"로그인 상태입니다!"} />
               }
             />
             <Route
-              exact
               path="/find-email"
               element={
                 <LoginError
@@ -49,14 +48,12 @@ function App() {
               }
             />
             <Route
-              exact
               path="/login"
               element={
                 <LoginError pageName={"Login"} error={"로그인 상태입니다!"} />
               }
             />
             <Route
-              exact
               path="/signup"
               element={
                 <LoginError
@@ -65,15 +62,14 @@ function App() {
                 />
               }
             />
-            <Route exact path="/change-password" element={<ChangePassword />} />
-            <Route exact path="/findpassword" element={<FindPassword />} />
+            <Route path="/change-password" element={<ChangePassword />} />
+            <Route path="/findpassword" element={<FindPassword />} />
 
             <Route
-              exact
               path="/logout"
               element={<Logout updateIsToken={setIsToken} />}
             />
-            <Route exact path="/mypage/:pagenumber" element={<MyPage />} />
+            <Route path="/mypage/:pagenumber" element={<MyPage />} />
           </Routes>
         </Router>
       ) : (
@@ -81,13 +77,8 @@ function App() {
         <Router>
           <MyPageButton isToken={isToken} />
           <Routes>
+            <Route path="/" element={<Login updateIsToken={setIsToken} />} />
             <Route
-              exact
-              path="/"
-              element={<Login updateIsToken={setIsToken} />}
-            />
-            <Route
-              exact
               path="/logout"
               element={
                 <LoginError
@@ -97,7 +88,6 @@ function App() {
               }
             />
             <Route
-              exact
               path={"/mypage/*"}
               element={
                 <LoginError
@@ -107,7 +97,6 @@ function App() {
               }
             />
             <Route
-              exact
               path="/change-password"
               element={
                 <LoginError
@@ -116,13 +105,12 @@ function App() {
                 />
               }
             />
-            <Route exact path="/find-email" element={<FindEmail />} />
+            <Route path="/find-email" element={<FindEmail />} />
             <Route
-              exact
               path="/login"
               element={<Login updateIsToken={setIsToken} />}
             />
-            <Route exact path="/signup" element={<Signup />} />
+            <Route path="/signup" element={<Signup />} />
           </Routes>
         </Router>
       )}

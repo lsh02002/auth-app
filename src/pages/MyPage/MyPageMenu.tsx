@@ -57,11 +57,9 @@ const EditProfileMypage = styled.div`
 const LinkMypage = styled(Link)`
   margin: 5px;
   width: 150px;
-  color: white;
   font-weight: 600;
   padding: 10px;
   cursor: pointer;
-  background-color: black;
   border-radius: 12px;
 `;
 
