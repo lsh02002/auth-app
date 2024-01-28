@@ -4,23 +4,17 @@ import styled from "styled-components";
 import backgroundImage from "./logout-background.jpg";
 //import axios from "axios";
 
-const Logout = ({ updateIsToken }) => {
+const Logout = ({ nickName, updateIsToken }) => {
   const navigator = useNavigate();
   const [userToken, setUserToken] = useState("");
 
   useLayoutEffect(() => {
-    const itemStr = localStorage.getItem("token");
-
-    if (itemStr !== null) {
-      const item = JSON.parse(itemStr);
-
-      if (itemStr === undefined || itemStr === null) {
-        setUserToken("");
-      } else {
-        setUserToken(item.email);
-      }
+    if (nickName === "") {
+      setUserToken("");
+    } else {
+      setUserToken(nickName);
     }
-  }, []);
+  }, [nickName]);
 
   const logoutHandler = () => {
     /*await axios
@@ -42,7 +36,6 @@ const Logout = ({ updateIsToken }) => {
     localStorage.removeItem("token");
     updateIsToken(false);
 
-    alert("로그아웃 되셨습니다!");
     navigator("/");
   };
 

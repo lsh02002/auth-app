@@ -10,16 +10,24 @@ import MyPageButton from "./pages/MyPage/MyPageButton.tsx";
 import FindPassword from "./pages/Login/FindPassword.tsx";
 import FindEmail from "./pages/Login/FindEmail.tsx";
 import ChangePassword from "./pages/Login/ChangePassword.tsx";
+import Redirect from "./pages/Login/Redirect.tsx";
 import React from "react";
 
 function App() {
   const [isToken, setIsToken] = useState(false);
+  const [userNickName, setUserNickName] = useState("");
 
   useLayoutEffect(() => {
-    if (localStorage.getItem("token")) {
+    const itemStr = localStorage.getItem("token");
+
+    if (itemStr !== null) {
+      const item = JSON.parse(itemStr);
+
       setIsToken(true);
+      setUserNickName(item.nickName);
     } else {
       setIsToken(false);
+      setUserNickName("");
     }
   }, []);
 
@@ -67,7 +75,9 @@ function App() {
 
             <Route
               path="/logout"
-              element={<Logout updateIsToken={setIsToken} />}
+              element={
+                <Logout nickName={userNickName} updateIsToken={setIsToken} />
+              }
             />
             <Route path="/mypage/:pagenumber" element={<MyPage />} />
           </Routes>
@@ -77,6 +87,10 @@ function App() {
         <Router>
           <MyPageButton isToken={isToken} />
           <Routes>
+            <Route
+              path="/redirect"
+              element={<Redirect updateIsToken={setIsToken} />}
+            />
             <Route path="/" element={<Login updateIsToken={setIsToken} />} />
             <Route
               path="/logout"

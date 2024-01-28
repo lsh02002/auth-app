@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
+import loginButton from "./kakao-login-button.jpg";
 
 const Login = ({ updateIsToken }) => {
   const [userId, setUserId] = useState("");
@@ -13,6 +14,15 @@ const Login = ({ updateIsToken }) => {
   const [failMessage, setFailMessage] = useState("");
 
   const navigator = useNavigate();
+
+  const protocol = window.location.protocol;
+  const hostname = window.location.hostname;
+  const port = window.location.port;
+
+  const currentUrl = `${protocol}//${hostname}:${port}`;
+
+  const clientId = process.env.REACT_APP_CLIENT_ID;
+  const redirectUri = `${currentUrl}/redirect`;
 
   const onUserIdChange = (e) => {
     setUserId(e.target.value);
@@ -67,7 +77,7 @@ const Login = ({ updateIsToken }) => {
 
           const item = {
             token: res.headers.token,
-            email: userId,
+            nickName: res.data.data.nickName,
           };
           localStorage.setItem("token", JSON.stringify(item));
 
@@ -79,6 +89,10 @@ const Login = ({ updateIsToken }) => {
           setFailMessage(err.message);
         });
     }
+  };
+
+  const onKakaoHandler = async () => {
+    window.location.href = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}`;
   };
 
   return (
@@ -111,6 +125,7 @@ const Login = ({ updateIsToken }) => {
           <UserLoginButton onClick={onLoginClickHandler}>
             로그인
           </UserLoginButton>
+          <ImgLogin src={loginButton} alt="" onClick={onKakaoHandler} />
           <LinkLogin to="/signup">회원가입 하기</LinkLogin>
           <LinkLogin to="/find-email">이메일 찾기</LinkLogin>
           {failMessage && <MessageLogin>{failMessage}</MessageLogin>}
@@ -187,6 +202,12 @@ const UserLoginButton = styled.button`
     background-color: rgb(40, 182, 214);
     cursor: pointer;
   }
+`;
+
+const ImgLogin = styled.img`
+  width: 270px;
+  height: 50px;
+  margin-bottom: 20px;
 `;
 
 const MessageLogin = styled.div`
