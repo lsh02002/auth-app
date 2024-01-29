@@ -129,8 +129,6 @@ const Signup = () => {
         `https://hansol.lhenry0.com/auth/sign-up/check-email?email=${e.target.value}`
       )
       .then(function (res) {
-        console.log(res.data.data);
-
         if (res.data.data) {
           setAlreadyEmailMessage("");
         } else {
@@ -218,6 +216,27 @@ const Signup = () => {
       userNickName.length <= 29
     ) {
       setNickNameMessage("");
+
+      await axios
+        .get(
+          `https://hansol.lhenry0.com/auth/sign-up/check-nickname?nickname=${userNickName}`
+        )
+        .then(function (res) {
+          console.log(res.data.data);
+
+          if (res.data.data) {
+            setAlreadyNickNameMessage("");
+          } else {
+            setAlreadyNickNameMessage("등록된 닉네임이 이미 있습니다!");
+          }
+        })
+        .catch(function (err) {
+          if (err.response.status === 409) {
+            setAlreadyNickNameMessage("등록된 닉네임이 이미 있습니다!");
+          } else {
+            setAlreadyNickNameMessage(err.message);
+          }
+        });
     } else {
       setNickNameMessage(
         "올바른 닉네임이 아닙니다.(최소길이: 2, 최대길이: 30)"
@@ -226,6 +245,25 @@ const Signup = () => {
 
     if (validator.isEmail(userEmail)) {
       setEmailMessage("");
+
+      await axios
+        .get(
+          `https://hansol.lhenry0.com/auth/sign-up/check-email?email=${userEmail}`
+        )
+        .then(function (res) {
+          if (res.data.data) {
+            setAlreadyEmailMessage("");
+          } else {
+            setAlreadyEmailMessage("등록된 이메일이 이미 있습니다!");
+          }
+        })
+        .catch(function (err) {
+          if (err.response.status === 409) {
+            setAlreadyEmailMessage("등록된 이메일이 이미 있습니다!");
+          } else {
+            setAlreadyEmailMessage(err.message);
+          }
+        });
     } else {
       setEmailMessage("이메일 형식이 올바르지 않습니다!");
     }
@@ -324,6 +362,7 @@ const Signup = () => {
           name="user_email"
           id="user_email"
           placeholder="이메일을 입력하세요."
+          disabled={searchParams.get("email") ? true : false}
           value={userEmail}
           onChange={onUserEmailChange}
           onBlur={onUserEmailBlur}
