@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.module.css";
 import validator from "validator";
@@ -9,6 +9,9 @@ import moment from "moment";
 import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
+  //카카오 회원가입 미완성시
+  const [searchParams] = useSearchParams();
+
   const [userNickName, setUserNickName] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [userGender, setUserGender] = useState(0);
@@ -37,6 +40,16 @@ const Signup = () => {
 
   const navigator = useNavigate();
 
+  useLayoutEffect(() => {
+    const searchEmail = searchParams.get("email");
+    const searchNickname = searchParams.get("nickname");
+
+    if (searchEmail && searchNickname) {
+      setUserEmail(searchEmail);
+      setUserNickName(searchNickname);
+    }
+  }, [searchParams]);
+
   const onUserNickNameChange = (e) => {
     setUserNickName(e.target.value.trim());
 
@@ -46,11 +59,13 @@ const Signup = () => {
     if (
       e.target.value.trim() !== "" &&
       e.target.value.length >= 2 &&
-      e.target.value.length <= 8
+      e.target.value.length <= 29
     ) {
       setNickNameMessage("");
     } else {
-      setNickNameMessage("올바른 닉네임이 아닙니다.(최소길이: 2, 최대길이: 8)");
+      setNickNameMessage(
+        "올바른 닉네임이 아닙니다.(최소길이: 2, 최대길이: 30)"
+      );
     }
   };
 
@@ -59,10 +74,12 @@ const Signup = () => {
       !(
         e.target.value.trim() !== "" &&
         e.target.value.length >= 2 &&
-        e.target.value.length <= 8
+        e.target.value.length <= 29
       )
     ) {
-      setNickNameMessage("올바른 닉네임이 아닙니다.(최소길이: 2, 최대길이: 8)");
+      setNickNameMessage(
+        "올바른 닉네임이 아닙니다.(최소길이: 2, 최대길이: 30)"
+      );
       return;
     }
 
@@ -71,9 +88,9 @@ const Signup = () => {
         `https://hansol.lhenry0.com/auth/sign-up/check-nickname?nickname=${e.target.value}`
       )
       .then(function (res) {
-        console.log(res.data);
+        console.log(res.data.data);
 
-        if (res.data) {
+        if (res.data.data) {
           setAlreadyNickNameMessage("");
         } else {
           setAlreadyNickNameMessage("등록된 닉네임이 이미 있습니다!");
@@ -112,9 +129,9 @@ const Signup = () => {
         `https://hansol.lhenry0.com/auth/sign-up/check-email?email=${e.target.value}`
       )
       .then(function (res) {
-        console.log(res.data);
+        console.log(res.data.data);
 
-        if (res.data) {
+        if (res.data.data) {
           setAlreadyEmailMessage("");
         } else {
           setAlreadyEmailMessage("등록된 이메일이 이미 있습니다!");
@@ -198,11 +215,13 @@ const Signup = () => {
     if (
       userNickName !== "" &&
       userNickName.length >= 2 &&
-      userNickName.length <= 8
+      userNickName.length <= 29
     ) {
       setNickNameMessage("");
     } else {
-      setNickNameMessage("올바른 닉네임이 아닙니다.(최소길이: 2, 최대길이: 8)");
+      setNickNameMessage(
+        "올바른 닉네임이 아닙니다.(최소길이: 2, 최대길이: 30)"
+      );
     }
 
     if (validator.isEmail(userEmail)) {
@@ -242,7 +261,7 @@ const Signup = () => {
       alreadyEmailMessage === "" &&
       userNickName !== "" &&
       userNickName.length >= 2 &&
-      userNickName.length <= 8 &&
+      userNickName.length <= 29 &&
       validator.isEmail(userEmail) &&
       userBirthDate !== "" &&
       userBirthDateObj !== null &&

@@ -1,6 +1,6 @@
 import { useSearchParams } from "react-router-dom";
 import axios from "axios";
-import { useLayoutEffect } from "react";
+import { useEffect } from "react";
 
 const Redirect = ({ updateIsToken }) => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -12,7 +12,7 @@ const Redirect = ({ updateIsToken }) => {
 
   const currentUrl = `${protocol}//${hostname}:${port}`;
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const getCode = async () => {
       await axios
         .post("https://hansol.lhenry0.com/auth/social/kakao", {
@@ -33,12 +33,23 @@ const Redirect = ({ updateIsToken }) => {
           window.location.href = currentUrl;
         })
         .catch(function (err) {
-          console.log(err);
+          if (err.response.status === 422) {
+            // eslint-disable-next-line no-restricted-globals
+            if (confirm("회원가입되지 않으셨습니다. 회원가입 하시겠습니까?")) {
+              const email = err.response.data.request.email;
+              const tempnickname = err.response.data.request.nickName;
+
+              window.location.href = `${currentUrl}/signup?email=${email}&nickname=${tempnickname}`;
+            } else {
+              window.location.href = `${currentUrl}/login`;
+            }
+          }
         });
     };
 
     getCode();
-  }, [currentUrl, updateIsToken, searchParams]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
 };
 
 export default Redirect;

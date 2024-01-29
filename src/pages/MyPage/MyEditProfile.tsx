@@ -1,9 +1,42 @@
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import styled from "styled-components";
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.module.css";
+import axios from "axios";
 
 const MyEditProfile = () => {
+  /*  const [email, setEmail] = useState("");
+  const [nickName, setNickName] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [dateOfBirth, setDateOfBirth] = useState("");
+  const [gender, setGender] = useState("");
+*/
+  useLayoutEffect(() => {
+    const itemStr = localStorage.getItem("token");
+
+    const getUserInfo = async () => {
+      if (itemStr !== null) {
+        const item = JSON.parse(itemStr);
+
+        await axios
+          .get("https://hansol.lhenry0.com/v1/api/account/my-page", {
+            headers: {
+              Token: item.token,
+            },
+          })
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    };
+
+    getUserInfo();
+  }, []);
+
   return (
     <>
       <hr />
