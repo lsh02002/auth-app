@@ -35,6 +35,7 @@ const Logout = ({ nickName, updateIsToken }) => {
       });
 */
     localStorage.removeItem("token");
+    localStorage.removeItem("nickName");
     updateIsToken(false);
 
     navigator("/");

@@ -1,8 +1,8 @@
-import React, { useLayoutEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.module.css";
-import axios from "axios";
+//import axios from "axios";
 
 const MyEditProfile = () => {
   /*  const [email, setEmail] = useState("");
@@ -11,18 +11,16 @@ const MyEditProfile = () => {
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [gender, setGender] = useState("");
-*/
-  useLayoutEffect(() => {
-    const itemStr = localStorage.getItem("token");
 
+  useEffect(() => {
     const getUserInfo = async () => {
-      if (itemStr !== null) {
-        const item = JSON.parse(itemStr);
+      const token = localStorage.getItem("token");
 
+      if (token !== "") {
         await axios
           .get("https://hansol.lhenry0.com/v1/api/account/my-page", {
             headers: {
-              Token: item.token,
+              Token: token,
             },
           })
           .then((res) => {
@@ -36,7 +34,7 @@ const MyEditProfile = () => {
 
     getUserInfo();
   }, []);
-
+*/
   return (
     <>
       <hr />

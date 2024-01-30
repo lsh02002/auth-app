@@ -18,12 +18,18 @@ function App() {
   const [userNickName, setUserNickName] = useState("");
 
   useLayoutEffect(() => {
-    if (userNickName) {
-      setIsToken(true);
+    if (localStorage.getItem("nickName") !== null) {
+      const nickName = localStorage.getItem("nickName");
+
+      if (nickName !== null) {
+        setUserNickName(nickName);
+        setIsToken(true);
+      }
     } else {
+      setUserNickName("");
       setIsToken(false);
     }
-  }, [userNickName]);
+  }, [isToken, setIsToken]);
 
   // 로그인 되었을 때 페이지들
   return (
@@ -83,22 +89,9 @@ function App() {
           <Routes>
             <Route
               path="/redirect"
-              element={
-                <Redirect
-                  updateNickName={setUserNickName}
-                  updateIsToken={setIsToken}
-                />
-              }
+              element={<Redirect updateIsToken={setIsToken} />}
             />
-            <Route
-              path="/"
-              element={
-                <Login
-                  updateNickName={setUserNickName}
-                  updateIsToken={setIsToken}
-                />
-              }
-            />
+            <Route path="/" element={<Login updateIsToken={setIsToken} />} />
             <Route
               path="/logout"
               element={
@@ -129,12 +122,7 @@ function App() {
             <Route path="/find-email" element={<FindEmail />} />
             <Route
               path="/login"
-              element={
-                <Login
-                  updateNickName={setUserNickName}
-                  updateIsToken={setIsToken}
-                />
-              }
+              element={<Login updateIsToken={setIsToken} />}
             />
             <Route path="/signup" element={<Signup />} />
           </Routes>

@@ -3,7 +3,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import React from "react";
 
-const Redirect = ({ updateNickName, updateIsToken }) => {
+const Redirect = ({ updateIsToken }) => {
   const navigator = useNavigate();
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [searchParams] = useSearchParams();
@@ -27,8 +27,8 @@ const Redirect = ({ updateNickName, updateIsToken }) => {
           const nickName = res.data.data.nickName;
 
           localStorage.setItem("token", token);
+          localStorage.setItem("nickName", nickName);
 
-          updateNickName(nickName);
           updateIsToken(true);
 
           navigator("/");
