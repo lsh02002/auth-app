@@ -5,7 +5,7 @@ import styled from "styled-components";
 import axios from "axios";
 import loginButton from "./kakao-login-button.jpg";
 
-const Login = ({ updateIsToken }) => {
+const Login = ({ updateNickName, updateIsToken }) => {
   const [userId, setUserId] = useState("");
   const [userPassword, setUserPassword] = useState("");
 
@@ -75,13 +75,14 @@ const Login = ({ updateIsToken }) => {
         .then(function (res) {
           console.log(res);
 
-          const item = {
-            token: res.headers.token,
-            nickName: res.data.data.nickName,
-          };
-          localStorage.setItem("token", JSON.stringify(item));
+          const token = res.headers.token;
+          const nickName = res.data.data.nickName;
 
+          localStorage.setItem("token", token);
+
+          updateNickName(nickName);
           updateIsToken(true);
+
           navigator("/");
         })
         .catch(function (err) {

@@ -14,7 +14,8 @@ const Logout = ({ nickName, updateIsToken }) => {
     } else {
       setUserToken(nickName);
     }
-  }, [nickName]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const logoutHandler = () => {
     /*await axios

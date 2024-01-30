@@ -1,17 +1,19 @@
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import { useEffect } from "react";
+import React from "react";
 
-const Redirect = ({ updateIsToken }) => {
+const Redirect = ({ updateNickName, updateIsToken }) => {
+  const navigator = useNavigate();
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [searchParams] = useSearchParams();
-
+  /*
   const protocol = window.location.protocol;
   const hostname = window.location.hostname;
   const port = window.location.port;
 
   const currentUrl = `${protocol}//${hostname}:${port}`;
-
+*/
   useEffect(() => {
     const getCode = async () => {
       await axios
@@ -21,16 +23,15 @@ const Redirect = ({ updateIsToken }) => {
         .then(function (res) {
           console.log(res);
 
-          const item = {
-            token: res.headers.token,
-            nickName: res.data.data.nickName,
-          };
+          const token = res.headers.token;
+          const nickName = res.data.data.nickName;
 
-          localStorage.setItem("token", JSON.stringify(item));
+          localStorage.setItem("token", token);
 
+          updateNickName(nickName);
           updateIsToken(true);
 
-          window.location.href = currentUrl;
+          navigator("/");
         })
         .catch(function (err) {
           if (err.response.status === 422) {
@@ -39,9 +40,9 @@ const Redirect = ({ updateIsToken }) => {
               const email = err.response.data.request.email;
               const tempnickname = err.response.data.request.nickName;
 
-              window.location.href = `${currentUrl}/signup?email=${email}&nickname=${tempnickname}`;
+              navigator(`/signup?email=${email}&nickname=${tempnickname}`);
             } else {
-              window.location.href = `${currentUrl}/login`;
+              navigator("/login");
             }
           }
         });
@@ -49,7 +50,9 @@ const Redirect = ({ updateIsToken }) => {
 
     getCode();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchParams]);
+  }, []);
+
+  return <h1>KaKao Redirecting Page</h1>;
 };
 
 export default Redirect;
