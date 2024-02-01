@@ -19,7 +19,7 @@ const Logout = ({ nickName, updateIsToken }) => {
 
   const logoutHandler = () => {
     /*await axios
-      .post("https://hansol.lhenry0.com/auth/logout")
+      .post("https://www.onesol.shop/auth/logout")
       .then((res) => {
         //로그아웃 성공
         localStorage.removeItem("token");

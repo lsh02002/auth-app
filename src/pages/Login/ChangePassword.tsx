@@ -87,7 +87,7 @@ const ChangePassword = () => {
       //const token = JSON.parse(tokenStr);
 
       await axios
-        .patch("https://hansol.lhenry0.com/v1/api/account/my-page", {
+        .patch(`https://hansol.lhenry0.com/v1/api/account/my-page`, {
           password: newPassword,
         })
         .then(function (res) {

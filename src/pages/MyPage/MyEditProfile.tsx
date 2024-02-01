@@ -1,17 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.module.css";
-//import axios from "axios";
+import axios from "axios";
 
 const MyEditProfile = () => {
-  /*  const [email, setEmail] = useState("");
+  /*
+  const [email, setEmail] = useState("");
   const [nickName, setNickName] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [gender, setGender] = useState("");
-
+*/
   useEffect(() => {
     const getUserInfo = async () => {
       const token = localStorage.getItem("token");
@@ -27,14 +28,14 @@ const MyEditProfile = () => {
             console.log(res);
           })
           .catch((err) => {
-            console.log(err);
+            console.log(err.response.detailMessage);
           });
       }
     };
 
     getUserInfo();
   }, []);
-*/
+
   return (
     <>
       <hr />

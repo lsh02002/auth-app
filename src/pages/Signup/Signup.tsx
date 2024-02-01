@@ -12,6 +12,7 @@ const Signup = () => {
   //카카오 회원가입 미완성시
   const [searchParams] = useSearchParams();
 
+  const [userSocialId, setUserSocialId] = useState("");
   const [userNickName, setUserNickName] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [userGender, setUserGender] = useState(0);
@@ -41,10 +42,12 @@ const Signup = () => {
   const navigator = useNavigate();
 
   useLayoutEffect(() => {
+    const searchSocialId = searchParams.get("socialId");
     const searchEmail = searchParams.get("email");
-    const searchNickname = searchParams.get("nickname");
+    const searchNickname = searchParams.get("nickName");
 
-    if (searchEmail && searchNickname) {
+    if (searchEmail && searchNickname && searchSocialId) {
+      setUserSocialId(searchSocialId);
       setUserEmail(searchEmail);
       setUserNickName(searchNickname);
     }
@@ -97,11 +100,7 @@ const Signup = () => {
         }
       })
       .catch(function (err) {
-        if (err.response.status === 409) {
-          setAlreadyNickNameMessage("등록된 닉네임이 이미 있습니다!");
-        } else {
-          setAlreadyNickNameMessage(err.message);
-        }
+        setAlreadyNickNameMessage(err.message);
       });
   };
 
@@ -129,6 +128,8 @@ const Signup = () => {
         `https://hansol.lhenry0.com/auth/sign-up/check-email?email=${e.target.value}`
       )
       .then(function (res) {
+        console.log(res.data.data);
+
         if (res.data.data) {
           setAlreadyEmailMessage("");
         } else {
@@ -136,11 +137,7 @@ const Signup = () => {
         }
       })
       .catch(function (err) {
-        if (err.response.status === 409) {
-          setAlreadyEmailMessage("등록된 이메일이 이미 있습니다!");
-        } else {
-          setAlreadyEmailMessage(err.message);
-        }
+        setAlreadyEmailMessage(err.message);
       });
   };
 
@@ -231,11 +228,7 @@ const Signup = () => {
           }
         })
         .catch(function (err) {
-          if (err.response.status === 409) {
-            setAlreadyNickNameMessage("등록된 닉네임이 이미 있습니다!");
-          } else {
-            setAlreadyNickNameMessage(err.message);
-          }
+          setAlreadyNickNameMessage(err.message);
         });
     } else {
       setNickNameMessage(
@@ -251,6 +244,8 @@ const Signup = () => {
           `https://hansol.lhenry0.com/auth/sign-up/check-email?email=${userEmail}`
         )
         .then(function (res) {
+          console.log(res.data.data);
+
           if (res.data.data) {
             setAlreadyEmailMessage("");
           } else {
@@ -258,11 +253,7 @@ const Signup = () => {
           }
         })
         .catch(function (err) {
-          if (err.response.status === 409) {
-            setAlreadyEmailMessage("등록된 이메일이 이미 있습니다!");
-          } else {
-            setAlreadyEmailMessage(err.message);
-          }
+          setAlreadyEmailMessage(err.message);
         });
     } else {
       setEmailMessage("이메일 형식이 올바르지 않습니다!");
@@ -312,27 +303,57 @@ const Signup = () => {
       userPassword.match(/\d+/) &&
       userPassword.match(/[a-zA-Z]/)
     ) {
-      const gender2 = userGender === 0 ? "남성" : "여성";
-      await axios
-        .post("https://hansol.lhenry0.com/auth/sign-up", {
-          email: userEmail,
-          nickName: userNickName,
-          password: userPassword,
-          passwordConfirm: userPassword2,
-          dateOfBirth: userBirthDate,
-          gender: gender2,
-        })
-        .then(function (res) {
-          console.log(res);
-          alert(
-            userEmail + " 님 가입을 축하드립니다! 로그인 페이지로 이동합니다."
-          );
-          navigator("/login");
-        })
-        .catch(function (err) {
-          console.log(err);
-          setAxiosErrorMessage(err.message);
-        });
+      if (searchParams === null) {
+        const gender2 = userGender === 0 ? "남성" : "여성";
+        await axios
+          .post("https://hansol.lhenry0.com/auth/sign-up", {
+            email: userEmail,
+            nickName: userNickName,
+            password: userPassword,
+            passwordConfirm: userPassword2,
+            dateOfBirth: userBirthDate,
+            gender: gender2,
+          })
+          .then(function (res) {
+            console.log(res);
+            alert(
+              userNickName +
+                " 님 가입을 축하드립니다! 로그인 페이지로 이동합니다."
+            );
+            navigator("/login");
+          })
+          .catch(function (err) {
+            console.log(err);
+            setAxiosErrorMessage(err.message);
+          });
+      } else {
+        const gender2 = userGender === 0 ? "남성" : "여성";
+        await axios
+          .post(
+            `https://hansol.lhenry0.com/auth/social/sign-up?is-sign-up=true&social-id=${userSocialId}`,
+            {
+              email: userEmail,
+              nickName: userNickName,
+              password: userPassword,
+              passwordConfirm: userPassword2,
+              dateOfBirth: userBirthDate,
+              gender: gender2,
+            }
+          )
+          .then(function (res) {
+            console.log(res);
+
+            alert(
+              userNickName +
+                " 님 가입을 축하드립니다! 로그인 페이지로 이동합니다."
+            );
+            navigator("/login");
+          })
+          .catch(function (err) {
+            console.log(err);
+            setAxiosErrorMessage(err.message);
+          });
+      }
     }
   };
 
