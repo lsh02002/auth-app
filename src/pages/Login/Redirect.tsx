@@ -106,11 +106,10 @@ const Redirect = ({ updateIsToken }) => {
             console.log(request.toString());
             const url = "https://hansol.lhenry0.com/auth/social/connect";
             await axios
-              .post(url, {
+              .post(url, request, {
                 headers: {
                   "Content-Type": "application/x-www-form-urlencoded",
-                },
-                body: request.toString(), // URLSearchParams를 문자열로 변환하여 body에 넣기
+                }, // URLSearchParams를 문자열로 변환하여 body에 넣기
               })
               .then((res) => {
                 console.log("성공 응답:", res);

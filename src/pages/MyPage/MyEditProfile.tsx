@@ -28,7 +28,7 @@ const MyEditProfile = () => {
             console.log(res);
           })
           .catch((err) => {
-            console.log(err.response.detailMessage);
+            console.log(err);
           });
       }
     };
