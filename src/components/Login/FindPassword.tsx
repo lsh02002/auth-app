@@ -1,27 +1,28 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 //import axios from "axios";
+import { BaseSyntheticEvent } from "react";
 
-const FindPassword = () => {
-  const [oldPassword, setOldPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+const FindPassword: React.FC = () => {
+  const [oldPassword, setOldPassword] = useState<string>("");
+  const [newPassword, setNewPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
 
-  const OnOldPasswordChange = (e) => {
+  const OnOldPasswordChange = (e: BaseSyntheticEvent) => {
     setOldPassword(e.target.value);
   };
 
-  const OnNewPasswordChange = (e) => {
+  const OnNewPasswordChange = (e: BaseSyntheticEvent) => {
     setNewPassword(e.target.value);
   };
 
-  const OnConfirmPasswordChange = (e) => {
+  const OnConfirmPasswordChange = (e: BaseSyntheticEvent) => {
     setConfirmPassword(e.target.value);
   };
 
   const OnChangeClickHandler = async () => {
     /*  await axios
-      .post("https://hansol.lhenry0.com/auth/find-email", {
+      .post("https://www.onesol.shop/auth/find-email", {
         nick_name: nickName,
         date_of_birth: dateOfBirth,
       })

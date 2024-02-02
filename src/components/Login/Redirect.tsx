@@ -3,7 +3,11 @@ import axios from "axios";
 import { useEffect } from "react";
 import React from "react";
 
-const Redirect = ({ updateIsToken }) => {
+interface RedirectProps {
+  updateIsToken: any;
+}
+
+const Redirect: React.FC<RedirectProps> = ({ updateIsToken }) => {
   const protocol = window.location.protocol;
   const hostname = window.location.hostname;
   const port = window.location.port;
@@ -17,7 +21,7 @@ const Redirect = ({ updateIsToken }) => {
   useEffect(() => {
     const getCode = async () => {
       await axios
-        .post("https://hansol.lhenry0.com/auth/social/kakao", {
+        .post("https://www.onesol.shop/auth/social/kakao", {
           authorizationCode: searchParams.get("code"),
         })
         .then(function (res) {
@@ -71,7 +75,7 @@ const Redirect = ({ updateIsToken }) => {
               //취소 눌렀을경우⬇️
             } else {
               console.log("가입취소");
-              const url = "https://hansol.lhenry0.com/auth/social/sign-up";
+              const url = "https://www.onesol.shop/auth/social/sign-up";
               const jsonData = null;
 
               // POST 요청의 body 데이터 생성
@@ -104,7 +108,7 @@ const Redirect = ({ updateIsToken }) => {
             request.append("is-connect", confirmation.toString());
             request.append("social-id", err.response.data.request);
             console.log(request.toString());
-            const url = "https://hansol.lhenry0.com/auth/social/connect";
+            const url = "https://www.onesol.shop/auth/social/connect";
             await axios
               .post(url, request, {
                 headers: {

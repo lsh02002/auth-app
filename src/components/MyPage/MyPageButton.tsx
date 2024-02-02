@@ -2,7 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-const MyPageButton = ({ isToken }) => {
+interface MyPageButtonProps {
+  isToken: boolean;
+}
+
+const MyPageButton: React.FC<MyPageButtonProps> = ({ isToken }) => {
   return (
     <div>
       {isToken ? (

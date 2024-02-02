@@ -7,6 +7,7 @@ import validator from "validator";
 import axios from "axios";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
+import { BaseSyntheticEvent } from "react";
 
 const Signup = () => {
   //카카오 회원가입 미완성시
@@ -53,7 +54,7 @@ const Signup = () => {
     }
   }, [searchParams]);
 
-  const onUserNickNameChange = (e) => {
+  const onUserNickNameChange = (e: BaseSyntheticEvent) => {
     setUserNickName(e.target.value.trim());
 
     setAlreadyNickNameMessage("");
@@ -72,7 +73,7 @@ const Signup = () => {
     }
   };
 
-  const onUserNickNameBlur = async (e) => {
+  const onUserNickNameBlur = async (e: BaseSyntheticEvent) => {
     if (
       !(
         e.target.value.trim() !== "" &&
@@ -88,7 +89,7 @@ const Signup = () => {
 
     await axios
       .get(
-        `https://hansol.lhenry0.com/auth/sign-up/check-nickname?nickname=${e.target.value}`
+        `https://www.onesol.shop/auth/sign-up/check-nickname?nickname=${e.target.value}`
       )
       .then(function (res) {
         console.log(res.data.data);
@@ -104,7 +105,7 @@ const Signup = () => {
       });
   };
 
-  const onUserEmailChange = async (e) => {
+  const onUserEmailChange = async (e: BaseSyntheticEvent) => {
     setUserEmail(e.target.value);
 
     setAlreadyEmailMessage("");
@@ -117,7 +118,7 @@ const Signup = () => {
     }
   };
 
-  const onUserEmailBlur = async (e) => {
+  const onUserEmailBlur = async (e: BaseSyntheticEvent) => {
     if (!validator.isEmail(e.target.value)) {
       setEmailMessage("이메일 형식이 올바르지 않습니다!");
       return;
@@ -125,7 +126,7 @@ const Signup = () => {
 
     await axios
       .get(
-        `https://hansol.lhenry0.com/auth/sign-up/check-email?email=${e.target.value}`
+        `https://www.onesol.shop/auth/sign-up/check-email?email=${e.target.value}`
       )
       .then(function (res) {
         console.log(res.data.data);
@@ -141,7 +142,7 @@ const Signup = () => {
       });
   };
 
-  const onBirthDateChange = (date) => {
+  const onBirthDateChange = (date: any) => {
     const changedDate = moment(date).format("YYYY-MM-DD");
     setUserBirthDate(changedDate);
     setUserBirthDateObj(date);
@@ -155,7 +156,7 @@ const Signup = () => {
     }
   };
 
-  const onUserPasswordChange = (e) => {
+  const onUserPasswordChange = (e: BaseSyntheticEvent) => {
     setUserPassword(e.target.value);
 
     setAxiosErrorMessage("");
@@ -182,7 +183,7 @@ const Signup = () => {
     }
   };
 
-  const onUserPassword2Change = (e) => {
+  const onUserPassword2Change = (e: BaseSyntheticEvent) => {
     setUserPassword2(e.target.value);
 
     //setAlreadyEmailMessage("");
@@ -216,7 +217,7 @@ const Signup = () => {
 
       await axios
         .get(
-          `https://hansol.lhenry0.com/auth/sign-up/check-nickname?nickname=${userNickName}`
+          `https://www.onesol.shop/auth/sign-up/check-nickname?nickname=${userNickName}`
         )
         .then(function (res) {
           console.log(res.data.data);
@@ -241,7 +242,7 @@ const Signup = () => {
 
       await axios
         .get(
-          `https://hansol.lhenry0.com/auth/sign-up/check-email?email=${userEmail}`
+          `https://www.onesol.shop/auth/sign-up/check-email?email=${userEmail}`
         )
         .then(function (res) {
           console.log(res.data.data);
@@ -303,10 +304,10 @@ const Signup = () => {
       userPassword.match(/\d+/) &&
       userPassword.match(/[a-zA-Z]/)
     ) {
-      if (searchParams === null) {
+      if (userSocialId === "") {
         const gender2 = userGender === 0 ? "남성" : "여성";
         await axios
-          .post("https://hansol.lhenry0.com/auth/sign-up", {
+          .post("https://www.onesol.shop/auth/sign-up", {
             email: userEmail,
             nickName: userNickName,
             password: userPassword,
@@ -330,7 +331,7 @@ const Signup = () => {
         const gender2 = userGender === 0 ? "남성" : "여성";
         await axios
           .post(
-            `https://hansol.lhenry0.com/auth/social/sign-up?is-sign-up=true&social-id=${userSocialId}`,
+            `https://www.onesol.shop/auth/social/sign-up?is-sign-up=true&social-id=${userSocialId}`,
             {
               email: userEmail,
               nickName: userNickName,

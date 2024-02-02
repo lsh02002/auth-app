@@ -2,26 +2,27 @@ import axios from "axios";
 import React, { useState } from "react";
 import styled from "styled-components";
 import validator from "validator";
+import { BaseSyntheticEvent } from "react";
 
-const ChangePassword = () => {
-  const [oldPassword, setOldPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+const ChangePassword: React.FC = () => {
+  const [oldPassword, setOldPassword] = useState<string>("");
+  const [newPassword, setNewPassword] = useState<string>("");
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
 
   //비밀번호 보이기/ 숨기기 상태변수
-  const [isShowPwd, setIsShowPwd] = useState(false);
+  const [isShowPwd, setIsShowPwd] = useState<boolean>(false);
 
-  const [newPasswordMessage, setNewPasswordMessage] = useState("");
-  const [passMatchMessage, setPassMatchMessage] = useState("");
-  const [axiosErrorMessage, setAxiosErrorMessage] = useState("");
+  const [newPasswordMessage, setNewPasswordMessage] = useState<string>("");
+  const [passMatchMessage, setPassMatchMessage] = useState<string>("");
+  const [axiosErrorMessage, setAxiosErrorMessage] = useState<string>("");
 
-  const OnOldPasswordChange = (e) => {
+  const OnOldPasswordChange = (e: BaseSyntheticEvent) => {
     setOldPassword(e.target.value);
 
     setAxiosErrorMessage("");
   };
 
-  const OnNewPasswordChange = (e) => {
+  const OnNewPasswordChange = (e: BaseSyntheticEvent) => {
     setNewPassword(e.target.value);
 
     setAxiosErrorMessage("");
@@ -47,7 +48,7 @@ const ChangePassword = () => {
     }
   };
 
-  const OnConfirmPasswordChange = (e) => {
+  const OnConfirmPasswordChange = (e: BaseSyntheticEvent) => {
     setConfirmPassword(e.target.value);
 
     setAxiosErrorMessage("");
@@ -87,7 +88,7 @@ const ChangePassword = () => {
       //const token = JSON.parse(tokenStr);
 
       await axios
-        .patch(`https://hansol.lhenry0.com/v1/api/account/my-page`, {
+        .patch(`https://www.onesol.shop/v1/api/account/my-page`, {
           password: newPassword,
         })
         .then(function (res) {

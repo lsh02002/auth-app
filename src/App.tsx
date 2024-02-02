@@ -1,16 +1,16 @@
 import { useLayoutEffect, useState } from "react";
 import "./App.css";
-import Login from "./pages/Login/Login.tsx";
-import LoginError from "./pages/Login/LoginError.tsx";
-import Logout from "./pages/Login/Logout.tsx";
-import MyPage from "./pages/MyPage/MyPage.tsx";
-import Signup from "./pages/Signup/Signup.tsx";
+import Login from "./components/Login/Login";
+import LoginError from "./components/Login/LoginError";
+import Logout from "./components/Login/Logout";
+import MyPage from "./components/MyPage/MyPage";
+import Signup from "./components/Signup/Signup";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import MyPageButton from "./pages/MyPage/MyPageButton.tsx";
-import FindPassword from "./pages/Login/FindPassword.tsx";
-import FindEmail from "./pages/Login/FindEmail.tsx";
-import ChangePassword from "./pages/Login/ChangePassword.tsx";
-import Redirect from "./pages/Login/Redirect.tsx";
+import MyPageButton from "./components/MyPage/MyPageButton";
+import FindPassword from "./components/Login/FindPassword";
+import FindEmail from "./components/Login/FindEmail";
+import ChangePassword from "./components/Login/ChangePassword";
+import Redirect from "./components/Login/Redirect";
 import React from "react";
 
 function App() {

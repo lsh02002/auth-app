@@ -1,11 +1,11 @@
 import React from "react";
-import MyPageMenu from "./MyPageMenu.tsx";
-import MyRestaurant from "./MyRestaurant.tsx";
-import MyFavoriteRestaurant from "./MyFavoriteRestaurant.tsx";
-import MyEditProfile from "./MyEditProfile.tsx";
+import MyPageMenu from "./MyPageMenu";
+import MyRestaurant from "./MyRestaurant";
+import MyFavoriteRestaurant from "./MyFavoriteRestaurant";
+import MyEditProfile from "./MyEditProfile";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import MyInfo from "./MyInfo.tsx";
+import MyInfo from "./MyInfo";
 
 const MyPage = () => {
   const { pagenumber } = useParams();
@@ -46,6 +46,8 @@ const MyPage = () => {
         </MyMain>
       </>
     );
+  } else {
+    return null;
   }
 };
 

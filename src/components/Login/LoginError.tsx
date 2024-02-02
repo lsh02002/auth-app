@@ -2,7 +2,12 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-const LoginError = ({ pageName, error }) => {
+interface LoginErrorProps {
+  pageName: string;
+  error: string;
+}
+
+const LoginError: React.FC<LoginErrorProps> = ({ pageName, error }) => {
   const navigator = useNavigate();
 
   const onClickHander = () => {

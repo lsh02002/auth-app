@@ -19,7 +19,7 @@ const MyEditProfile = () => {
 
       if (token !== "") {
         await axios
-          .get("https://hansol.lhenry0.com/v1/api/account/my-page", {
+          .get("https://www.onesol.shop/v1/api/account/my-page", {
             headers: {
               Token: token,
             },

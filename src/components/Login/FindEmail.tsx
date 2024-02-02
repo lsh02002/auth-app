@@ -3,22 +3,23 @@ import styled from "styled-components";
 import ReactDatePicker from "react-datepicker";
 import moment from "moment";
 import axios from "axios";
+import { BaseSyntheticEvent } from "react";
 
-const FindEmail = () => {
-  const [nickName, setNickName] = useState("");
-  const [dateOfBirth, setDateOfBirth] = useState("");
-  const [dateofBirthObj, setDateOfBirthObj] = useState(null);
+const FindEmail: React.FC = () => {
+  const [nickName, setNickName] = useState<string>("");
+  const [dateOfBirth, setDateOfBirth] = useState<string>("");
+  const [dateofBirthObj, setDateOfBirthObj] = useState<any>(null);
 
-  const [findSuccessMessage, setFindSuccessMessage] = useState("");
-  const [findFailMessage, setFindFailMessage] = useState("");
+  const [findSuccessMessage, setFindSuccessMessage] = useState<string>("");
+  const [findFailMessage, setFindFailMessage] = useState<string>("");
 
-  const OnNickNameChange = (e) => {
+  const OnNickNameChange = (e: BaseSyntheticEvent) => {
     setNickName(e.target.value);
     setFindSuccessMessage("");
     setFindFailMessage("");
   };
 
-  const OnBirthDateChange = (date) => {
+  const OnBirthDateChange = (date: any) => {
     const changedDate = moment(date).format("YYYY-MM-DD");
     setDateOfBirth(changedDate);
     setDateOfBirthObj(date);
@@ -29,7 +30,7 @@ const FindEmail = () => {
 
   const OnLoginClickHandler = async () => {
     await axios
-      .post("https://hansol.lhenry0.com/auth/find-email", {
+      .post("https://www.onesol.shop/auth/find-email", {
         nickName: nickName,
         dateOfBirth: dateOfBirth,
       })

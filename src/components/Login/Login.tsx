@@ -3,15 +3,20 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
-import loginButton from "./kakao-login-button.jpg";
+import loginButton from "../../components/shared/images/LoginPage/kakao-login-button.jpg";
+import { BaseSyntheticEvent } from "react";
 
-const Login = ({ updateIsToken }) => {
-  const [userId, setUserId] = useState("");
-  const [userPassword, setUserPassword] = useState("");
+interface IsTokenProps {
+  updateIsToken: any;
+}
 
-  const [idMessage, setIdMessage] = useState("");
-  const [passMessage, setPassMessage] = useState("");
-  const [failMessage, setFailMessage] = useState("");
+const Login: React.FC<IsTokenProps> = ({ updateIsToken }) => {
+  const [userId, setUserId] = useState<string>("");
+  const [userPassword, setUserPassword] = useState<string>("");
+
+  const [idMessage, setIdMessage] = useState<string>("");
+  const [passMessage, setPassMessage] = useState<string>("");
+  const [failMessage, setFailMessage] = useState<string>("");
 
   const navigator = useNavigate();
 
@@ -21,10 +26,10 @@ const Login = ({ updateIsToken }) => {
 
   const currentUrl = `${protocol}//${hostname}:${port}`;
 
-  const clientId = process.env.REACT_APP_CLIENT_ID;
+  const clientId = "d7453d5d4fe1c096ca03c1ed009a03ff";
   const redirectUri = `${currentUrl}/redirect`;
 
-  const onUserIdChange = (e) => {
+  const onUserIdChange = (e: BaseSyntheticEvent) => {
     setUserId(e.target.value);
     setFailMessage("");
 
@@ -35,7 +40,7 @@ const Login = ({ updateIsToken }) => {
     }
   };
 
-  const onUserPasswordChange = (e) => {
+  const onUserPasswordChange = (e: BaseSyntheticEvent) => {
     setUserPassword(e.target.value);
     setFailMessage("");
 
@@ -68,7 +73,7 @@ const Login = ({ updateIsToken }) => {
 
     if (idMessage === "" && userId !== "" && userPassword !== "") {
       await axios
-        .post("https://hansol.lhenry0.com/auth/login", {
+        .post("https://www.onesol.shop/auth/login", {
           email: userId,
           password: userPassword,
         })
