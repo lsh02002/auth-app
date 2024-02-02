@@ -92,7 +92,7 @@ const Login: React.FC<IsTokenProps> = ({ updateIsToken }) => {
         })
         .catch(function (err) {
           console.log(err);
-          setFailMessage(err.message);
+          setFailMessage(err.response.data.detailMessage);
         });
     }
   };

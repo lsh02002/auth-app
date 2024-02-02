@@ -1,31 +1,53 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.module.css";
 import axios from "axios";
+import { BaseSyntheticEvent } from "react";
 
 const MyEditProfile = () => {
-  /*
-  const [email, setEmail] = useState("");
-  const [nickName, setNickName] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordConfirm, setPasswordConfirm] = useState("");
-  const [dateOfBirth, setDateOfBirth] = useState("");
-  const [gender, setGender] = useState("");
-*/
+  const [email, setEmail] = useState<string>("");
+  const [nickName, setNickName] = useState<string>("");
+  const [phone, setPhone] = useState<string>("");
+  const [neighbor, setNeighbor] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [newPassword, setNewPassword] = useState<string>("");
+  const [newPasswordConfirm, setNewPasswordConfirm] = useState<string>("");
+  const [dateOfBirth, setDateOfBirth] = useState<string>("");
+  const [dateOfBirthObj, setDateOfBirthObj] = useState<any>();
+  const [gender, setGender] = useState<number>(0);
+  const [joinDate, setJointDate] = useState<string>("");
+  const [isShowPwd, setIsShowPwd] = useState<boolean>(false);
+  const [errMessage, setErrMessage] = useState<string>("");
+
   useEffect(() => {
     const getUserInfo = async () => {
       const token = localStorage.getItem("token");
 
-      if (token !== "") {
+      if (token !== null) {
         await axios
-          .get("https://www.onesol.shop/v1/api/account/my-page", {
+          .get("https://www.onesol.shop/account/my-page", {
             headers: {
               Token: token,
             },
           })
           .then((res) => {
             console.log(res);
+
+            setEmail(res.data.data.email);
+            setNickName(res.data.data.nickName);
+            setPhone(res.data.data.phoneNumber);
+            setNeighbor(res.data.data.neighborhood);
+            //setPassword(res.data.data.password);
+            setDateOfBirth(res.data.data.dateOfBirth);
+            setDateOfBirthObj(new Date(res.data.data.dateOfBirth));
+            setJointDate(res.data.data.joinDate.toString());
+
+            if (res.data.data.gender === "남성") {
+              setGender(0);
+            } else {
+              setGender(1);
+            }
           })
           .catch((err) => {
             console.log(err);
@@ -36,6 +58,46 @@ const MyEditProfile = () => {
     getUserInfo();
   }, []);
 
+  const onTogglePwdShowHandler = () => {
+    if (!isShowPwd) {
+      setIsShowPwd(true);
+    } else {
+      setIsShowPwd(false);
+    }
+  };
+
+  const onBirthDateChange = () => {
+    setDateOfBirth(dateOfBirth);
+    setDateOfBirthObj(dateOfBirthObj);
+  };
+
+  const onChangeInfoHander = async () => {
+    //const token = localStorage.getItem("token");
+    const gender2 = gender === 0 ? "남성" : "여성";
+
+    await axios
+      .patch("https://www.onesol.shop/account/my-page", {
+        email,
+        nickName,
+        password,
+        newPassword,
+        newPasswordConfirm,
+        phoneNumber: phone,
+        neighborhood: neighbor,
+        imageUrl: "",
+        dateOfBirth,
+        gender: gender2,
+        joinDate,
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+        setErrMessage(err.message);
+      });
+  };
+
   return (
     <>
       <hr />
@@ -44,26 +106,59 @@ const MyEditProfile = () => {
           <h1>회원정보 수정 페이지</h1>
           <InputContainerPro>
             <LabelPro htmlFor="user_nickname">닉네임 :</LabelPro>
-            <InputPro type="text" id="user_nickname" />
+            <InputPro
+              type="text"
+              id="user_nickname"
+              value={nickName || ""}
+              onChange={(e: BaseSyntheticEvent) => setNickName(e.target.value)}
+            />
           </InputContainerPro>
           <InputContainerPro>
             <LabelPro htmlFor="user_phone">전화번호 :</LabelPro>
-            <InputPro type="text" id="user_phone" />
+            <InputPro
+              type="text"
+              id="user_phone"
+              value={phone || ""}
+              onChange={(e: BaseSyntheticEvent) => setPhone(e.target.value)}
+            />
           </InputContainerPro>
           <InputContainerPro>
             <LabelPro htmlFor="user_email">이메일 :</LabelPro>
-            <InputPro type="text" id="user_email" />
+            <InputPro
+              type="text"
+              id="user_email"
+              disabled={true}
+              value={email || ""}
+              onChange={(e: BaseSyntheticEvent) => setEmail(e.target.value)}
+            />
           </InputContainerPro>
           <InputContainerPro>
             <LabelPro htmlFor="user_neighbor">이웃 :</LabelPro>
-            <InputPro type="text" id="user_neighbor" />
+            <InputPro
+              type="text"
+              id="user_neighbor"
+              value={neighbor || ""}
+              onChange={(e: BaseSyntheticEvent) => setNeighbor(e.target.value)}
+            />
           </InputContainerPro>
           <RadioContainerPro>
             <LabelPro>성별:</LabelPro>
             <RadioPro>
-              <RadioInputPro type="radio" id="user_gender1" />
+              <RadioInputPro
+                type="radio"
+                id="user_gender1"
+                value={gender}
+                checked={gender === 0}
+                onChange={() => setGender(0)}
+              />
               <RadioLabelPro htmlFor="user_gender1">남성</RadioLabelPro>
-              <RadioInputPro type="radio" id="user_gender2" />
+              <RadioInputPro
+                type="radio"
+                id="user_gender2"
+                value={gender}
+                checked={gender === 1}
+                onChange={() => setGender(1)}
+              />
               <RadioLabelPro htmlFor="user_gender2">여성</RadioLabelPro>
             </RadioPro>
           </RadioContainerPro>
@@ -74,7 +169,8 @@ const MyEditProfile = () => {
               dateFormat="yyyy-MM-dd"
               startDate={null}
               showYearDropdown
-              onChange={() => {}}
+              selected={dateOfBirthObj}
+              onChange={onBirthDateChange}
             />
           </BirthDateContainerPro>
           <InputContainerPro>
@@ -85,20 +181,60 @@ const MyEditProfile = () => {
           <br />
           <br />
           <InputContainerPro>
-            <LabelPro htmlFor="user_pwd2">비밀번호 확인:</LabelPro>
+            <LabelPro htmlFor="user_joint_date">가입일 :</LabelPro>
             <InputPro
-              type="password"
-              id="user_pwd2"
-              placeholder="확인을 위해 비밀번호를 입력하세요."
+              type="text"
+              id="user_joint_date"
+              value={joinDate || ""}
+              disabled={true}
+            />
+          </InputContainerPro>
+          <InputContainerPro>
+            <LabelPro htmlFor="user_password">이전 비밀번호:</LabelPro>
+            <InputPro
+              type={isShowPwd ? "text" : "password"}
+              id="user_password"
+              placeholder="이전 비밀번호를 입력하세요."
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </InputContainerPro>
+          <InputContainerPro>
+            <LabelPro htmlFor="user_newpassword">새로운 비밀번호:</LabelPro>
+            <InputPro
+              type={isShowPwd ? "text" : "password"}
+              id="user_newpassword"
+              placeholder="새로운 비밀번호를 입력하세요."
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+            />
+          </InputContainerPro>
+          <InputContainerPro>
+            <LabelPro htmlFor="user_newpassword_confirm">
+              새 비밀번호 확인:
+            </LabelPro>
+            <InputPro
+              type={isShowPwd ? "text" : "password"}
+              id="user_newpassword_confirm"
+              placeholder="새로운 비밀번호를 입력하세요."
+              value={newPasswordConfirm}
+              onChange={(e) => setNewPasswordConfirm(e.target.value)}
             />
           </InputContainerPro>
           <PwdCheckDivPro>
-            <PwdCheckBoxPro type="checkbox" id="user_check_show_pwd" />
+            <PwdCheckBoxPro
+              type="checkbox"
+              id="user_check_show_pwd"
+              onChange={onTogglePwdShowHandler}
+            />
             <PwdCheckLabelPro htmlFor="user_check_show_pwd">
               비밀번호 보이기
             </PwdCheckLabelPro>
           </PwdCheckDivPro>
-          <UserSignupButton>회원정보 수정하기</UserSignupButton>
+          <UserSignupButton onClick={onChangeInfoHander}>
+            회원정보 수정하기
+          </UserSignupButton>
+          {errMessage && <UserErrMessagePro>{errMessage}</UserErrMessagePro>}
         </UserInfoContainerPro>
       </UserInfoPro>
     </>
@@ -114,7 +250,6 @@ const UserInfoPro = styled.div`
 
 const UserInfoContainerPro = styled.div`
   width: 500px;
-  height: 700px;
   padding: 30px;
   display: flex;
   flex-direction: column;
@@ -209,6 +344,14 @@ const UserSignupButton = styled.button`
     background-color: rgb(40, 182, 214);
     cursor: pointer;
   }
+`;
+
+const UserErrMessagePro = styled.div`
+  width: 260px;
+  padding-top: 5px;
+  color: red;
+  font-size: 12px;
+  text-align: left;
 `;
 
 export default MyEditProfile;

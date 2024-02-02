@@ -325,7 +325,7 @@ const Signup = () => {
           })
           .catch(function (err) {
             console.log(err);
-            setAxiosErrorMessage(err.message);
+            setAxiosErrorMessage(err.response.data.detailMessage);
           });
       } else {
         const gender2 = userGender === 0 ? "남성" : "여성";
