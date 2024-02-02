@@ -14,6 +14,6 @@
     "strictNullChecks": true
   },
   "typeRoots": ["./src/components/shared/images/LoginPage"],
-  "include": ["./src"],
+  "include": ["./src", "server.js"],
   "exclude": ["node_modules", "build"]
 }
