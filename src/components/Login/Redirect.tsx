@@ -122,8 +122,14 @@ const Redirect: React.FC<RedirectProps> = ({ updateIsToken }) => {
               .catch((error) => {
                 console.error("실패 응답:", error);
               });
-          } else {
+          } else if (err.response.status === 400) {
             console.log(err);
+            alert(err.response.data.detailMessage);
+            navigator("/login");
+          } else if (err.response.status === 500) {
+            console.log(err);
+            alert(err.response.data.error);
+            navigator("/login");
           }
         });
     };
