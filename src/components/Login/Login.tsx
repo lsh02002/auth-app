@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
-import loginButton from "../../components/shared/images/LoginPage/kakao-login-button.jpg";
+import loginButton from "../../shared/images/LoginPage/kakao-login-button.jpg";
 import { BaseSyntheticEvent } from "react";
 
 interface IsTokenProps {
@@ -166,6 +166,7 @@ const UserTitleLogin = styled.div`
 `;
 
 const LabelLogin = styled.label`
+  text-align: left;
   padding-top: 10px;
   color: rgb(100, 100, 100);
   width: 260px;
