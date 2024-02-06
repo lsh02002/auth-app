@@ -12,7 +12,7 @@ const Redirect: React.FC<RedirectProps> = ({ updateIsToken }) => {
   const hostname = window.location.hostname;
   const port = window.location.port;
 
-  const currentUrl = `${protocol}//${hostname}:${port}/auth/signup`;
+  const currentUrl = `${protocol}//${hostname}:${port}/signup`;
 
   const navigator = useNavigate();
   // eslint-disable-next-line react-hooks/rules-of-hooks
