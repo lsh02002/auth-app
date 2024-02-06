@@ -29,9 +29,11 @@ const Redirect: React.FC<RedirectProps> = ({ updateIsToken }) => {
 
           const token = res.headers.token;
           const nickName = res.data.data.nickName;
+          const userId = res.data.data.userId;
 
           localStorage.setItem("token", token);
           localStorage.setItem("nickName", nickName);
+          localStorage.setItem("userId", userId);
 
           updateIsToken(true);
 
