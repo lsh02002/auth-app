@@ -33,6 +33,9 @@ const DivMainPost = styled.div`
 
 const LinkPage = styled(Link)`
   margin: 10px;
+  color: black;
+
+  cursor: pointer;
 `;
 
 export default MyPageButton;

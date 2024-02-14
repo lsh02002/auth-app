@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
+import { DEEP_YELLOW, SOFT_BEIGE } from "../../styles/colors";
 
 const GetMyPosts = () => {
   const [posts, setPosts] = useState([]);
@@ -53,7 +54,7 @@ const DivMainMyPost = styled.div`
 `;
 
 const DivMyPost = styled.div`
-  width: 500px;
+  width: 450px;
   height: 700px;
   margin: 50px;
   padding: 30px;
@@ -61,7 +62,10 @@ const DivMyPost = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 1px solid black;
+
+  background-color: ${SOFT_BEIGE};
+  border: 1px solid ${DEEP_YELLOW};
+  border-radius: 8px;
 `;
 
 const ButtonMyPost = styled.button`

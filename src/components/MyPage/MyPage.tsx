@@ -283,6 +283,7 @@ const MyPage: React.FC<MyPageProps> = ({ updateIsToken }) => {
         <MyMain>
           <MyPageContainer>
             <MyInfo
+              nickName={formData.nickName}
               likedNumber={liked.length}
               prevImage={prevImage}
               image2={image2}
@@ -299,6 +300,7 @@ const MyPage: React.FC<MyPageProps> = ({ updateIsToken }) => {
         <MyMain>
           <MyPageContainer>
             <MyInfo
+              nickName={formData.nickName}
               likedNumber={liked.length}
               prevImage={prevImage}
               image2={image2}
@@ -315,6 +317,7 @@ const MyPage: React.FC<MyPageProps> = ({ updateIsToken }) => {
         <MyMain>
           <MyPageContainer>
             <MyInfo
+              nickName={formData.nickName}
               likedNumber={liked.length}
               prevImage={prevImage}
               image2={image2}
@@ -352,6 +355,7 @@ const MyPage: React.FC<MyPageProps> = ({ updateIsToken }) => {
         <MyMain>
           <MyPageContainer>
             <MyInfo
+              nickName={formData.nickName}
               likedNumber={liked.length}
               prevImage={prevImage}
               image2={image2}
