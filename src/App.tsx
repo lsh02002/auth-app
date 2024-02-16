@@ -5,11 +5,13 @@ import { Routes, Route } from "react-router-dom";
 import React from "react";
 import AuthRouter from "./components/Login/AuthRouter";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { login, logout } from "./store/slices/authSlices";
 
 function App() {
-  const [isToken, setIsToken] = useState(false);
   const [userNickName, setUserNickName] = useState("");
   const navigator = useNavigate();
+  const dispatch = useDispatch();
 
   useLayoutEffect(() => {
     if (localStorage.getItem("nickName") !== null) {
@@ -17,18 +19,18 @@ function App() {
 
       if (nickName !== null) {
         setUserNickName(nickName);
-        setIsToken(true);
+        dispatch(login());
       }
     } else {
       setUserNickName("");
-      setIsToken(false);
+      dispatch(logout());
     }
-  }, [isToken, setIsToken]);
+  }, [navigator, dispatch]);
 
   // 로그인 되었을 때 페이지들
   return (
     <div className="App">
-      <MyPageButton isToken={isToken} />
+      <MyPageButton />
       <Routes>
         <Route
           path="/"
@@ -49,16 +51,7 @@ function App() {
             </div>
           }
         />
-        <Route
-          path="/*"
-          element={
-            <AuthRouter
-              isToken={isToken}
-              userNickName={userNickName}
-              updateIsToken={setIsToken}
-            />
-          }
-        />
+        <Route path="/*" element={<AuthRouter userNickName={userNickName} />} />
       </Routes>
     </div>
   );
